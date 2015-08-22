@@ -1,0 +1,454 @@
+.icon-rss,.icon-e-mail,.icon-youtube,.icon-mailru,.icon-odnoklassniki,.icon-vk2,.icon-vk,.icon-facebook,.icon-twitter,.icon-linkedin,.icon-google-plus,.icon-icon212,.icon-th-large,.icon-th,.icon-ok,.icon-remove,.icon-zoom-in,.icon-zoom-out,.icon-home,.icon-map-marker,.icon-chevron-left,.icon-chevron-right,.icon-arrow-left,.icon-arrow-right,.icon-arrow-up,.icon-arrow-down,.icon-share-alt,.icon-plus,.icon-minus,.icon-chevron-up,.icon-chevron-down,.icon-reorder,.icon-caret-down,.icon-caret-up,.icon-caret-left,.icon-caret-right,.icon-angle-left,.icon-angle-right,.icon-angle-up,.icon-angle-down,.icon-long-arrow-left,.icon-long-arrow-right,.icon-apple,.icon-windows,.icon-android,.icon-linux,.icon-pencil,.icon-pen,.icon-camera,.icon-music,.icon-headphones,.icon-play,.icon-connection,.icon-file,.icon-tag,.icon-tags,.icon-cart,.icon-cart2,.icon-cart3,.icon-coin,.icon-credit,.icon-phone,.icon-phone-hang-up,.icon-location,.icon-location2,.icon-history,.icon-clock,.icon-clock2,.icon-undo,.icon-redo,.icon-undo2,.icon-redo2,.icon-forward,.icon-reply,.icon-bubble,.icon-bubbles,.icon-bubbles2,.icon-bubble2,.icon-user,.icon-user2,.icon-user3,.icon-spinner,.icon-spinner2,.icon-search,.icon-zoom-in2,.icon-zoom-out2,.icon-expand,.icon-contract,.icon-expand2,.icon-contract2,.icon-key,.icon-key2,.icon-lock,.icon-wrench,.icon-settings,.icon-cog,.icon-cogs,.icon-cog2,.icon-remove2,.icon-remove3,.icon-menu,.icon-eye,.icon-star,.icon-star2,.icon-star3,.icon-heart,.icon-heart2,.icon-heart-broken,.icon-thumbs-up,.icon-thumbs-up2,.icon-warning,.icon-notification,.icon-info,.icon-info2,.icon-blocked,.icon-cancel-circle,.icon-checkmark-circle,.icon-spam,.icon-close,.icon-checkmark,.icon-checkmark2,.icon-minus2,.icon-plus2,.icon-enter,.icon-exit,.icon-arrow-up-left,.icon-arrow-up2,.icon-arrow-up-right,.icon-arrow-right2,.icon-arrow-down-right,.icon-arrow-down2,.icon-arrow-down-left,.icon-arrow-left2,.icon-checkbox-checked,.icon-checkbox-unchecked,.icon-radio-checked,.icon-radio-unchecked,.icon-google-plus2,.icon-google-plus3,.icon-facebook2,.icon-facebook3,.icon-twitter2,.icon-twitter3,.icon-list,.icon-grid {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background-image: url(sprites.png);
+	background-repeat: no-repeat;
+}
+.icon-rss {
+	background-position: 0 0;
+}
+.icon-e-mail {
+	background-position: -128px 0;
+	width: 67px;
+}
+.icon-youtube {
+	background-position: -256px 0;
+}
+.icon-mailru {
+	background-position: -384px 0;
+}
+.icon-odnoklassniki {
+	background-position: -512px 0;
+}
+.icon-vk2 {
+	background-position: -640px 0;
+}
+.icon-vk {
+	background-position: -768px 0;
+}
+.icon-facebook {
+	background-position: -896px 0;
+}
+.icon-twitter {
+	background-position: -1024px 0;
+}
+.icon-linkedin {
+	background-position: -1152px 0;
+}
+.icon-google-plus {
+	background-position: -1280px 0;
+}
+.icon-icon212 {
+	background-position: -1408px 0;
+}
+.icon-th-large {
+	background-position: -1536px 0;
+}
+.icon-th {
+	background-position: -1664px 0;
+}
+.icon-ok {
+	background-position: -1792px 0;
+}
+.icon-remove {
+	background-position: -1920px 0;
+}
+.icon-zoom-in {
+	background-position: 0 -128px;
+}
+.icon-zoom-out {
+	background-position: -128px -128px;
+}
+.icon-home {
+	background-position: -256px -128px;
+}
+.icon-map-marker {
+	background-position: -384px -128px;
+}
+.icon-chevron-left {
+	background-position: -512px -128px;
+}
+.icon-chevron-right {
+	background-position: -640px -128px;
+}
+.icon-arrow-left {
+	background-position: -768px -128px;
+}
+.icon-arrow-right {
+	background-position: -896px -128px;
+}
+.icon-arrow-up {
+	background-position: -1024px -128px;
+}
+.icon-arrow-down {
+	background-position: -1152px -128px;
+}
+.icon-share-alt {
+	background-position: -1280px -128px;
+}
+.icon-plus {
+	background-position: -1408px -128px;
+}
+.icon-minus {
+	background-position: -1536px -128px;
+}
+.icon-chevron-up {
+	background-position: -1664px -128px;
+}
+.icon-chevron-down {
+	background-position: -1792px -128px;
+}
+.icon-reorder {
+	background-position: -1920px -128px;
+}
+.icon-caret-down {
+	background-position: 0 -256px;
+}
+.icon-caret-up {
+	background-position: -128px -256px;
+}
+.icon-caret-left {
+	background-position: -256px -256px;
+}
+.icon-caret-right {
+	background-position: -384px -256px;
+}
+.icon-angle-left {
+	background-position: -512px -256px;
+}
+.icon-angle-right {
+	background-position: -640px -256px;
+}
+.icon-angle-up {
+	background-position: -768px -256px;
+}
+.icon-angle-down {
+	background-position: -896px -256px;
+}
+.icon-long-arrow-left {
+	background-position: -1024px -256px;
+}
+.icon-long-arrow-right {
+	background-position: -1152px -256px;
+}
+.icon-apple {
+	background-position: -1280px -256px;
+}
+.icon-windows {
+	background-position: -1408px -256px;
+}
+.icon-android {
+	background-position: -1536px -256px;
+}
+.icon-linux {
+	background-position: -1664px -256px;
+}
+.icon-pencil {
+	background-position: -1792px -256px;
+}
+.icon-pen {
+	background-position: -1920px -256px;
+}
+.icon-camera {
+	background-position: 0 -384px;
+}
+.icon-music {
+	background-position: -128px -384px;
+}
+.icon-headphones {
+	background-position: -256px -384px;
+}
+.icon-play {
+	background-position: -384px -384px;
+}
+.icon-connection {
+	background-position: -512px -384px;
+}
+.icon-file {
+	background-position: -640px -384px;
+}
+.icon-tag {
+	background-position: -768px -384px;
+	width: 65px;
+	height: 65px;
+}
+.icon-tags {
+	background-position: -896px -384px;
+}
+.icon-cart {
+	background-position: -1024px -384px;
+}
+.icon-cart2 {
+	background-position: -1152px -384px;
+}
+.icon-cart3 {
+	background-position: -1280px -384px;
+}
+.icon-coin {
+	background-position: -1408px -384px;
+}
+.icon-credit {
+	background-position: -1536px -384px;
+}
+.icon-phone {
+	background-position: -1664px -384px;
+}
+.icon-phone-hang-up {
+	background-position: -1792px -384px;
+	width: 65px;
+}
+.icon-location {
+	background-position: -1920px -384px;
+}
+.icon-location2 {
+	background-position: 0 -512px;
+}
+.icon-history {
+	background-position: -128px -512px;
+	width: 66px;
+}
+.icon-clock {
+	background-position: -256px -512px;
+}
+.icon-clock2 {
+	background-position: -384px -512px;
+}
+.icon-undo {
+	background-position: -512px -512px;
+}
+.icon-redo {
+	background-position: -640px -512px;
+}
+.icon-undo2 {
+	background-position: -768px -512px;
+}
+.icon-redo2 {
+	background-position: -896px -512px;
+}
+.icon-forward {
+	background-position: -1024px -512px;
+}
+.icon-reply {
+	background-position: -1152px -512px;
+}
+.icon-bubble {
+	background-position: -1280px -512px;
+}
+.icon-bubbles {
+	background-position: -1408px -512px;
+}
+.icon-bubbles2 {
+	background-position: -1536px -512px;
+}
+.icon-bubble2 {
+	background-position: -1664px -512px;
+}
+.icon-user {
+	background-position: -1792px -512px;
+}
+.icon-user2 {
+	background-position: -1920px -512px;
+}
+.icon-user3 {
+	background-position: 0 -640px;
+}
+.icon-spinner {
+	background-position: -128px -640px;
+}
+.icon-spinner2 {
+	background-position: -256px -640px;
+}
+.icon-search {
+	background-position: -384px -640px;
+	width: 65px;
+	height: 65px;
+}
+.icon-zoom-in2 {
+	background-position: -512px -640px;
+	width: 65px;
+	height: 65px;
+}
+.icon-zoom-out2 {
+	background-position: -640px -640px;
+	width: 65px;
+	height: 65px;
+}
+.icon-expand {
+	background-position: -768px -640px;
+}
+.icon-contract {
+	background-position: -896px -640px;
+}
+.icon-expand2 {
+	background-position: -1024px -640px;
+}
+.icon-contract2 {
+	background-position: -1152px -640px;
+}
+.icon-key {
+	background-position: -1280px -640px;
+}
+.icon-key2 {
+	background-position: -1408px -640px;
+}
+.icon-lock {
+	background-position: -1536px -640px;
+}
+.icon-wrench {
+	background-position: -1664px -640px;
+}
+.icon-settings {
+	background-position: -1792px -640px;
+}
+.icon-cog {
+	background-position: -1920px -640px;
+}
+.icon-cogs {
+	background-position: 0 -768px;
+}
+.icon-cog2 {
+	background-position: -128px -768px;
+}
+.icon-remove2 {
+	background-position: -256px -768px;
+}
+.icon-remove3 {
+	background-position: -384px -768px;
+}
+.icon-menu {
+	background-position: -512px -768px;
+}
+.icon-eye {
+	background-position: -640px -768px;
+}
+.icon-star {
+	background-position: -768px -768px;
+}
+.icon-star2 {
+	background-position: -896px -768px;
+}
+.icon-star3 {
+	background-position: -1024px -768px;
+}
+.icon-heart {
+	background-position: -1152px -768px;
+}
+.icon-heart2 {
+	background-position: -1280px -768px;
+}
+.icon-heart-broken {
+	background-position: -1408px -768px;
+}
+.icon-thumbs-up {
+	background-position: -1536px -768px;
+}
+.icon-thumbs-up2 {
+	background-position: -1664px -768px;
+}
+.icon-warning {
+	background-position: -1792px -768px;
+	width: 66px;
+}
+.icon-notification {
+	background-position: -1920px -768px;
+}
+.icon-info {
+	background-position: 0 -896px;
+}
+.icon-info2 {
+	background-position: -128px -896px;
+}
+.icon-blocked {
+	background-position: -256px -896px;
+}
+.icon-cancel-circle {
+	background-position: -384px -896px;
+}
+.icon-checkmark-circle {
+	background-position: -512px -896px;
+}
+.icon-spam {
+	background-position: -640px -896px;
+}
+.icon-close {
+	background-position: -768px -896px;
+}
+.icon-checkmark {
+	background-position: -896px -896px;
+}
+.icon-checkmark2 {
+	background-position: -1024px -896px;
+}
+.icon-minus2 {
+	background-position: -1152px -896px;
+}
+.icon-plus2 {
+	background-position: -1280px -896px;
+}
+.icon-enter {
+	background-position: -1408px -896px;
+}
+.icon-exit {
+	background-position: -1536px -896px;
+}
+.icon-arrow-up-left {
+	background-position: -1664px -896px;
+}
+.icon-arrow-up2 {
+	background-position: -1792px -896px;
+}
+.icon-arrow-up-right {
+	background-position: -1920px -896px;
+}
+.icon-arrow-right2 {
+	background-position: 0 -1024px;
+}
+.icon-arrow-down-right {
+	background-position: -128px -1024px;
+}
+.icon-arrow-down2 {
+	background-position: -256px -1024px;
+}
+.icon-arrow-down-left {
+	background-position: -384px -1024px;
+}
+.icon-arrow-left2 {
+	background-position: -512px -1024px;
+}
+.icon-checkbox-checked {
+	background-position: -640px -1024px;
+}
+.icon-checkbox-unchecked {
+	background-position: -768px -1024px;
+}
+.icon-radio-checked {
+	background-position: -896px -1024px;
+}
+.icon-radio-unchecked {
+	background-position: -1024px -1024px;
+}
+.icon-google-plus2 {
+	background-position: -1152px -1024px;
+}
+.icon-google-plus3 {
+	background-position: -1280px -1024px;
+}
+.icon-facebook2 {
+	background-position: -1408px -1024px;
+}
+.icon-facebook3 {
+	background-position: -1536px -1024px;
+}
+.icon-twitter2 {
+	background-position: -1664px -1024px;
+}
+.icon-twitter3 {
+	background-position: -1792px -1024px;
+}
+.icon-list {
+	background-position: -1920px -1024px;
+}
+.icon-grid {
+	background-position: 0 -1152px;
+}

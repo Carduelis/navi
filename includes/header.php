@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="<?php echo str_ireplace(array('-', '.php'), array(' ', ''), basename($_SERVER['PHP_SELF']) ) ?>">
   <head>
   <meta charset="utf-8">
   <title>Навигация по зданию МИРЭА</title>
@@ -8,6 +8,7 @@
   <meta name="MobileOptimized" content="320" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="format-detection" content="telephone=yes" />
+<meta name="theme-color" content="#2980B9">
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
  <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
   <!--это для скопмилированного css

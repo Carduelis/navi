@@ -21,6 +21,11 @@ $(document).ready(function(){
       $(this).remove();
     });
   });
+  $('.toggler').on('click', function(){
+    $(this).toggleClass('active');
+    $(this).next().slideToggle();
+  })
+
 });
 
 

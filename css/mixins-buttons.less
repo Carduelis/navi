@@ -14,36 +14,31 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   margin: @pad2 0;
   padding: @pad2/1.8 @pad2 @pad2/2.2;
-  .shadow(0 @pad/2 0 darken(@color,15%));
-  .radius(@bpad*3);
+  border-radius: 2px;
   display: inline-block;
   text-align: center;
   text-decoration: none;
   color: @color-back;
-  border: @bpad solid darken(@color,15%);
-  .gradient(lighten(@color,3%), darken(@color,3%));
+  box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid darken(@color,5%);
+  @color-top: lighten(@color,6%);
+  @color-bot: saturate(darken(@color,6%),5%);
+  border-top-color: darken(@color-top,5%);
+  border-bottom-color: darken(@color-bot,5%);
+  .gradient(@color-top, @color-bot);
 
-  &:hover {
-    .gradient(darken(@color,5%), darken(@color,5%));
-  }
   &:active, &.active {
-    .shadow(0 @pad/8 0 darken(@color,15%));
-    top: @bpad*2;
-    position: relative;
   }
 }
 
 .btn-flat-color(@color: @color-btn) {
 
-  .shadow(0 @pad/2 0 darken(@color,15%));
-  border-color: darken(@color,15%);
-  .gradient(lighten(@color,3%), darken(@color,3%));
-  &:hover {
-    .gradient(darken(@color,5%), darken(@color,5%));
-  }
-  &:active, &.active {
-    .shadow(0 @pad/8 0 darken(@color,15%));
-  }
+  @color-top: lighten(@color,6%);
+  @color-bot: saturate(darken(@color,6%),5%);
+  border-color: darken(@color,5%);
+  border-top-color: darken(@color-top,5%);
+  border-bottom-color: darken(@color-bot,5%);
+  .gradient(@color-top, @color-bot);
 }
 .btn-skmrph(@color: @color-btn) {
   -webkit-tap-highlight-color: rgba(0,0,0,0);

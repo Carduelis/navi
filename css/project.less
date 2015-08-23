@@ -8,13 +8,13 @@
 @color-back4: rgba(0,0,0,.05);
 @color-back5: @color-back;
 @color-back6: @grey2;
-
+@mirea: #3287C0;
 
 @color-link: @wet_asphalt;
 @color-accent: @turquoise;
 @color-accent2: @green_sea;
 @color-link-hover: @color-link;
-@color-btn: saturate(lighten(@color-accent,5%),5%);
+@color-btn: @mirea;
 
 @screen-desktop: 980px;
 @screen-phonev: 320px;
@@ -83,6 +83,15 @@ button {
 select {	
 	&:focus {
 		outline: none;
+	}
+}
+.svg-wrapper {
+	.overflow-x;
+}
+.svg-holder {
+	svg {
+		width: 1200px;
+		height: 1200px;
 	}
 }
 .hinter {
@@ -179,6 +188,7 @@ header {
 						.icon-reorder;
 						vertical-align: middle;
 						.xxlarge;
+						line-height: @pad*6;
 						display: inline-block;
 						color: @wet_asphalt;
 						.transitions(transform,100ms);
@@ -250,9 +260,9 @@ form {
 			display: inline-block;
 			vertical-align: top;
 			position: relative;
-			margin-right: -1px;
+			margin-right: @pad;
 			&.corpus {
-				width: @pad*7;
+				width: auto;
 				text-align: center;
 			}
 			&.number {
@@ -265,18 +275,23 @@ form {
 			}
 			&.go {
 				text-align: center;
-				width: @pad*7;
+				float: right;
 				margin-left: @pad;
+				margin-right: 0;
+				width: @pad*9;
 			}
 			input, select, .btn {
 				border-radius: 0;
 				display: block;
-				border: 1px solid @silver;
 				padding: @pad;
 				color: @color-txt;
 				height: @pad*6;
 				line-height: @pad*4;
 				margin: 0;
+				background-color: @color-back;
+				&:focus {
+					box-shadow: inset @pad/2 @pad/2 @pad/2 @color-border;
+				}
 			}
 			span {
 				display: block;
@@ -319,13 +334,13 @@ form {
 			padding: @pad*2 @pad*3;
 		}
 		ul {
-			padding: @pad*3;
 			li {
 				position: relative;
 			}
 		}
-		.toDo {
-			li {
+		.navigation {
+			padding: 0 @pad;
+			> li {
 				margin-bottom: @pad*2;
 			}
 			.button {
@@ -335,6 +350,7 @@ form {
 				display: block;
 				text-align: left;
 				position: relative;
+				z-index: 2;
 				padding-left: @pad*5;
 				&::before {
 					margin-right: @pad;
@@ -347,18 +363,34 @@ form {
 				&::after {
 
 				}
+				span {
+					&.name {
+						display: block;
+						font-size: 120%;
+						margin-bottom: @pad;
+					}
+					&.description {
+						display: block;
+						line-height: 120%;
+						font-size: 75%;
+						opacity: .7;
+						.light;
+					}
+				}
 				&#room {
+					.btn-flat-color(#3FA8C1);
 					&::before {
 						.icon-exit;
 					}
 				}
 				&#person {
+					.btn-flat-color(#C55D52);
 					&::before {
 						.icon-user;
 					}
 				}
 				&#organization {
-					.btn-flat-color(@concrete);
+					.btn-flat-color(@mirea);
 					&::before {
 						.icon-list;
 					}
@@ -380,277 +412,38 @@ form {
 				margin: @pad 0;
 			}
 		}
-	.promo-text {
-		#mirea {
-			margin: 0 auto @pad-list;
-			width: @pad*8;
-		}
-		.btns {
-			text-align: center;
-			a {
-				.btn-flat(@peter_river);
-			}
-		}
-		> div {
-			.transitions;
-			margin: auto;
-			padding: 0 @pad;
-			&#top {
-				max-width: @screen-tablet;
-			}
-		}
-		> h1 {
-			padding-top:  @pad*2;
-			font-size: @pad*4;
-		}
-
-		#form {
-			display: none;
-			input {
-				.radius(@pad/2);
-				padding: @pad-list @pad;
-			}
-		}
-		#thx {
-			display: none;
-			text-align: center;
-			padding: @pad 10%;
-			.large;
-		}
-		.iphone-slider {
-			width: 26%;
-			padding: 7% 2%;
-			position: relative;
-			float: left;
-			margin: 0 2%;
-			margin-top: @pad*4;
-			min-height: @pad*45;
-			vertical-align: middle;
-			overflow: hidden;
-			&::after {
-				content: '';
-				background-image: url(../img/phonebg.png);
-				background-size: 100%;
-				background-position: 50% 0; 
-				background-repeat: no-repeat;
-				display: block;
-				position: absolute;
-				left: 0;
-				height: 100%;
-				width: 100%;
-				top: 0;
-			}
-			@media (max-width: @screen-phoneh) {
-				display: none;
-			}
-			ul.slider {
-				width: 100%;
-				padding: 0;
-				li {
-					padding: 0;
-					float: left;
-					&::before {
-						display: none;
-					}
-					margin: 0;
-				}
-
-			}
-			.bx-wrapper {
-				.bx-controls-direction {
-					a {
-						top: auto;
-						height: @pad*5;
-						margin-bottom: -@pad*2.5;
-						text-indent: 0;
-						font-size: 0;
-						.no-bborder;
-						line-height: @pad*5;
-						text-align: center;
-						-webkit-tap-highlight-color: rgba(0,0,0,0);
-						&:active::before {
-							color: @green_sea;
-						}
-						&::before {
-							.normal;
-							color: @turquoise;
-							@media (min-width: @screen-tablet) {
-								.large;
-							}
-						}
-						&.bx-prev {left: 0;}
-						&.bx-next {right: 0;}
-						&.bx-prev::before {.icon-arrow-left;}
-						&.bx-next::before {.icon-arrow-right;}
-					}
-				}
-			}
-		}
-		.first {
-			width: 100%;
-			margin: auto;
-			max-width: @screen-desktop;
-			ul {
-				@media (min-width: @screen-phoneh) {
-					margin-left: 30%;
-					min-height: @pad*45;
-				}
-				@media (max-width: @screen-phoneh) {
-					.normal;
-				}
-				background: none;
-				.large;
-				> a {
-					.btn-flat(@turquoise);
-					background: @turquoise;
-					.xlarge;
-					width: 100%;
-					&:hover, &:active {
-						background: @green_sea;
-					}
-				}
-			}
-		}
-			h2 {
-				color: @belize_hole;
-				background: @clouds;
-				margin: auto;
-				span {
-					max-width: @screen-desktop;
-					padding: @pad*3 @pad*3 0;
-					margin: auto;
-					display: block;
-				}
-			}
-		.second {
-			width: 100%;
-			background: @belize_hole;
-	border-bottom: @pad/2 solid @color-border;
-	border-top: @pad/2 solid @color-border;
-			ul {
-				margin: auto;
-				max-width: @screen-desktop;
-				.transitions;
-				color: @clouds;
-				li {
-					&::before {
-						color: @clouds;
-					}
-					a {
-						color: @clouds;
-						.light;
-
-					}
-				}
-			}
-		}
-	}
-	.site-vs-app {
-		//border-top: @pad/2 solid @belize_hole;
-		margin-top: @pad*4;
-		h2 {
-			text-align: center;
-		}
-		ul {
-			padding: 0;
-			@k: @pad*12;
-			background: transparent;
-			li {
-				max-width: @screen-tablet;
-				margin: auto;
-				.inliner;
-				padding: 0;
-				padding-bottom: @pad;
-				border-bottom: @pad/2 solid @silver;
-				margin-bottom: @pad*3;
-				&::before {
-					content: '';
-					display: block;
-					float: left;
-					position: static;
-					background-size: 100%;
-					padding: 8%;
-					@media (max-width: @screen-tablet) {display: none;}
-				}
-					&.time {
-						&::before {background-image: url('../img/PNG/Compass.png');}
-					}
-					&.platform {
-						&::before{background-image: url('../img/PNG/Dashboard.png');}
-					}
-					&.money {
-						&::before{background-image: url('../img/PNG/Calendar.png');}
-					}
-					&.differ {
-						&::before{background-image: url('../img/PNG/Trophy.png');}
-					}
-				> p {
-					margin: 0 1%;
-					padding: 0 @pad @pad-list;
-				}
-				> div {
-					width: 40%;
-					margin-left: 1%;
-					padding-left: @pad;
-					> p {
-					}
-					&.result {
-						width: 99%;
-						@media (max-width: @screen-phoneh) {width: 94%; margin: 0 3% 3%;}
-						padding: @pad*3 @pad @pad;
-						&::before {
-							.icon-arrow-down-right;
-							float: left;
-							margin-top: -@pad;
-							.xlarge;
-							padding-right: @pad;
-
-						}
-						p {
-							.large;
-						}
-					}
-				}
-				.site, .app {
-					@media (max-width: @screen-phoneh) {width: 94%; margin: 0 3% 3%;}
-					padding: @pad;
-					padding-left: @pad*5;
-					position: relative;
-					&::before {
-						position: absolute;
-						left: @pad-list;
-						top: 50%;
-						@media (min-width: @screen-tablet) {top: @pad*4}
-						margin-top: -@pad-list;
-					}
-					p {
-						margin-bottom: 0;
-					}
-				}
-				.site {
-					&::before {
-						.icon-plus;
-						color: @nephritis;
-					}
-					background-color: fadeout(@nephritis,95%);
-					b {color: @nephritis;}
-				}
-				.app {
-					&::before {
-						.icon-minus;
-						color: @pomegranate;
-					}
-					background-color: fadeout(@pomegranate,95%);
-					b {color: @pomegranate;}
-				}
-				&.differ {
-					display: none;
-				}
-			}
-		}
-	}
 
 }
+
+
+#roomBLock {
+	background-color: #3FA8C1;
+	color: @color-back;
+	border-color: darken(#3fa8c1,5%);
+	border-radius: 0 0 @pad/2 @pad/2;
+	input, select {
+		border-color: @color-back;
+		text-align: center;
+	}
+	li {
+	}
+}
+
+.toggleBlock {
+	display: none;
+	border: 1px solid @concrete;
+	padding: @pad;
+	z-index: 1;
+	position: relative;
+	top: -1px;
+	input, select {
+		-webkit-appearance: none;
+	}
+	.btn {
+		.btn-flat(@color-back);
+	}
+}
+
 
 #team {
 	.wrap;

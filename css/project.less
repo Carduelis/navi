@@ -85,13 +85,52 @@ select {
 		outline: none;
 	}
 }
-.svg-wrapper {
-	.overflow-x;
+path.active {
+	fill: @pomegranate;
+	stroke: @color-txt;
+}
+html.map {
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	i#top_page {
+		display: none;
+	}
+	body {
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+		left: 0;
+		top: 0;
+		position: absolute;
+		#gf-root {
+			height: 100%;
+			width: 100%;
+			div {
+				height: 100%;
+				width: 100%;
+			}
+		}
+	}
+	footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
 }
 .svg-holder {
+	.overflow-x;
+	overflow-y: auto;
+	padding: @pad*8 @pad*4 @pad*4;
+	background-color: #585858;
 	svg {
-		width: 1200px;
-		height: 1200px;
+		width: 1020px;
+		background-color: #585858;
+		height: 660px;
 	}
 }
 .hinter {

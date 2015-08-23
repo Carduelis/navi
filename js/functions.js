@@ -25,7 +25,13 @@ $(document).ready(function(){
     $(this).toggleClass('active');
     $(this).next().slideToggle();
   })
-
+  $('path').click(function () {
+    if ($(this).attr("class") == 'land') {
+      $(this).attr("class", "land active");
+    } else if ($(this).attr("class") == 'land active') {
+      $(this).attr("class", "land");
+    }
+  });
 });
 
 

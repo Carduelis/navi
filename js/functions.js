@@ -22,6 +22,16 @@ return c;
 }
 inPoly(x,y);
 
+$('polygon:eq(2)').each(function(){
+
+  var points = [];
+  points = $(this).attr('points').split(' ');
+ 
+  for (var i = points.length - 1; i >= 0; i--) {
+    points[i] = points[i].split(',');
+  };
+  console.log(points)
+})
 
 $(document).ready(function(){
 

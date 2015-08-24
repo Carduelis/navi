@@ -22,8 +22,10 @@ $(document).ready(function(){
     });
   });
   $('.toggler').on('click', function(){
+    $('.toggler').not($(this)).removeClass('active');
+    $('.toggleBlock').not($(this).next()).hide();
     $(this).toggleClass('active');
-    $(this).next().slideToggle();
+    $(this).next().toggle();
   })
   $('path').click(function () {
     if ($(this).attr("class") == 'land') {

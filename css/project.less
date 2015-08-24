@@ -294,6 +294,9 @@ header {
 }
 .toggler { 
 	display: none;
+	&.inactive {
+		-webkit-filter: grayscale(50%);
+	}
 }
 form {
 	.in-line {

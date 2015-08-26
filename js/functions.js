@@ -20,17 +20,26 @@ function inPoly(x,y){
   }
 return c;
 }
-inPoly(x,y);
 
 $('polygon:eq(2)').each(function(){
 
   var points = [];
+  var pointsX = [];
+  var pointsY = [];
   points = $(this).attr('points').split(' ');
  
   for (var i = points.length - 1; i >= 0; i--) {
     points[i] = points[i].split(',');
+    pointsX[i] = points[i][0]
+    pointsY[i] = points[i][1]
   };
-  console.log(points)
+  xp = pointsX;
+  yp = pointsY;
+  console.log(pointsX);
+  console.log(pointsY);
+  
+
+
 })
 
 $(document).ready(function(){
@@ -65,13 +74,6 @@ $(document).ready(function(){
     }
   });
 });
-
-
-
-
-
-
-
 
 
 // ----------------------------

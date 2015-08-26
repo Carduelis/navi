@@ -18,11 +18,38 @@ function inPoly(x,y){
        }
        j = i;
   }
-return c;
+  if (c === true) {
+    return 1;
+  } else if (c === false) {
+    return '?';
+  } else {
+    return c;
+  }
 }
 
-$('polygon:eq(2)').each(function(){
+var arr1 = [
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0]
+  [0,0,0,0,0,0]
+]
 
+  xConstStart = 670;
+  xConstEnd = 420;
+  yConstStart = 350;
+  yConstEnd = 320;
+
+var coordinates = [[]];
+
+function getMaxOfArray(numArray) {
+  return Math.max.apply(null, numArray);
+}
+function getMinOfArray(numArray) {
+  return Math.min.apply(null, numArray);
+}
+$('polygon:eq(6)').each(function(){
   var points = [];
   var pointsX = [];
   var pointsY = [];
@@ -33,17 +60,34 @@ $('polygon:eq(2)').each(function(){
     pointsX[i] = points[i][0]
     pointsY[i] = points[i][1]
   };
+  xConstStart = getMaxOfArray(pointsX);
+  xConstEnd = getMinOfArray(pointsX);
+  yConstStart = getMaxOfArray(pointsY);
+  yConstEnd = getMinOfArray(pointsY);
   xp = pointsX;
   yp = pointsY;
   console.log(pointsX);
   console.log(pointsY);
-  
-
-
+  x = xConstStart;
+  y = yConstStart;
+  for (var i = xConstStart; i >= xConstEnd; i--) {
+      x = i;
+      coordinates[i] = [];
+      for (var j = yConstStart; j >= yConstEnd; j--) {
+          y = j;
+          coordinates[i][j] = inPoly(x,y);
+      };
+  };
 })
 
 $(document).ready(function(){
-
+  coordinates.splice(0,xConstEnd);
+  for (var i = coordinates.length - 1; i >= 0; i--) {
+    coordinates[i].splice(0,yConstEnd);
+  };
+ // console.log(coordinates.join('\n') + '\n\n');
+  $('.svg-holder').append('<pre>');
+  $('.svg-holder pre').html(coordinates.join('\n') + '\n\n');
 
   $('.slider').bxSlider({
     pager: false,

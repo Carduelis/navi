@@ -19,11 +19,11 @@ function inPoly(x,y){
        j = i;
   }
   if (c === true) {
-    return 1;
+    return '*';
   } else if (c === false) {
-    return '?';
+    return '_';
   } else {
-    return c;
+    return '_';
   }
 }
 
@@ -49,10 +49,12 @@ function getMaxOfArray(numArray) {
 function getMinOfArray(numArray) {
   return Math.min.apply(null, numArray);
 }
-$('polygon:eq(6)').each(function(){
+$('polygon:eq(70)').each(function(){
   var points = [];
-  var pointsX = [];
-  var pointsY = [];
+  var pointsX = [520,540,440,530];
+  var pointsY = [340,360,350,320];
+  /*
+  */
   points = $(this).attr('points').split(' ');
  
   for (var i = points.length - 1; i >= 0; i--) {

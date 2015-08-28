@@ -19,6 +19,7 @@
   text-align: center;
   text-decoration: none;
   color: @color-back;
+  cursor: pointer;
   box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
   border: 1px solid darken(@color,5%);
   @color-top: lighten(@color,6%);
@@ -27,7 +28,8 @@
   border-bottom-color: darken(@color-bot,5%);
   .gradient(@color-top, @color-bot);
 
-  &:active, &.active {
+  &.active, &:active{
+    .gradient(@color-bot, @color-bot);
   }
 }
 
@@ -39,6 +41,10 @@
   border-top-color: darken(@color-top,5%);
   border-bottom-color: darken(@color-bot,5%);
   .gradient(@color-top, @color-bot);
+
+  &.active, &:active {
+    .gradient(@color-bot, @color-bot);
+  }
 }
 .btn-skmrph(@color: @color-btn) {
   -webkit-tap-highlight-color: rgba(0,0,0,0);

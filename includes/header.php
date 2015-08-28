@@ -55,7 +55,7 @@
 
   <div id='menuBody' class='hidden-block'>
     <ul>
-      <?php include ('includes/navi.php'); ?>
+      <li><a href="map.php">К карте</a>
     </ul>
   </div>
 

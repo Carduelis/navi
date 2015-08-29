@@ -88,14 +88,33 @@ $(document).ready(function(){
     coordinates[i].splice(0,yConstEnd);
   };
  // console.log(coordinates.join('\n') + '\n\n');
-  $('.svg-holder').append('<pre>');
+  $('.tab-view[data-corpus="a"][data-level="2"]').append('<pre>');
   $('.svg-holder pre').html(coordinates.join('\n') + '\n\n');
 
   $('.slider').bxSlider({
     pager: false,
     auto: true
   });
-
+  $('.tab-buttons select').on('change', function(){
+    var container = $(this).parents('.tab-buttons');
+    var dataCorpus = $(this).val();
+    console.log(dataCorpus);
+    container.find('div[data-corpus]').hide();
+    container.find('div[data-corpus="'+dataCorpus+'"]').show();
+    $('.tab-view').hide();
+    $('.tab-view[data-corpus="'+dataCorpus+'"][data-level="1"]').show();
+    container.find('a.btn').removeClass('active');
+    container.find('a.btn[data-level="1"]').addClass('active');
+  });
+  $('.tab-buttons a.btn').on('click', function(){
+    var dataCorpusLevel = $(this).attr('data-level');
+    var container = $(this).parents('.tab-buttons');
+    var dataCorpus = container.find('select').val();
+    container.find('a.btn').removeClass('active');
+    $(this).addClass('active');
+    $('.tab-view').hide();
+    $('.tab-view[data-corpus="'+dataCorpus+'"][data-level="'+dataCorpusLevel+'"]').show();
+  })
   $('#openTheForm').bind('click',function() {
     $('#form').slideDown();
     $('#thx').slideUp();

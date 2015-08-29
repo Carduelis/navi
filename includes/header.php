@@ -17,8 +17,8 @@
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
-  <!--
   <script type="text/javascript">less.watch();</script>
+  <!--
   -->
   
   <!--apple web app-->

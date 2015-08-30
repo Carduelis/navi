@@ -9,10 +9,10 @@
        		<?php include("img/world-polygon.svg"); ?>	
 		</div>
 		<div class="tab-view" data-corpus="a" data-level="2" data-floor="3">
-			<span>empty</span>
+			<span><?php include("img/A34.svg"); ?></span>
 		</div>
 		<div class="tab-view" data-corpus="a" data-level="3" data-floor="4">
-			<span>empty</span>
+			<span><?php include("img/A34.svg"); ?></span>
 
 		</div>
 		<div class="tab-view" data-corpus="d" data-level="-1" data-floor="1">

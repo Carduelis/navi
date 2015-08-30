@@ -83,13 +83,16 @@ $('polygon:eq(70)').each(function(){
 })
 
 $(document).ready(function(){
+  // Обрезка пустых значений
   coordinates.splice(0,xConstEnd);
   for (var i = coordinates.length - 1; i >= 0; i--) {
     coordinates[i].splice(0,yConstEnd);
   };
  // console.log(coordinates.join('\n') + '\n\n');
-  $('.tab-view[data-corpus="a"][data-level="2"]').append('<pre>');
-  $('.svg-holder pre').html(coordinates.join('\n') + '\n\n');
+ // 
+ var containerA2  = $('.tab-view[data-corpus="a"][data-level="2"]');
+  containerA2.append('<pre>');
+  containerA2.find('pre').text(coordinates.join('\n') + '\n\n');
 
 
 

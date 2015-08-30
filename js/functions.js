@@ -5,7 +5,6 @@ var y = -60;
 var xp = new Array(-73,-33,7,-33); // Массив X-координат полигона
 var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
 
-console.log($('#TL').attr('d'));
 
 function inPoly(x,y){
   npol = xp.length;
@@ -36,14 +35,6 @@ function zoomOut() {
   zoom--;
   $('.svg-holder svg > g').css('transform','scale('+zoom+')')
 }
-var arr1 = [
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0]
-  [0,0,0,0,0,0]
-]
 
   xConstStart = 670;
   xConstEnd = 420;
@@ -100,10 +91,19 @@ $(document).ready(function(){
   $('.tab-view[data-corpus="a"][data-level="2"]').append('<pre>');
   $('.svg-holder pre').html(coordinates.join('\n') + '\n\n');
 
-  $('.slider').bxSlider({
-    pager: false,
-    auto: true
-  });
+
+
+
+
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+
   $('.tab-buttons select').on('change', function(){
     var container = $(this).parents('.tab-buttons');
     var dataCorpus = $(this).val();
@@ -182,51 +182,15 @@ $('.btn-group > .inside > .btn:first-child').addClass('active');
 $('.view-group > .view:first-child').show();
 
 
-// ----------------------------
-// Плавная прокрутка
-// ----------------------------
- function filterPath(string) {
-  return string
-    .replace(/^\//,'')
-    .replace(/(index|default).[a-zA-Z]{3,4}$/,'')
-    .replace(/\/$/,'');
-  }
-  var locationPath = filterPath(location.pathname);
-  var scrollElem = scrollableElement('html', 'body');
- 
-  $('a[href*=#]').each(function() {
-    var thisPath = filterPath(this.pathname) || locationPath;
-    if (  locationPath == thisPath
-    && (location.hostname == this.hostname || !this.hostname)
-    && this.hash.replace(/#/,'') ) {
-      var $target = $(this.hash), target = this.hash;
-      if (target) {
-        var targetOffset = $target.offset().top;
-        $(this).click(function(event) {
-          event.preventDefault();
-          $(scrollElem).animate({scrollTop: targetOffset}, 400, function() {
-            location.hash = target;
-          });
-        });
-      }
-    }
-  });
- 
-  // use the first element that is "scrollable"
-  function scrollableElement(els) {
-    for (var i = 0, argLength = arguments.length; i <argLength; i++) {
-      var el = arguments[i],
-          $scrollElement = $(el);
-      if ($scrollElement.scrollTop()> 0) {
-        return el;
-      } else {
-        $scrollElement.scrollTop(1);
-        var isScrollable = $scrollElement.scrollTop()> 0;
-        $scrollElement.scrollTop(0);
-        if (isScrollable) {
-          return el;
-        }
-      }
-    }
-    return [];
-  }
+
+
+/*
+var arr1 = [
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0]
+  [0,0,0,0,0,0]
+]
+*/

@@ -27,6 +27,15 @@ function inPoly(x,y){
   }
 }
 
+var zoom = 1;
+function zoomIn() {
+  zoom++;
+  $('.svg-holder svg').css('transform','scale('+zoom+')')
+}
+function zoomOut() {
+  zoom--;
+  $('.svg-holder svg').css('transform','scale('+zoom+')')
+}
 var arr1 = [
   [0,0,0,0,0,0],
   [0,0,0,0,0,0],
@@ -49,7 +58,7 @@ function getMaxOfArray(numArray) {
 function getMinOfArray(numArray) {
   return Math.min.apply(null, numArray);
 }
-$('polygon:eq(70)').each(function(){
+$('#walkablespace').each(function(){
   var points = [];
   var pointsX = [520,540,440,530];
   var pointsY = [340,360,350,320];

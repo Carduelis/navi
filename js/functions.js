@@ -33,7 +33,7 @@ function zoomIn() {
   $('.svg-holder svg').css('transform','scale('+zoom+')')
 }
 function zoomOut() {
-  zoom--;
+  zoom++;
   $('.svg-holder svg').css('transform','scale('+zoom+')')
 }
 var arr1 = [
@@ -58,7 +58,7 @@ function getMaxOfArray(numArray) {
 function getMinOfArray(numArray) {
   return Math.min.apply(null, numArray);
 }
-$('#walkablespace').each(function(){
+$('polygon:eq(70)').each(function(){
   var points = [];
   var pointsX = [520,540,440,530];
   var pointsY = [340,360,350,320];

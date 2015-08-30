@@ -30,11 +30,11 @@ function inPoly(x,y){
 var zoom = 1;
 function zoomIn() {
   zoom++;
-  $('.svg-holder svg').css('transform','scale('+zoom+')')
+  $('.svg-holder svg > g').css('transform','scale('+zoom+')')
 }
 function zoomOut() {
-  zoom++;
-  $('.svg-holder svg').css('transform','scale('+zoom+')')
+  zoom--;
+  $('.svg-holder svg > g').css('transform','scale('+zoom+')')
 }
 var arr1 = [
   [0,0,0,0,0,0],
@@ -153,7 +153,7 @@ $(document).ready(function(){
 // ----------------------------
 // Показать верхнее меню
 // ----------------------------
-
+/*
 $('header .btn a').bind('click',function() {
   var thisLink = $(this);
   var openBlockId = thisLink.parent().attr('id');
@@ -164,6 +164,7 @@ $('header .btn a').bind('click',function() {
   $('.hidden-block').not(openBlock).removeClass('opened')();
   $('header .btn a').not(thisLink).removeClass('active');
 });
+*/
 
 
 // ----------------------------

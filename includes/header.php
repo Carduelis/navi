@@ -44,8 +44,15 @@
     <li class='logo'>
       <a href="#top_page"><img src="http://goldfinch.pro/mirea1/css/logo_min.png"></a>
     </li>
-    <li class='logotext'>
+   <!-- <li class='logotext'>
       <a href="main.php"><span class="txt">Навигация</span></a>
+    </li>
+    -->
+    <li class="btn">
+      <a onclick="zoomIn()">+</a>
+    </li>
+    <li class="btn">
+      <a onclick="zoomOut()">-</a>
     </li>
     <li id='menu' class="btn">
       <a href='javascript:void()'></a>

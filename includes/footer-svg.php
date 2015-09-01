@@ -1,5 +1,8 @@
 </div><!--end root-->
-
+<aside class="map-controls">
+    <a class="btn-border plus" onclick="zoomIn()"></a>
+    <a class="btn-border minus" onclick="zoomOut()"></a>
+</aside>
 <footer>
 	<div class="tab-buttons">
 		<ul class="inline">
@@ -41,11 +44,12 @@
 <script src="js/functions.js" type="text/javascript"></script>
 
 <!--slider-->
+<!--
 <link rel="stylesheet" href="js/cs3/idangerous.chopslider-3.4.css"/>
 <script src="js/cs3/idangerous.chopslider-3.4.min.js"></script>
-<!--end slider-->
 <script src="js/bxslider/jquery.bxslider.min.js"></script>
-<!--<script src="js/jquery.fittext.js"></script>-->
+<script src="js/jquery.fittext.js"></script>
+-->
 
 
 

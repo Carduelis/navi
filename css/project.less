@@ -53,6 +53,20 @@
 header {
 	z-index: 9999999;
 }
+.btn-border {
+	.btn-border;
+}
+.btn-border() {
+	.unsel;
+	display: inline-block;
+	vertical-align: top;
+	padding: @pad/2 @pad*.6;
+	border-radius: @pad/2;
+	border: 1px solid;
+	&.active {
+		color: @color-back;
+	}
+}
 .ptsans {font-family: 'PT Sans', sans-serif;}
 .cuprum{font-family: 'Cuprum', sans-serif;}
 h1,h2,h3 {}
@@ -129,12 +143,14 @@ html.map {
 .svg-holder {
 	.overflow-x;
 	overflow-y: auto;
-	padding: @pad*8 @pad*4 @pad*4;
+	padding: @pad*8 0 @pad*4;
 	background-color: #585858;
 	svg {
 		width: 1020px;
+		width: 100%;
 		background-color: #585858;
 		height: 660px;
+		height: 100%;
 	}
 	code, pre {
 		position: absolute;
@@ -151,7 +167,30 @@ html.map {
 .hinter {
 	display: none;
 }
-body {.ptsans}
+.map-controls {
+	position: fixed;
+	left: 0;
+	z-index: 10;
+	top: 50%;
+	margin: @pad/2;
+	border-radius: @pad/2;
+	margin-top: -@pad*4;
+	background-color: fadeout(@peter_river,20%);
+	a {
+		display: block;
+		margin: @pad;
+		&.plus {
+			&::before {
+				.icon-plus;
+			}
+		}
+		&.minus {
+			&::before {
+				.icon-minus;
+			}
+		}
+	}	
+}
 header {
 	position: fixed;
 	max-width: 100%;
@@ -256,7 +295,6 @@ header {
 				}
 			}
 			&.btn {
-				display: none;
 				@media (min-width: @screen-tablet) {display: inline-block;}
 
 			}
@@ -484,6 +522,7 @@ ul.inline {
 svg > g {
 	-webkit-transform-origin: 50%;
 	transform-origin: 50%;
+	.transitions;
 }
 .tab-buttons {
 	height: @pad*6;
@@ -505,14 +544,7 @@ svg > g {
 		text-align: center;
 	}
 	.btn {
-		display: inline-block;
-		vertical-align: top;
-		padding: @pad/2 @pad*.6;
-		border-radius: @pad/2;
-		border: 1px solid;
-		&.active {
-			color: @color-back;
-		}
+		.btn-border();
 	}
 	select {
 		margin: 0;

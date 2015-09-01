@@ -81,9 +81,27 @@ $('polygon:eq(70)').each(function(){
       };
   };
 })
-
 $(document).ready(function(){
   // Обрезка пустых значений
+ $.getJSON( "js/data.json", function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+  alert(data);
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+}).done(function() {
+    console.log( "second success" );
+  })
+  .fail(function() {
+    console.log( "error" );
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
   coordinates.splice(0,xConstEnd);
   for (var i = coordinates.length - 1; i >= 0; i--) {
     coordinates[i].splice(0,yConstEnd);
@@ -107,7 +125,7 @@ $(document).ready(function(){
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
 
-  
+
   $('.tab-buttons select').on('change', function(){
     var container = $(this).parents('.tab-buttons');
     var dataCorpus = $(this).val();

@@ -17,8 +17,8 @@
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
-  <script type="text/javascript">less.watch();</script>
   <!--
+  <script type="text/javascript">less.watch();</script>
   -->
   
   <!--apple web app-->
@@ -44,18 +44,11 @@
     <li class='logo'>
       <a href="#top_page"><img src="http://goldfinch.pro/mirea1/css/logo_min.png"></a>
     </li>
-   <!-- <li class='logotext'>
-      <a href="main.php"><span class="txt">Навигация</span></a>
-    </li>
-    -->
-    <li class="btn">
-      <a onclick="zoomIn()">+</a>
-    </li>
-    <li class="btn">
-      <a onclick="zoomOut()">-</a>
+    <li class='logotext'>
+      <a href="/"><span class="txt">Навигация</span></a>
     </li>
     <li id='menu' class="btn">
-      <a href='javascript:void()'></a>
+      <a></a>
     </li>
   </ul>
 

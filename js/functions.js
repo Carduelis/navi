@@ -107,6 +107,7 @@ $(document).ready(function(){
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
 
+  
   $('.tab-buttons select').on('change', function(){
     var container = $(this).parents('.tab-buttons');
     var dataCorpus = $(this).val();
@@ -156,7 +157,7 @@ $(document).ready(function(){
 // ----------------------------
 // Показать верхнее меню
 // ----------------------------
-/*
+
 $('header .btn a').bind('click',function() {
   var thisLink = $(this);
   var openBlockId = thisLink.parent().attr('id');
@@ -167,7 +168,6 @@ $('header .btn a').bind('click',function() {
   $('.hidden-block').not(openBlock).removeClass('opened')();
   $('header .btn a').not(thisLink).removeClass('active');
 });
-*/
 
 
 // ----------------------------

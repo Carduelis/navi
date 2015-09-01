@@ -58,6 +58,7 @@ header {
 }
 .btn-border() {
 	.unsel;
+	cursor: pointer;
 	display: inline-block;
 	vertical-align: top;
 	padding: @pad/2 @pad*.6;
@@ -208,15 +209,16 @@ header {
 		margin: auto !important;
 		height: @header-height;
 		li {
-			display: none;
+			
 			a {
 				text-decoration: none;
 				text-align: center;
 				padding: @pad;
 				height: @header-height;
 				line-height: @header-height - @pad*2;
-				.cuprum;
+				//.cuprum;
 				.large;
+				.unsel;
 				box-shadow: none !important;
 				color: @clouds !important;
 				&.active {

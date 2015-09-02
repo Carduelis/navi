@@ -85,14 +85,38 @@ $(document).ready(function(){
   // Обрезка пустых значений
  $.getJSON( "js/data.json", function( data ) {
   var items = [];
-  $.each( data, function( key, val ) {
-    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  $.each( data, function( corpusKey, val ) {
+    $('body').append('<section class="json" data-corpus='+corpusKey+'>');
+    $.each( data[corpusKey], function( key2, val2 ) {
+      //console.log(key2 + ' - ' + val2);
+      var section = $('section.json[data-corpus="'+corpusKey+'"]');
+      section.append('<div class="'+key2+'-'+corpusKey+'">Корпус '+val2+'</div>');
+      var corpusVal = data[corpusKey].corpus;
+      $.each( data[corpusKey].levels, function( levelKey, val3 ) {
+        //console.log(levelKey + ' - ' + val3);
+        level = section.find('.levels-'+levelKey);
+        levelVal = data[corpusKey].levels[levelKey].level;
+        floorVal = data[corpusKey].levels[levelKey].floor;
+        $.each( data[corpusKey].levels[levelKey], function( key4, val4 ) {
+            level.append('<div class="'+key4+'">'+val4+'</div>');
+            $.each( data[corpusKey].levels[levelKey].rooms, function( key5, val5 ) {
+                var rooms = level.find('.rooms');
+                rooms.append('<div class="room" data-roomId="'+key5+'">');
+                $.each( data[corpusKey].levels[levelKey].rooms[key5], function( key6, val6 ) {
+                    var room = rooms.find('.room[data-roomid="'+key5+'"]');
+                    if (key6 == 'num') {
+                      room.append('<div class="'+key6+'">'+corpusVal+'-'+floorVal+val6+'</div>');
+                    } else  {
+                      room.append('<div class="'+key6+'">'+val6+'</div>');
+                    }
+                });
+            });
+        });
+      });
+    });
+    
   });
-  alert(data);
-  $( "<ul/>", {
-    "class": "my-new-list",
-    html: items.join( "" )
-  }).appendTo( "body" );
+  
 }).done(function() {
     console.log( "second success" );
   })

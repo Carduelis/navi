@@ -192,6 +192,48 @@ html.map {
 		}
 	}	
 }
+.popup {
+	position: fixed;
+	@size: 90%;
+	z-index: 99999;
+	width: @size;
+	left: (100 - @size)/2;
+	top: @header-height;
+	margin-top: @pad*4;
+	> a {
+		display: block;
+		width: @pad*4;
+		right: 0;
+		top: 0;
+		position: absolute;
+		height: @pad*4;
+		cursor: pointer;
+		line-height: @pad*4;
+		text-align: center;
+		color: @concrete;
+		&::before {
+			.icon-plus;
+			display: inline-block;
+			.rotate(45deg);
+			.transitions();
+			line-height: inherit;
+		}
+	}
+	.popup-content {
+		box-shadow: 0 0 0 @pad*1.5 rgba(255, 255, 255, 0.3), 0 0 @pad rgba(0,0,0,.9);
+		background-color: @clouds;
+		padding: @pad;
+
+	}
+}
+.room {
+	padding: @pad;
+	.num {
+		.xlarge;
+		margin: @pad 0;
+	}
+}
+@header-height: @pad*8;
 header {
 	position: fixed;
 	max-width: 100%;
@@ -204,7 +246,6 @@ header {
 		display: block;
 	}
 	ul.header {
-		@header-height: @pad*8;
 		max-width: @screen-desktop;
 		margin: auto !important;
 		height: @header-height;

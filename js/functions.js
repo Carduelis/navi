@@ -81,29 +81,74 @@ $('polygon:eq(70)').each(function(){
       };
   };
 })
+function destroyPopUp() {
+  $('.popup').remove();
+}
+function createPopUp(content) {
+  destroyPopUp();
+  $('body').append('<div class="popup"><a class="close" onclick="closePopUp($(this))"></a><div class="popup-content"></div></div></div>');
+  $('.popup-content').append(content);
+}
+function closePopUp(el) {
+  el.parent().remove();
+}
+function showRoom(name) {
+  var name = name.split("");
+  corpus = name[0];
+  floor = name[1].toString();
+  room = name[2]+name[3];
+  switch (corpus) {
+    case 'А':
+      corpus = 0
+      break
+    case 'Д':
+      corpus = 1
+      break
+    case 'Б':
+      corpus = 2
+      break
+    default:
+      console.error('Неверный корпус')
+  }
+  console.log(corpus + floor + room);
+  var content = $('section[data-corpus="'+corpus+'"]')
+        .find('.level[data-floor="'+floor+'"]')
+        .find('.room[data-roomid="'+room+'"]')
+        .clone();
+  createPopUp(content)
+}
 $(document).ready(function(){
   // Обрезка пустых значений
  $.getJSON( "js/data.json", function( data ) {
   var items = [];
   $.each( data, function( corpusKey, val ) {
+    var corpusVal = data[corpusKey].corpus;
     $('body').append('<section class="json" data-corpus='+corpusKey+'>');
     $.each( data[corpusKey], function( key2, val2 ) {
       //console.log(key2 + ' - ' + val2);
       var section = $('section.json[data-corpus="'+corpusKey+'"]');
-      section.append('<div class="'+key2+'-'+corpusKey+'">Корпус '+val2+'</div>');
+      if (key2 == 'corpus') {
+          section.append('<div class="'+key2+'">Корпус '+val2+'</div>');
+      } else {
+          section.append('<div class="'+key2+'" data-corpus="'+corpusKey+'">'+val2+'</div>');
+      }
       var corpusVal = data[corpusKey].corpus;
       $.each( data[corpusKey].levels, function( levelKey, val3 ) {
         //console.log(levelKey + ' - ' + val3);
-        level = section.find('.levels-'+levelKey);
-        levelVal = data[corpusKey].levels[levelKey].level;
-        floorVal = data[corpusKey].levels[levelKey].floor;
+        var levels = section.find('.levels[data-corpus="'+corpusKey+'"]');
+        var levelVal = data[corpusKey].levels[levelKey].level;
+        var floorVal = data[corpusKey].levels[levelKey].floor;
+        levels.append('<div class="level" data-level="'+levelVal+'" data-floor="'+floorVal+'">'+val3+'</div>');
+
         $.each( data[corpusKey].levels[levelKey], function( key4, val4 ) {
+            var level = levels.find('.level[data-level="'+levelVal+'"]');
             level.append('<div class="'+key4+'">'+val4+'</div>');
             $.each( data[corpusKey].levels[levelKey].rooms, function( key5, val5 ) {
                 var rooms = level.find('.rooms');
-                rooms.append('<div class="room" data-roomId="'+key5+'">');
+                var roomVal = data[corpusKey].levels[levelKey].rooms[key5].num;
+                rooms.append('<div class="room" data-roomId="'+roomVal+'">');
                 $.each( data[corpusKey].levels[levelKey].rooms[key5], function( key6, val6 ) {
-                    var room = rooms.find('.room[data-roomid="'+key5+'"]');
+                    var room = rooms.find('.room[data-roomid="'+roomVal+'"]');
                     if (key6 == 'num') {
                       room.append('<div class="'+key6+'">'+corpusVal+'-'+floorVal+val6+'</div>');
                     } else  {
@@ -112,6 +157,7 @@ $(document).ready(function(){
                 });
             });
         });
+        
       });
     });
     

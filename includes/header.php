@@ -6,7 +6,10 @@
   
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=none, max-scale=1.0" />
+  -->
   <meta name="format-detection" content="telephone=yes" />
   <!--
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>

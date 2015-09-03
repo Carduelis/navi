@@ -25,15 +25,33 @@ function inPoly(x,y){
     return '_';
   }
 }
-
+function onPinch(e) {
+    if (e.scale > 1)
+    {
+       alert('in')
+   } else if (e.scale < 1) {
+       alert('out')
+     }
+}
+ $("svg").on("gestureend", onPinch);
+svgWidth = $('.tab-view:eq(1)').find('svg').width();
+svgHeight = $('.tab-view:eq(1)').find('svg').height();
 var zoom = 1;
 function zoomIn() {
   zoom++;
-  $('.svg-holder svg > g').css('transform','scale('+zoom+')')
+  scale = 1 + zoom*0.15;
+  $('.svg-holder svg > g').css('transform','scale('+scale+')');
+
+  $('svg').css('width', svgWidth*scale)
+  $('svg').css('height', svgHeight*scale)
 }
 function zoomOut() {
   zoom--;
-  $('.svg-holder svg > g').css('transform','scale('+zoom+')')
+  scale = 1 + zoom*0.15;
+  $('.svg-holder svg > g').css('transform','scale('+scale+')');
+
+  $('svg').css('width', svgWidth*scale)
+  $('svg').css('height', svgHeight*scale)
 }
 
   xConstStart = 670;

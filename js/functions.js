@@ -118,7 +118,6 @@ function showRoom(name) {
   createPopUp(content)
 }
 $(document).ready(function(){
-  // Обрезка пустых значений
  $.getJSON( "js/data.json", function( data ) {
   var items = [];
   $.each( data, function( corpusKey, val ) {
@@ -130,42 +129,62 @@ $(document).ready(function(){
       if (key2 == 'corpus') {
           section.append('<div class="'+key2+'">Корпус '+val2+'</div>');
       } else {
-          section.append('<div class="'+key2+'" data-corpus="'+corpusKey+'">'+val2+'</div>');
+        $('<ul/>', {
+          "class": key2,
+          "data-corpus": corpusKey,
+          html: val2
+        }).appendTo(section)
+        //section.append('<ul class="'+key2+'" data-corpus="'+corpusKey+'">'+val2+'</ul>');
       }
       var corpusVal = data[corpusKey].corpus;
-      $.each( data[corpusKey].levels, function( levelKey, val3 ) {
+      $.each( this, function( levelKey, val3 ) {
         //console.log(levelKey + ' - ' + val3);
         var levels = section.find('.levels[data-corpus="'+corpusKey+'"]');
         var levelVal = data[corpusKey].levels[levelKey].level;
         var floorVal = data[corpusKey].levels[levelKey].floor;
-        levels.append('<div class="level" data-level="'+levelVal+'" data-floor="'+floorVal+'">'+val3+'</div>');
+        $('<li/>', {
+          "class": "level",
+          "data-level": levelVal,
+          "data-floor": floorVal,
+          html: val3
+        }).appendTo(levels)
 
-        $.each( data[corpusKey].levels[levelKey], function( key4, val4 ) {
+        $.each( this, function( key4, val4 ) {
             var level = levels.find('.level[data-level="'+levelVal+'"]');
-            level.append('<div class="'+key4+'">'+val4+'</div>');
-            $.each( data[corpusKey].levels[levelKey].rooms, function( key5, val5 ) {
+            if (key4 != 'rooms') {
+                level.append('<div class="'+key4+'">'+val4+'</div>');
+            } else {
+                level.append('<ul class="'+key4+'">'+val4+'</div>');
+            }
+            $.each( this, function( roomKey, val5 ) {
                 var rooms = level.find('.rooms');
-                var roomVal = data[corpusKey].levels[levelKey].rooms[key5].num;
-                var roomName = corpusVal+'-'+floorVal+roomVal
-                rooms.append('<div class="room" data-roomId="'+roomVal+'">');
-                $.each( data[corpusKey].levels[levelKey].rooms[key5], function( key6, val6 ) {
+                var roomVal = data[corpusKey].levels[levelKey].rooms[roomKey].num;
+                var roomName = corpusVal+'-'+floorVal+roomVal;
+                rooms.append('<li class="room" data-roomId="'+roomVal+'">');
+
+                $.each( this, function( key6, val6 ) {
                     var room = rooms.find('.room[data-roomid="'+roomVal+'"]');
                     if (key6 == 'num') {
-                      room.append('<div class="'+key6+'">'+roomName+'</div>');
+                      $('<div/>', {
+                          "class": key6,
+                          html: roomName
+                      }).appendTo(room);
+                      //room.append('<div class="'+key6+'">'+roomName+'</div>');
                     } else if (key6 == 'subrooms') {
                       room.append('<ul class="subrooms">')
-                      $.each( data[corpusKey].levels[levelKey].rooms[key5].subrooms, function( key7, val7 ) {
+                      $.each( this, function( key7, val7 ) {
                           //room.children('.subrooms').append('<div class="subroom-'+key7+'">'+val7+'</div>');
                           var subroom = [];
-                          $.each( data[corpusKey].levels[levelKey].rooms[key5].subrooms[key7], function(key8, val8) {
+                          $.each( this, function(key8, val8) {
                               if (key8 == 'postfix') {
-                                subroom.push('<div class="'+key8+'">'+roomName+'<sup>'+val8+'</sup></div>')
+                                subroom.push('<div class="num">'+roomName+'<sup>'+val8+'</sup></div>')
                               } else {
                                 subroom.push('<div class="'+key8+'">'+val8+'</div>')
                               }
                           });
                           $('<li/>', {
                             "class": "subroom",
+                            "data-subroomid": key7,
                             html: subroom.join('')
                           }).appendTo(room.children('.subrooms'))
                       });

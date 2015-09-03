@@ -226,11 +226,46 @@ html.map {
 
 	}
 }
+section.json {
+	display: none;
+}
+
 .room {
+	.nolist;
 	padding: @pad;
 	.num {
-		.xlarge;
+		font-size: 140%;
 		margin: @pad 0;
+	}
+}
+.subrooms {
+	font-size: 80%;
+	li {
+		margin: @pad 0;
+		padding: @pad 0 0;
+		border-top: 1px solid @silver;
+	}
+}
+.subroom {
+	> div {
+		margin: @pad 0;
+		&::before {
+
+			position: absolute;
+			left: 0;
+			color: @concrete;
+		}
+	}
+	.title {
+		&::before {
+		}
+	}
+	.owner {
+		padding-left: @pad*2.5;
+		position: relative;
+		&::before {
+			.icon-user;
+		}
 	}
 }
 @header-height: @pad*8;

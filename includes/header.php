@@ -8,27 +8,35 @@
   <meta name="MobileOptimized" content="320" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="format-detection" content="telephone=yes" />
-<meta name="theme-color" content="#2980B9">
+  <!--
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
  <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
+  -->
   <!--это для скопмилированного css
   <link rel="stylesheet" href="css/style.css">
   -->
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
-  <script type="text/javascript">less.watch();</script>
   <!--
+  <script type="text/javascript">less.watch();</script>
   -->
   
   <!--apple web app-->
-  <meta name="apple-mobile-web-app-title" content="Курсовая работа">
-  
-  <link rel="apple-touch-icon-precomposed" href="img/apple/144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/apple/144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple/144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple/144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple/144.png" />
+  <meta name="apple-mobile-web-app-title" content="Навигация">
+<link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">
+<link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="favicons/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="favicons/manifest.json">
+<link rel="shortcut icon" href="favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#2980B9">
+<meta name="msapplication-config" content="/favicons/browserconfig.xml">
+<meta name="theme-color" content="#2980B9">
   
   <!--для live refresh-->
   <!--использовать только при локальной разработке

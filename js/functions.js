@@ -146,12 +146,30 @@ $(document).ready(function(){
             $.each( data[corpusKey].levels[levelKey].rooms, function( key5, val5 ) {
                 var rooms = level.find('.rooms');
                 var roomVal = data[corpusKey].levels[levelKey].rooms[key5].num;
+                var roomName = corpusVal+'-'+floorVal+roomVal
                 rooms.append('<div class="room" data-roomId="'+roomVal+'">');
                 $.each( data[corpusKey].levels[levelKey].rooms[key5], function( key6, val6 ) {
                     var room = rooms.find('.room[data-roomid="'+roomVal+'"]');
                     if (key6 == 'num') {
-                      room.append('<div class="'+key6+'">'+corpusVal+'-'+floorVal+val6+'</div>');
-                    } else  {
+                      room.append('<div class="'+key6+'">'+roomName+'</div>');
+                    } else if (key6 == 'subrooms') {
+                      room.append('<ul class="subrooms">')
+                      $.each( data[corpusKey].levels[levelKey].rooms[key5].subrooms, function( key7, val7 ) {
+                          //room.children('.subrooms').append('<div class="subroom-'+key7+'">'+val7+'</div>');
+                          var subroom = [];
+                          $.each( data[corpusKey].levels[levelKey].rooms[key5].subrooms[key7], function(key8, val8) {
+                              if (key8 == 'postfix') {
+                                subroom.push('<div class="'+key8+'">'+roomName+'<sup>'+val8+'</sup></div>')
+                              } else {
+                                subroom.push('<div class="'+key8+'">'+val8+'</div>')
+                              }
+                          });
+                          $('<li/>', {
+                            "class": "subroom",
+                            html: subroom.join('')
+                          }).appendTo(room.children('.subrooms'))
+                      });
+                    } else {
                       room.append('<div class="'+key6+'">'+val6+'</div>');
                     }
                 });

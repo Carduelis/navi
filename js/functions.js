@@ -33,6 +33,13 @@ function onPinch(e) {
        alert('out')
      }
 }
+$('#roomBLock .btn').on('click', function(){
+  var p = $(this).parents('#roomBLock');
+  corpus = p.find('select').val();
+  number = p.find('input[type="number"]').val();
+  console.log(corpus + number)
+  showRoom(corpus+number)
+})
  $("svg").on("gestureend", onPinch);
 svgWidth = $('.tab-view:eq(1)').find('svg').width();
 svgHeight = $('.tab-view:eq(1)').find('svg').height();
@@ -290,6 +297,7 @@ $(document).ready(function(){
   $('path').click(function () {
     if ($(this).attr("class") == 'land') {
       $(this).attr("class", "land active");
+      showRoom('А101');
     } else if ($(this).attr("class") == 'land active') {
       $(this).attr("class", "land");
     }

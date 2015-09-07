@@ -5,11 +5,11 @@
 		<div class="tab-view" data-corpus="a" data-level="0" data-floor="1">
         	<?php include("img/world.svg"); ?>
 		</div>
-		<div class="tab-view" data-corpus="a" style="display:block;" data-level="1" data-floor="2">
-        	<?php include("img/world.svg"); ?>
+		<div class="tab-view" data-corpus="a" data-level="1" data-floor="2" id="a12">
+			<?php include("img/A-left.svg"); ?>
 		</div>
 		<div class="tab-view" data-corpus="a" data-level="2" data-floor="3">
-			<span><?php include("img/A34.svg"); ?></span>
+			<span><?php include("img/A-left.svg"); ?></span>
 		</div>
 		<div class="tab-view" data-corpus="a" data-level="3" data-floor="4">
 			<span><?php include("img/A34.svg"); ?></span>

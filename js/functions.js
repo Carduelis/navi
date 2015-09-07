@@ -6,6 +6,19 @@ var xp = new Array(-73,-33,7,-33); // Массив X-координат поли
 var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
 
 
+var currentLevel = 1;
+var currentCorpus = 'a';
+function mapView(corpus, level) {
+  return $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="'+currentLevel+'"]')
+}
+var currentSVG = mapView(currentCorpus, currentLevel).find('svg');
+svgWidth = currentSVG.width();
+svgHeight = currentSVG.height();
+mapView(currentCorpus, currentLevel).show().scrollLeft(currentSVG.width()/2);
+$('.tab-buttons [data-corpus="'+currentCorpus+'"]').show();
+$('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
+$('#corpus-selector').val(currentCorpus)
+
 function inPoly(x,y){
   npol = xp.length;
   j = npol - 1;
@@ -33,32 +46,130 @@ function onPinch(e) {
        alert('out')
      }
 }
-$('#roomBLock .btn').on('click', function(){
-  var p = $(this).parents('#roomBLock');
-  corpus = p.find('select').val();
-  number = p.find('input[type="number"]').val();
-  console.log(corpus + number)
-  showRoom(corpus+number)
-})
- $("svg").on("gestureend", onPinch);
-svgWidth = $('.tab-view:eq(1)').find('svg').width();
-svgHeight = $('.tab-view:eq(1)').find('svg').height();
+
+/*
+  var elm = document.getElementById('gf-root');
+  var svg = document.getElementById('svg14643');
+
+  elm = document.getElementById('svg14643');
+  function hammerIt(elm) {
+  hammertime = new Hammer(elm, {});
+  hammertime.get('pinch').set({
+      enable: true
+  });
+  var posX = 0,
+      posY = 0,
+      scale = 1,
+      last_scale = 1,
+      last_posX = 0,
+      last_posY = 0,
+      max_pos_x = 0,
+      max_pos_y = 0,
+      transform = "",
+      el = elm;
+
+  hammertime.on('doubletap pan pinch panend pinchend', function(ev) {
+      if (ev.type == "doubletap") {
+          transform =
+              "translate3d(0, 0, 0) " +
+              "scale3d(2, 2, 1) ";
+          scale = 2;
+          last_scale = 2;
+          try {
+              if (window.getComputedStyle(el, null).getPropertyValue('-webkit-transform').toString() != "matrix(1, 0, 0, 1, 0, 0)") {
+                  transform =
+                      "translate3d(0, 0, 0) " +
+                      "scale3d(1, 1, 1) ";
+                  scale = 1;
+                  last_scale = 1;
+              }
+          } catch (err) {}
+          el.style.webkitTransform = transform;
+          transform = "";
+      }
+
+      //pan    
+      if (scale != 1) {
+          posX = last_posX + ev.deltaX;
+          posY = last_posY + ev.deltaY;
+          max_pos_x = Math.ceil((scale - 1) * el.clientWidth / 2);
+          max_pos_y = Math.ceil((scale - 1) * el.clientHeight / 2);
+          if (posX > max_pos_x) {
+              posX = max_pos_x;
+          }
+          if (posX < -max_pos_x) {
+              posX = -max_pos_x;
+          }
+          if (posY > max_pos_y) {
+              posY = max_pos_y;
+          }
+          if (posY < -max_pos_y) {
+              posY = -max_pos_y;
+          }
+      }
+
+
+      //pinch
+      if (ev.type == "pinch") {
+          scale = Math.max(.999, Math.min(last_scale * (ev.scale), 4));
+      }
+      if(ev.type == "pinchend"){last_scale = scale;}
+
+      //panend
+      if(ev.type == "panend"){
+      last_posX = posX < max_pos_x ? posX : max_pos_x;
+      last_posY = posY < max_pos_y ? posY : max_pos_y;
+      }
+
+      if (scale != 1) {
+          transform =
+              "translate3d(" + posX + "px," + posY + "px, 0) " +
+              "scale3d(" + scale + ", " + scale + ", 1)";
+      }
+
+      if (transform) {
+          el.style.webkitTransform = transform;
+      }
+  });
+  }
+  hammerIt(elm)
+  $('#roomBLock .btn').on('click', function(){
+    var p = $(this).parents('#roomBLock');
+    corpus = p.find('select').val();
+    number = p.find('input[type="number"]').val();
+    console.log(corpus + number)
+    showRoom(corpus+number)
+  })
+   $("svg").on("gestureend", onPinch);
+ */
+
 var zoom = 1;
+
 function zoomIn() {
   zoom++;
-  scale = 1 + zoom*0.15;
-  $('.svg-holder svg > g').css('transform','scale('+scale+')');
+  scale = 1 + zoom*0.05;
+  currentSVG 
+        .children('g')
+        .css('transform','scale('+scale+')');
 
-  $('svg').css('width', svgWidth*scale)
-  $('svg').css('height', svgHeight*scale)
+  currentSVG
+        .css({  
+          'width': svgWidth*scale,
+          'height': svgHeight*scale,
+        });
 }
 function zoomOut() {
   zoom--;
-  scale = 1 + zoom*0.15;
-  $('.svg-holder svg > g').css('transform','scale('+scale+')');
+  scale = 1 + zoom*0.05;
+  currentSVG 
+        .children('g')
+        .css('transform','scale('+scale+')');
 
-  $('svg').css('width', svgWidth*scale)
-  $('svg').css('height', svgHeight*scale)
+  currentSVG
+        .css({  
+          'width': svgWidth*scale,
+          'height': svgHeight*scale,
+        });
 }
 
   xConstStart = 670;
@@ -74,12 +185,12 @@ function getMaxOfArray(numArray) {
 function getMinOfArray(numArray) {
   return Math.min.apply(null, numArray);
 }
+/*
 $('polygon:eq(70)').each(function(){
   var points = [];
   var pointsX = [520,540,440,530];
   var pointsY = [340,360,350,320];
-  /*
-  */
+
   points = $(this).attr('points').split(' ');
  
   for (var i = points.length - 1; i >= 0; i--) {
@@ -106,6 +217,7 @@ $('polygon:eq(70)').each(function(){
       };
   };
 })
+*/
 function destroyPopUp() {
   $('.popup').remove();
 }
@@ -260,23 +372,23 @@ $(document).ready(function(){
 
   $('.tab-buttons select').on('change', function(){
     var container = $(this).parents('.tab-buttons');
-    var dataCorpus = $(this).val();
-    console.log(dataCorpus);
+    var currentCorpus = $(this).val();
+    //console.log(currentCorpus);
     container.find('div[data-corpus]').hide();
-    container.find('div[data-corpus="'+dataCorpus+'"]').show();
+    container.find('div[data-corpus="'+currentCorpus+'"]').show();
     $('.tab-view').hide();
-    $('.tab-view[data-corpus="'+dataCorpus+'"][data-level="1"]').show();
+    $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="1"]').show();
     container.find('a.btn').removeClass('active');
     container.find('a.btn[data-level="1"]').addClass('active');
   });
   $('.tab-buttons a.btn').on('click', function(){
-    var dataCorpusLevel = $(this).attr('data-level');
+    var currentLevel = $(this).attr('data-level');
     var container = $(this).parents('.tab-buttons');
-    var dataCorpus = container.find('select').val();
+    var currentCorpus = container.find('select').val();
     container.find('a.btn').removeClass('active');
     $(this).addClass('active');
     $('.tab-view').hide();
-    $('.tab-view[data-corpus="'+dataCorpus+'"][data-level="'+dataCorpusLevel+'"]').show();
+    $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="'+currentLevel+'"]').show();
   })
   $('#openTheForm').bind('click',function() {
     $('#form').slideDown();

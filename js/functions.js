@@ -12,6 +12,17 @@ function mapView(corpus, level) {
   return $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="'+currentLevel+'"]')
 }
 var currentSVG = mapView(currentCorpus, currentLevel).find('svg');
+currentSVG.setSize = function(width, height, scale) {
+  xShift = (width - width*scale)/2;
+  yShift = (height - height*scale)/2;
+  width = width*scale;
+  height = height*scale;
+  this.attr('width', width)
+    .attr('height', height)
+    .get(0).setAttribute('viewBox',  xShift+' '+yShift+' '+width+' '+height);
+  this.children('g').css('transform-origin','50%')
+
+};
 svgWidth = currentSVG.width();
 svgHeight = currentSVG.height();
 mapView(currentCorpus, currentLevel).show().scrollLeft(currentSVG.width()/2);
@@ -143,33 +154,32 @@ function onPinch(e) {
    $("svg").on("gestureend", onPinch);
  */
 
-var zoom = 1;
 
+var zoom = 1;
+var scalefactor = 0.05;
 function zoomIn() {
   zoom++;
-  scale = 1 + zoom*0.05;
+  scale = 1 + zoom*scalefactor;
   currentSVG 
         .children('g')
         .css('transform','scale('+scale+')');
 
-  currentSVG
+  currentSVG.setSize(svgWidth,svgHeight, scale)
+  /*
         .css({  
-          'width': svgWidth*scale,
-          'height': svgHeight*scale,
+          'width': svgWidth*scalePX,
+          'height': svgHeight*scalePX,
         });
+*/
 }
 function zoomOut() {
   zoom--;
-  scale = 1 + zoom*0.05;
+  scale = 1 + zoom*scalefactor;
   currentSVG 
         .children('g')
         .css('transform','scale('+scale+')');
 
-  currentSVG
-        .css({  
-          'width': svgWidth*scale,
-          'height': svgHeight*scale,
-        });
+  currentSVG.setSize(svgWidth,svgHeight, scale)
 }
 
   xConstStart = 670;

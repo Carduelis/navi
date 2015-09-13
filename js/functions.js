@@ -144,6 +144,7 @@ function onPinch(e) {
   });
   }
   hammerIt(elm)
+ */
   $('#roomBLock .btn').on('click', function(){
     var p = $(this).parents('#roomBLock');
     corpus = p.find('select').val();
@@ -152,7 +153,6 @@ function onPinch(e) {
     showRoom(corpus+number)
   })
    $("svg").on("gestureend", onPinch);
- */
 
 
 var zoom = 1;
@@ -195,6 +195,36 @@ function getMaxOfArray(numArray) {
 function getMinOfArray(numArray) {
   return Math.min.apply(null, numArray);
 }
+
+$('rect').each(function(){
+  id = $(this).attr('id');
+  text = id;
+  width = $(this).attr('width');
+  height = $(this).attr('height');
+  x = $(this).attr('x');
+  y = $(this).attr('y');
+
+  gid = 'group' + id ;
+  //$(this).wrap('<g id="'+gid+'">')
+  $svg_g = $(document.createElementNS('http://www.w3.org/2000/svg', 'g')).attr({
+    id:  gid,
+    fill: 'red',
+    width: width*0.5,
+    height: height*0.5,
+    x: x,
+    y: y
+  })
+  $svg_text = $(document.createElementNS('http://www.w3.org/2000/svg', 'text')).attr({
+    fill: 'red',
+    x: x - -5,
+    y: y - -20,
+    width: width*0.5,
+    height: height*0.5,
+
+  }).text(id)
+  $(this).wrap($svg_g)
+  $(this).parent($svg_g).append($svg_text)
+})
 /*
 $('polygon:eq(70)').each(function(){
   var points = [];
@@ -251,18 +281,20 @@ function showRoom(name) {
     case 'Д':
       corpus = 1
       break
-    case 'Б':
-      corpus = 2
-      break
     default:
-      console.error('Неверный корпус')
+      corpus = null
+      alert('Доступны корпуса А и Д');
   }
   console.log(corpus + floor + room);
   var content = $('section[data-corpus="'+corpus+'"]')
         .find('.level[data-floor="'+floor+'"]')
         .find('.room[data-roomid="'+room+'"]')
         .clone();
-  createPopUp(content)
+        if (content.get(0)) {
+          createPopUp(content)
+        } else {
+          createPopUp('Данная аудитория пока не доступна')
+        }
 }
 $(document).ready(function(){
  $.getJSON( "js/data.json", function( data ) {

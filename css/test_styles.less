@@ -124,3 +124,77 @@ svg g {
     font-weight: bold;
   }
 }
+
+.promo-text h1 {
+  margin-top: 120px;
+  margin-bottom: 30px;
+  .light;
+  font-size: 180% !important;
+}
+
+#routesBlock {
+  padding: 0;
+  a {
+    display: block;
+    padding: @pad*2;
+    border-bottom: 1px solid @silver;
+    &::after {
+      .icon-angle-right;
+      float: right;
+    }
+  }
+  li {
+    a {
+      &::before {
+        
+        margin-right: @pad*2;
+      }
+    }
+  }
+  li:nth-of-type(1) a::before {.icon-file;}
+  li:nth-of-type(2) a::before {.icon-pencil;}
+  li:nth-of-type(3) a::before {}
+  li:nth-of-type(4) a::before {}
+  li:nth-of-type(4) a::before {}
+  li:last-child a {
+    border-bottom: none;
+  }
+}
+#loading {
+  height: 700px;
+  //margin-top: 150px;
+  .logo {
+    @size: 120px;
+    margin: auto;
+    width: @size;
+    height: @size;
+    background-image: url('../img/logo.png');
+    background-size: contain;
+  }
+  .progress {
+    border-radius: 3px;
+    border: @peter_river 1px solid;
+    width: 220px;
+    margin: 40px auto;
+    position: relative;
+    &::before {
+      content: '77%';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      right: 0;
+      top: 0;
+      height: @pad*2;
+      line-height: @pad*2;
+      text-align: center;
+      font-size: 10px;
+      color: @clouds;
+    }
+    > div {
+      border: 1px solid @clouds;
+      border-radius: 3px 0 0 3px;
+      background: @peter_river;
+      height: @pad*2;
+    }
+  }
+}

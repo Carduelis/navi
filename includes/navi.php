@@ -50,9 +50,19 @@
     </a>
     
 <li>
-    <a class="button" id="routes"><span class="name">Особые маршруты</span>
-        <span class="description">Например, "Маршрут обходного листа" или "Оформление на работу"</span>
+    <a class="button toggler" id="routes"><span class="name">День открытых дверей</span>
+        <span class="description">Найти институт, кафедру, подать документы</span>
     </a>
+    <div class="toggleBlock" id="routesBlock">
+        <ul>
+            <li><a href="">Подать документы</a>
+            <li><a href="">Заполнить анкету</a>
+            <li><a href="">Институт ИТ</a>
+            <li><a href="">Институт Кибернетики</a>
+            <li><a href="">Институт РТС</a>
+            <li><a href="">Институт Экономики и Управления</a>
+        </ul>
+    </div>
     
 <li>
     <a class="button" id="map" href="map.php"><span class="name">Перейти к карте</span>

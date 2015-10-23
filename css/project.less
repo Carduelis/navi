@@ -104,6 +104,15 @@ path.active {
 	fill: @pomegranate;
 	stroke: @color-txt;
 }
+#debug {
+	position: absolute;
+	z-index: 9999999999999999;
+	background-color: rgba(0,0,0,.6);
+	top: 0;
+	left: 0;
+	color: #fff;
+	font-size: 6px;
+}
 html.map {
 	height: 100%;
 	position: absolute;
@@ -126,8 +135,8 @@ html.map {
 			height: 100%;
 			width: 100%;
 			div {
-				height: 100%;
 				width: 100%;
+				height: 100%;
 			}
 		}
 	}
@@ -145,6 +154,9 @@ html.map {
 .parent {
 	background-color: red;
 	-webkit-overflow-scrolling: touch;
+}
+polyline {
+	fill: transparent;
 }
 .svg-holder {
 	background-color: #585858;
@@ -169,7 +181,7 @@ html.map {
 		bottom: @pad*4;
 		left: 0;
 		overflow-y: auto;
-		font-size: 10px;
+		font-size: 9px;
 		background-color: rgba(255, 255, 255, 1);
 	}
 }
@@ -533,6 +545,12 @@ form {
 				position: relative;
 				z-index: 2;
 				padding-left: @pad*5;
+
+				-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	transition: none;
 				&::before {
 					margin-right: @pad;
 					position: absolute;
@@ -608,8 +626,12 @@ ul.inline {
 svg > g {
 	//-webkit-transform-origin: 50%;
 	//transform-origin: 50%;
-	.transitions();
+	//.transitions();
 }
+g#gholder {
+	.transitions(transform, 3s);
+	transform-origin: 1598px 523px;
+} 
 .tab-buttons {
 	height: @pad*6;
 	line-height: @pad*6;

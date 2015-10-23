@@ -42,7 +42,7 @@
      fit-margin-right="50" /><metadata
      id="metadata14649"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><polygon points="50,50 100,100, 150,150, 200,200" fill="#ff0000"></polygon><defs
      id="defs14647"><clipPath
        id="clipPath14659"
        clipPathUnits="userSpaceOnUse"><path

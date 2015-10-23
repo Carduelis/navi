@@ -1,18 +1,36 @@
 //fitText if needed
 //jQuery(".phones b").fitText();
+var xp = []
+var yp = []
+
+/*
 var x = -40;
 var y = -60; 
 var xp = new Array(-73,-33,7,-33); // Массив X-координат полигона
 var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
 
 
+*/
 var currentLevel = 1;
 var currentCorpus = 'a';
 function mapView(corpus, level) {
   return $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="'+currentLevel+'"]')
 }
 var currentSVG = mapView(currentCorpus, currentLevel).find('svg');
+
 currentSVG.setSize = function(width, height, scale) {
+  deviceWidth = $(window).width();
+  deviceHeight = $(window).height();
+
+  scrolledLeft = this.offset().left;
+  scrolledTop = this.offset().top;
+
+  console.log(scrolledLeft)
+
+  originLeft = (deviceWidth + 2779.46)/2 - scrolledLeft;
+  originTop = (deviceHeight + 454.613)/2 - scrolledTop;
+// после скролла надо сохранять предыдущий trnasfrom-origin
+
   xShift = (width - width*scale)/2;
   yShift = (height - height*scale)/2;
   width = width*scale;
@@ -20,9 +38,11 @@ currentSVG.setSize = function(width, height, scale) {
   this.attr('width', width)
     .attr('height', height)
     .get(0).setAttribute('viewBox',  xShift+' '+yShift+' '+width+' '+height);
-  this.children('g').css('transform-origin','50%')
-
+   this.children('g').css('transform-origin', originLeft+'px '+originTop+'px ' );
 };
+
+
+
 svgWidth = currentSVG.width();
 svgHeight = currentSVG.height();
 mapView(currentCorpus, currentLevel).show().scrollLeft(currentSVG.width()/2);
@@ -30,25 +50,6 @@ $('.tab-buttons [data-corpus="'+currentCorpus+'"]').show();
 $('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
 $('#corpus-selector').val(currentCorpus)
 
-function inPoly(x,y){
-  npol = xp.length;
-  j = npol - 1;
-  var c = 0;
-  for (i = 0; i < npol;i++){
-      if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-      (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i])) {
-       c = !c
-       }
-       j = i;
-  }
-  if (c === true) {
-    return '*';
-  } else if (c === false) {
-    return '_';
-  } else {
-    return '_';
-  }
-}
 function onPinch(e) {
     if (e.scale > 1)
     {
@@ -56,144 +57,6 @@ function onPinch(e) {
    } else if (e.scale < 1) {
        alert('out')
      }
-}
-
-/*
-  var elm = document.getElementById('gf-root');
-  var svg = document.getElementById('svg14643');
-
-  elm = document.getElementById('svg14643');
-  function hammerIt(elm) {
-  hammertime = new Hammer(elm, {});
-  hammertime.get('pinch').set({
-      enable: true
-  });
-  var posX = 0,
-      posY = 0,
-      scale = 1,
-      last_scale = 1,
-      last_posX = 0,
-      last_posY = 0,
-      max_pos_x = 0,
-      max_pos_y = 0,
-      transform = "",
-      el = elm;
-
-  hammertime.on('doubletap pan pinch panend pinchend', function(ev) {
-      if (ev.type == "doubletap") {
-          transform =
-              "translate3d(0, 0, 0) " +
-              "scale3d(2, 2, 1) ";
-          scale = 2;
-          last_scale = 2;
-          try {
-              if (window.getComputedStyle(el, null).getPropertyValue('-webkit-transform').toString() != "matrix(1, 0, 0, 1, 0, 0)") {
-                  transform =
-                      "translate3d(0, 0, 0) " +
-                      "scale3d(1, 1, 1) ";
-                  scale = 1;
-                  last_scale = 1;
-              }
-          } catch (err) {}
-          el.style.webkitTransform = transform;
-          transform = "";
-      }
-
-      //pan    
-      if (scale != 1) {
-          posX = last_posX + ev.deltaX;
-          posY = last_posY + ev.deltaY;
-          max_pos_x = Math.ceil((scale - 1) * el.clientWidth / 2);
-          max_pos_y = Math.ceil((scale - 1) * el.clientHeight / 2);
-          if (posX > max_pos_x) {
-              posX = max_pos_x;
-          }
-          if (posX < -max_pos_x) {
-              posX = -max_pos_x;
-          }
-          if (posY > max_pos_y) {
-              posY = max_pos_y;
-          }
-          if (posY < -max_pos_y) {
-              posY = -max_pos_y;
-          }
-      }
-
-
-      //pinch
-      if (ev.type == "pinch") {
-          scale = Math.max(.999, Math.min(last_scale * (ev.scale), 4));
-      }
-      if(ev.type == "pinchend"){last_scale = scale;}
-
-      //panend
-      if(ev.type == "panend"){
-      last_posX = posX < max_pos_x ? posX : max_pos_x;
-      last_posY = posY < max_pos_y ? posY : max_pos_y;
-      }
-
-      if (scale != 1) {
-          transform =
-              "translate3d(" + posX + "px," + posY + "px, 0) " +
-              "scale3d(" + scale + ", " + scale + ", 1)";
-      }
-
-      if (transform) {
-          el.style.webkitTransform = transform;
-      }
-  });
-  }
-  hammerIt(elm)
- */
-  $('#roomBLock .btn').on('click', function(){
-    var p = $(this).parents('#roomBLock');
-    corpus = p.find('select').val();
-    number = p.find('input[type="number"]').val();
-    console.log(corpus + number)
-    showRoom(corpus+number)
-  })
-   $("svg").on("gestureend", onPinch);
-
-
-var zoom = 1;
-var scalefactor = 0.05;
-function zoomIn() {
-  zoom++;
-  scale = 1 + zoom*scalefactor;
-  currentSVG 
-        .children('g')
-        .css('transform','scale('+scale+')');
-
-  currentSVG.setSize(svgWidth,svgHeight, scale)
-  /*
-        .css({  
-          'width': svgWidth*scalePX,
-          'height': svgHeight*scalePX,
-        });
-*/
-}
-function zoomOut() {
-  zoom--;
-  scale = 1 + zoom*scalefactor;
-  currentSVG 
-        .children('g')
-        .css('transform','scale('+scale+')');
-
-  currentSVG.setSize(svgWidth,svgHeight, scale)
-}
-
-  xConstStart = 670;
-  xConstEnd = 420;
-  yConstStart = 350;
-  yConstEnd = 320;
-
-var coordinates = [[]];
-
-function getMaxOfArray(numArray) {
-  return Math.max.apply(null, numArray);
-}
-function getMinOfArray(numArray) {
-  return Math.min.apply(null, numArray);
 }
 
 $('rect').each(function(){
@@ -225,6 +88,13 @@ $('rect').each(function(){
   $(this).wrap($svg_g)
   $(this).parent($svg_g).append($svg_text)
 })
+
+//var matrix = coordinates;
+//console.log(matrix);
+// var grid = new PF.Grid(matrix);
+// var finder = new PF.BiAStarFinder();
+//var path = finder.findPath(55, 55, 180, 180, grid);
+
 /*
 $('polygon:eq(70)').each(function(){
   var points = [];
@@ -238,26 +108,60 @@ $('polygon:eq(70)').each(function(){
     pointsX[i] = points[i][0]
     pointsY[i] = points[i][1]
   };
-  xConstStart = getMaxOfArray(pointsX);
-  xConstEnd = getMinOfArray(pointsX);
-  yConstStart = getMaxOfArray(pointsY);
-  yConstEnd = getMinOfArray(pointsY);
+  xMin = getMaxOfArray(pointsX);
+  xMax = getMinOfArray(pointsX);
+  yMin = getMaxOfArray(pointsY);
+  yMax = getMinOfArray(pointsY);
   xp = pointsX;
   yp = pointsY;
   console.log(pointsX);
   console.log(pointsY);
-  x = xConstStart;
-  y = yConstStart;
-  for (var i = xConstStart; i >= xConstEnd; i--) {
+  x = xMin;
+  y = yMin;
+  for (var i = xMin; i >= xMax; i--) {
       x = i;
       coordinates[i] = [];
-      for (var j = yConstStart; j >= yConstEnd; j--) {
+      for (var j = yMin; j >= yMax; j--) {
+          y = j;
+          coordinates[i][j] = inPoly(x,y);
+      };
+  };
+})
+
+$currentRect = $('#ToiletA-L-2-1')
+$currentRect.each(function(){
+  var points = [];
+  var pointsX = [];
+  var pointsY = [];
+ 
+  pointsX[0] = parseInt($(this).attr('x'));
+  pointsX[1] = parseInt($(this).attr('x')) + parseInt($(this).attr('width'));
+  pointsY[0] = parseInt($(this).attr('y'));
+  pointsY[1] = parseInt($(this).attr('y')) + parseInt($(this).attr('height'));
+
+
+  xMin = getMaxOfArray(pointsX);
+  xMax = getMinOfArray(pointsX);
+  yMin = getMaxOfArray(pointsY);
+  yMax = getMinOfArray(pointsY);
+  xp = pointsX;
+  yp = pointsY;
+  console.log(pointsX);
+  console.log(pointsY);
+  x = xMin;
+  y = yMin;
+  for (var i = xMin; i >= xMax; i--) {
+      x = i;
+      coordinates[i] = [];
+      for (var j = yMin; j >= yMax; j--) {
           y = j;
           coordinates[i][j] = inPoly(x,y);
       };
   };
 })
 */
+
+//-path
 function destroyPopUp() {
   $('.popup').remove();
 }
@@ -296,7 +200,178 @@ function showRoom(name) {
           createPopUp('Данная аудитория пока не доступна')
         }
 }
+
+
+/*
+          var svgId = "testsvg"
+          elm = document.getElementById(svgId);;
+        function hammerIt(elm) {
+          hammertime = new Hammer(elm, {});
+          hammertime.get('pinch').set({
+              enable: true,
+          });
+          hammertime.get('rotate').set({ 
+            enable: true,
+          });
+          var posX = 0,
+              posY = 0,
+              perX = 50,
+              perY = 50,
+              scale = 1,
+              deg = 0,
+              last_deg = 0,
+              last_scale = 1,
+              last_posX = 0,
+              last_posY = 0,
+              max_pos_x = 0,
+              max_pos_y = 0,
+              transform = "",
+              el = elm;
+            hammertime.on('doubletap  pinch  pinchend rotate rotateend rotatestart center', function(ev) {
+              if (ev.type == "doubletap") {
+                  transform =
+                      "translate3d(0, 0, 0) " +
+                      "scale3d(2, 2, 1) ";
+                  scale = 2;
+                  last_scale = 2;
+                  try {
+                      if (window.getComputedStyle(el, null).getPropertyValue('-webkit-transform').toString() != "matrix(1, 0, 0, 1, 0, 0)") {
+                          transform =
+                              "translate3d(0, 0, 0) " +
+                              "scale3d(1, 1, 1) ";
+                          scale = 1;
+                          last_scale = 1;
+                      }
+                  } catch (err) {}
+                  el.style.webkitTransform = transform;
+                  transform = "";
+             
+              }
+
+              if (ev.type == "pan") {
+                  posX = last_posX + ev.deltaX;
+                  posY = last_posY + ev.deltaY;
+                  max_pos_x = Math.ceil((scale - 1) * el.clientWidth / 2);
+                  max_pos_y = Math.ceil((scale - 1) * el.clientHeight / 2);
+                  if (posX > max_pos_x) {
+                      posX = max_pos_x;
+                  }
+                  if (posX < -max_pos_x) {
+                      posX = -max_pos_x;
+                  }
+                  if (posY > max_pos_y) {
+                      posY = max_pos_y;
+                  }
+                  if (posY < -max_pos_y) {
+                      posY = -max_pos_y;
+                  }
+            }
+            //  }
+
+
+              //pinch
+              if (ev.type == "pinch") {
+                  scale = Math.max(.8, Math.min(last_scale * (ev.scale),2));
+                  $('#DEBUG_scale').text(scale);
+                  svgWidth = $('#'+svgId).width();
+                  svgHeight = $('#'+svgId).height();
+                  perX = ev.center.x / svgWidth * 100;
+                  perY = ev.center.y / svgHeight * 100;
+
+                  $('#DEBUG_center').text('x: '+ev.center.x + ' '+ perX+'; y:' +ev.center.y + ' '+ perY);
+
+              }
+              if(ev.type == "pinchend"){
+                last_scale = scale;
+                
+                $('#'+svgId).hide();
+                $('#'+svgId).get(0).offsetHeight; // no need to store this anywhere, the reference is enough
+                $('#'+svgId).show();
+
+
+              }
+
+              //panend
+              if(ev.type == "panend"){
+                last_posX = posX < max_pos_x ? posX : max_pos_x;
+                last_posY = posY < max_pos_y ? posY : max_pos_y;
+              }
+              if (ev.type == "rotate") {
+                if (last_deg == 0) {
+                  deg =  ev.rotation;
+                } else {
+                  deg = last_deg + ev.rotation;
+                }
+
+                $('#DEBUG_rotate').text(deg);
+              }
+
+              if (ev.type == "rotateend") {
+                last_deg = deg;
+              }
+              //if (scale != 1) {
+                  transform =
+                      "translate3d(" + posX + "px," + posY + "px, 0) " +
+                      "scale3d(" + scale + ", " + scale + ", 1)" + 
+                      "rotate("+deg+"deg)" 
+
+             // }
+
+              if (transform) {
+
+                  el.style.webkitTransform = transform;
+
+                  el.style.transformOrigin = perX + "% " + perY+"%";
+                  $('#DEBUG_posX').text(posX);
+                  $('#DEBUG_posY').text(posY);
+              }
+          });
+        }
+        hammerIt(elm)
+*/         
+         
+          $('#roomBLock .btn').on('click', function(){
+            var p = $(this).parents('#roomBLock');
+            corpus = p.find('select').val();
+            number = p.find('input[type="number"]').val();
+            console.log(corpus + number)
+            showRoom(corpus+number)
+          })
+
+
+        var zoom = 1;
+        var scalefactor = 0.05;
+        function zoomIn() {
+          zoom++;
+          scale = 1 + zoom*scalefactor;
+          currentSVG 
+                .children('g')
+                .css('transform','scale('+scale+')');
+
+          currentSVG.setSize(svgWidth,svgHeight, scale)
+
+          /*
+                .css({  
+                  'width': svgWidth*scalePX,
+                  'height': svgHeight*scalePX,
+                });
+        */
+        }
+
+
+
+
+        function zoomOut() {
+          zoom--;
+          scale = 1 + zoom*scalefactor;
+          currentSVG 
+                .children('g')
+                .css('transform','scale('+scale+')');
+
+          currentSVG.setSize(svgWidth,svgHeight, scale)
+        }
 $(document).ready(function(){
+
  $.getJSON( "js/data.json", function( data ) {
   var items = [];
   $.each( data, function( corpusKey, val ) {
@@ -388,17 +463,7 @@ $(document).ready(function(){
   .always(function() {
     console.log( "complete" );
   });
-  coordinates.splice(0,xConstEnd);
-  for (var i = coordinates.length - 1; i >= 0; i--) {
-    coordinates[i].splice(0,yConstEnd);
-  };
- // console.log(coordinates.join('\n') + '\n\n');
- // 
- var containerA2  = $('.tab-view[data-corpus="a"][data-level="2"]');
-  containerA2.append('<pre>');
-  containerA2.find('pre').text(coordinates.join('\n') + '\n\n');
-
-
+  
 
 
 
@@ -490,15 +555,3 @@ $('.btn-group > .inside > .btn:first-child').addClass('active');
 $('.view-group > .view:first-child').show();
 
 
-
-
-/*
-var arr1 = [
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0],
-  [0,0,0,0,0,0]
-  [0,0,0,0,0,0]
-]
-*/

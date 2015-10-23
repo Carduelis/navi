@@ -4,8 +4,13 @@
 
 <div class="holder">
     <div class="promo-text">
-        <h1>Источники информации</h1>
-        <div>
+        <h1>МИРЭА – вуз инновационных технологий</h1>
+        <div id="loading">
+            <div class="logo"></div>
+            <div class="progress"><div style="width: 77%;"></div>
+        </div>
+
+       <!--  <div>
             <ul>
                 <li>Информационный портал по динамическому языку стилевой разметки LESS .//[Электронный ресурс].-Режим доступа: <a href="http://lesscss.ru/">http://lesscss.ru/</a> (По состоянию на 12.11.13)
                 <li>Официальный сайт проекта “DENWER”.//[Электронный ресурс].-Режим доступа: <a href="http://www.denwer.ru">http://www.denwer.ru</a>  (По состоянию на 12.11.13)
@@ -16,7 +21,7 @@
                 <li>Палитра и графические изображения для «плоского» дизайна .//[Электронный ресурс].-Режим доступа:  <a href="http://designmodo.github.io/Flat-UI/">http://designmodo.github.io/Flat-UI/</a> (По состоянию на 12.11.13)
                 <li>Статья собственного авторства о разработке на LESS.//[Электронный ресурс].-Режим доступа:  <a href="http://habrahabr.ru/post/196190/">http://habrahabr.ru/post/196190/</a> (По состоянию на 12.11.13)
             </ul>
-        </div>
+        </div> -->
     </div>
 </div><!--end content-->
 

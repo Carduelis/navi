@@ -449,6 +449,52 @@ function showRoom(name) {
           }
         }
 
+//                                                                                                                     
+//                                                                                                                     
+//     SSSSSSSSSSSSSSS                                            iiii                     iiii          tttt          
+//   SS:::::::::::::::S                                          i::::i                   i::::i      ttt:::t          
+//  S:::::SSSSSS::::::S                                           iiii                     iiii       t:::::t          
+//  S:::::S     SSSSSSS                                                                               t:::::t          
+//  S:::::S      vvvvvvv           vvvvvvvggggggggg   ggggg     iiiiiiinnnn  nnnnnnnn    iiiiiiittttttt:::::ttttttt    
+//  S:::::S       v:::::v         v:::::vg:::::::::ggg::::g     i:::::in:::nn::::::::nn  i:::::it:::::::::::::::::t    
+//   S::::SSSS     v:::::v       v:::::vg:::::::::::::::::g      i::::in::::::::::::::nn  i::::it:::::::::::::::::t    
+//    SS::::::SSSSS v:::::v     v:::::vg::::::ggggg::::::gg      i::::inn:::::::::::::::n i::::itttttt:::::::tttttt    
+//      SSS::::::::SSv:::::v   v:::::v g:::::g     g:::::g       i::::i  n:::::nnnn:::::n i::::i      t:::::t          
+//         SSSSSS::::Sv:::::v v:::::v  g:::::g     g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t          
+//              S:::::Sv:::::v:::::v   g:::::g     g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t          
+//              S:::::S v:::::::::v    g::::::g    g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t    tttttt
+//  SSSSSSS     S:::::S  v:::::::v     g:::::::ggggg:::::g      i::::::i n::::n    n::::ni::::::i     t::::::tttt:::::t
+//  S::::::SSSSSS:::::S   v:::::v       g::::::::::::::::g      i::::::i n::::n    n::::ni::::::i     tt::::::::::::::t
+//  S:::::::::::::::SS     v:::v         gg::::::::::::::g      i::::::i n::::n    n::::ni::::::i       tt:::::::::::tt
+//   SSSSSSSSSSSSSSS        vvv            gggggggg::::::g      iiiiiiii nnnnnn    nnnnnniiiiiiii         ttttttttttt  
+//                                                 g:::::g                                                             
+//                                     gggggg      g:::::g                                                             
+//                                     g:::::gg   gg:::::g                                                             
+//                                      g::::::ggg:::::::g                                                             
+//                                       gg:::::::::::::g                                                              
+//                                         ggg::::::ggg                                                                
+//                                            gggggg                                                                                                            gggggg                                                                                    
+        var beforePan
+
+        beforePan = function(oldPan, newPan){
+          var stopHorizontal = false
+            , stopVertical = false
+            , gutterWidth = 0.9 * $(window).width()
+            , gutterHeight = 0.3 * $(window).height()
+              // Computed variables
+            , sizes = this.getSizes()
+            , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
+            , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
+            , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
+            , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom)
+
+          customPan = {}
+          customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x))
+          customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y))
+
+          return customPan
+        }
+
         window.svg = null;
         function svgAlive(svgId) {
 
@@ -456,17 +502,26 @@ function showRoom(name) {
           // 1) надо запомнить предыдущий уровень зума и центровку
   
           $('.map-controls').removeClass('show');
-
-          svgPanZoom('svg').destroy();
-            window.svg = svgPanZoom('#'+svgId, {
+            if (svg) {
+              svgPanZoom('svg').destroy();
+            }
+            svg = svgPanZoom('#'+svgId, {
             zoomEnabled: true,
             controlIconsEnabled: true,
             fit: true,
             center: true,
-            customEventsHandler: eventsHandler
+            zoomScaleSensitivity: 0.3,
+            minZoom: 1,
+            maxZoom: 14,
+            customEventsHandler: eventsHandler,
+            beforePan: beforePan
           });
           $('.map-controls').addClass('show');
-
+          $(window).resize(function(){
+            svg.resize();
+            svg.fit();
+            svg.center();
+          })
         }
 
 //                                                                                                                                                                      
@@ -496,7 +551,7 @@ function showRoom(name) {
 //                                                                                                                                                                      
 $(document).ready(function(){
 
-
+      svgAlive('leftA');
       // Don't use window.onLoad like this in production, because it can only listen to one function.
     
      

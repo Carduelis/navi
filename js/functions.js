@@ -1,5 +1,3 @@
-//fitText if needed
-//jQuery(".phones b").fitText();
 var xp = []
 var yp = []
 
@@ -55,14 +53,6 @@ $('.tab-buttons [data-corpus="'+currentCorpus+'"]').show();
 $('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
 $('#corpus-selector').val(currentCorpus)
 
-function onPinch(e) {
-    if (e.scale > 1)
-    {
-       alert('in')
-   } else if (e.scale < 1) {
-       alert('out')
-     }
-}
 
 $('rect').each(function(){
   id = $(this).attr('id');
@@ -74,7 +64,7 @@ $('rect').each(function(){
 
   gid = 'group' + id ;
   //$(this).wrap('<g id="'+gid+'">')
-  $svg_g = $(document.createElementNS('http://www.w3.org/2000/svg', 'g')).attr({
+  $svg_g = createSvgElement('g').attr({
     id:  gid,
     fill: 'red',
     width: width*0.5,
@@ -82,7 +72,7 @@ $('rect').each(function(){
     x: x,
     y: y
   })
-  $svg_text = $(document.createElementNS('http://www.w3.org/2000/svg', 'text')).attr({
+  $svg_text = createSvgElement('text').attr({
     fill: 'red',
     x: x - -5,
     y: y - -20,
@@ -375,12 +365,32 @@ function showRoom(name) {
 
           currentSVG.setSize(svgWidth,svgHeight, scale)
         }
-$(document).ready(function(){
-
-
-      // Don't use window.onLoad like this in production, because it can only listen to one function.
-    
-        var eventsHandler;
+//                                                                                                                                                                             
+//                                                                                                                                                                             
+//  HHHHHHHHH     HHHHHHHHH                                                                                                                              jjjj                  
+//  H:::::::H     H:::::::H                                                                                                                             j::::j                 
+//  H:::::::H     H:::::::H                                                                                                                              jjjj                  
+//  HH::::::H     H::::::HH                                                                                                                                                    
+//    H:::::H     H:::::H    aaaaaaaaaaaaa      mmmmmmm    mmmmmmm      mmmmmmm    mmmmmmm       eeeeeeeeeeee    rrrrr   rrrrrrrrr                     jjjjjjj    ssssssssss   
+//    H:::::H     H:::::H    a::::::::::::a   mm:::::::m  m:::::::mm  mm:::::::m  m:::::::mm   ee::::::::::::ee  r::::rrr:::::::::r                    j:::::j  ss::::::::::s  
+//    H::::::HHHHH::::::H    aaaaaaaaa:::::a m::::::::::mm::::::::::mm::::::::::mm::::::::::m e::::::eeeee:::::eer:::::::::::::::::r                    j::::jss:::::::::::::s 
+//    H:::::::::::::::::H             a::::a m::::::::::::::::::::::mm::::::::::::::::::::::me::::::e     e:::::err::::::rrrrr::::::r                   j::::js::::::ssss:::::s
+//    H:::::::::::::::::H      aaaaaaa:::::a m:::::mmm::::::mmm:::::mm:::::mmm::::::mmm:::::me:::::::eeeee::::::e r:::::r     r:::::r                   j::::j s:::::s  ssssss 
+//    H::::::HHHHH::::::H    aa::::::::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me:::::::::::::::::e  r:::::r     rrrrrrr                   j::::j   s::::::s      
+//    H:::::H     H:::::H   a::::aaaa::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me::::::eeeeeeeeeee   r:::::r                               j::::j      s::::::s   
+//    H:::::H     H:::::H  a::::a    a:::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me:::::::e            r:::::r                               j::::jssssss   s:::::s 
+//  HH::::::H     H::::::HHa::::a    a:::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me::::::::e           r:::::r                               j::::js:::::ssss::::::s
+//  H:::::::H     H:::::::Ha:::::aaaa::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::m e::::::::eeeeeeee   r:::::r             ......            j::::js::::::::::::::s 
+//  H:::::::H     H:::::::H a::::::::::aa:::am::::m   m::::m   m::::mm::::m   m::::m   m::::m  ee:::::::::::::e   r:::::r             .::::.            j::::j s:::::::::::ss  
+//  HHHHHHHHH     HHHHHHHHH  aaaaaaaaaa  aaaammmmmm   mmmmmm   mmmmmmmmmmmm   mmmmmm   mmmmmm    eeeeeeeeeeeeee   rrrrrrr             ......            j::::j  sssssssssss    
+//                                                                                                                                                      j::::j                 
+//                                                                                                                                            jjjj      j::::j                 
+//                                                                                                                                           j::::jj   j:::::j                 
+//                                                                                                                                           j::::::jjj::::::j                 
+//                                                                                                                                            jj::::::::::::j                  
+//                                                                                                                                              jjj::::::jjj                   
+//                                                                                                                                                 jjjjjj                                                                                                                                                                                                                                                                                                                                                                      
+   var eventsHandler;
 
         eventsHandler = {
           haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
@@ -439,23 +449,140 @@ $(document).ready(function(){
           }
         }
 
-        // Expose to window namespace for testing purposes
-        window.panZoom = svgPanZoom('#testsvg', {
-          zoomEnabled: true
-        , controlIconsEnabled: true
-        , fit: true
-        , center: true
-       , customEventsHandler: eventsHandler
-        });
-        $(window).resize(function(){
-          panZoom.resize();
-          panZoom.fit();
-          panZoom.center();
-        })
+        window.svg = null;
+        function svgAlive(svgId) {
+
+          // to do
+          // 1) надо запомнить предыдущий уровень зума и центровку
   
+          $('.map-controls').removeClass('show');
+
+          svgPanZoom('svg').destroy();
+            window.svg = svgPanZoom('#'+svgId, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            customEventsHandler: eventsHandler
+          });
+          $('.map-controls').addClass('show');
+
+        }
+
+//                                                                                                                                                                      
+//              dddddddd                                                                                                                dddddddd                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d:::::d                                                                                                                 d:::::d                         
+//      ddddddddd:::::d    ooooooooooo       cccccccccccccccc        rrrrr   rrrrrrrrr       eeeeeeeeeeee    aaaaaaaaaaaaa      ddddddddd:::::dyyyyyyy           yyyyyyy
+//    dd::::::::::::::d  oo:::::::::::oo   cc:::::::::::::::c        r::::rrr:::::::::r    ee::::::::::::ee  a::::::::::::a   dd::::::::::::::d y:::::y         y:::::y 
+//   d::::::::::::::::d o:::::::::::::::o c:::::::::::::::::c        r:::::::::::::::::r  e::::::eeeee:::::eeaaaaaaaaa:::::a d::::::::::::::::d  y:::::y       y:::::y  
+//  d:::::::ddddd:::::d o:::::ooooo:::::oc:::::::cccccc:::::c        rr::::::rrrrr::::::re::::::e     e:::::e         a::::ad:::::::ddddd:::::d   y:::::y     y:::::y   
+//  d::::::d    d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r     r:::::re:::::::eeeee::::::e  aaaaaaa:::::ad::::::d    d:::::d    y:::::y   y:::::y    
+//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r     rrrrrrre:::::::::::::::::e aa::::::::::::ad:::::d     d:::::d     y:::::y y:::::y     
+//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r            e::::::eeeeeeeeeee a::::aaaa::::::ad:::::d     d:::::d      y:::::y:::::y      
+//  d:::::d     d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r            e:::::::e         a::::a    a:::::ad:::::d     d:::::d       y:::::::::y       
+//  d::::::ddddd::::::ddo:::::ooooo:::::oc:::::::cccccc:::::c         r:::::r            e::::::::e        a::::a    a:::::ad::::::ddddd::::::dd       y:::::::y        
+//   d:::::::::::::::::do:::::::::::::::o c:::::::::::::::::c ......  r:::::r             e::::::::eeeeeeeea:::::aaaa::::::a d:::::::::::::::::d        y:::::y         
+//    d:::::::::ddd::::d oo:::::::::::oo   cc:::::::::::::::c .::::.  r:::::r              ee:::::::::::::e a::::::::::aa:::a d:::::::::ddd::::d       y:::::y          
+//     ddddddddd   ddddd   ooooooooooo       cccccccccccccccc ......  rrrrrrr                eeeeeeeeeeeeee  aaaaaaaaaa  aaaa  ddddddddd   ddddd      y:::::y           
+//                                                                                                                                                   y:::::y            
+//                                                                                                                                                  y:::::y             
+//                                                                                                                                                 y:::::y              
+//                                                                                                                                                y:::::y               
+//                                                                                                                                               yyyyyyy                
+//                                                                                                                                                                      
+//                                                                                                                                                                      
+$(document).ready(function(){
+
+
+      // Don't use window.onLoad like this in production, because it can only listen to one function.
+    
+     
 
 
 
+      // Don't use window.onLoad like this in production, because it can only listen to one function.
+      // $(function() {
+      //   var lastEventListener = null;
+
+      //   function createNewEmbed(src){
+      //     var embed = document.createElement('embed');
+      //     embed.setAttribute('style', 'width: 500px; height: 500px; border:1px solid black;');
+      //     embed.setAttribute('type', 'image/svg+xml');
+      //     embed.setAttribute('src', src);
+
+      //     document.getElementById('container').appendChild(embed)
+
+      //     lastEventListener = function(){
+      //       svgPanZoom(embed, {
+      //         zoomEnabled: true,
+      //         controlIconsEnabled: true
+      //       });
+      //     }
+      //     embed.addEventListener('load', lastEventListener)
+
+      //     return embed
+      //   }
+
+      //   var lastEmbedSrc = 'tiger.svg'
+      //     , lastEmbed = createNewEmbed(lastEmbedSrc)
+      //     ;
+
+      //   function removeEmbed(){
+      //     // Destroy svgpanzoom
+      //     svgPanZoom(lastEmbed).destroy()
+      //     // Remove event listener
+      //     lastEmbed.removeEventListener('load', lastEventListener)
+      //     // Null last event listener
+      //     lastEventListener = null
+      //     // Remove embed element
+      //     document.getElementById('container').removeChild(lastEmbed)
+      //     // Null reference to embed
+      //     lastEmbed = null
+      //   }
+
+
+      //   $('#swap').on('click', function(){
+      //     // Remove last added svg
+      //     removeEmbed()
+
+      //     if (lastEmbedSrc == 'tiger.svg') {
+      //       lastEmbedSrc = 'Tux.svg'
+      //     } else {
+      //       lastEmbedSrc = 'tiger.svg'
+      //     }
+
+      //     lastEmbed = createNewEmbed(lastEmbedSrc)
+      //   })
+      // });
+    
+//                                                                                                                                           
+//                                                                                                                                           
+//                                                   tttt                           jjjj                                                     
+//                                                ttt:::t                          j::::j                                                    
+//                                                t:::::t                           jjjj                                                     
+//                                                t:::::t                                                                                    
+//     ggggggggg   ggggg    eeeeeeeeeeee    ttttttt:::::ttttttt                   jjjjjjj    ssssssssss      ooooooooooo   nnnn  nnnnnnnn    
+//    g:::::::::ggg::::g  ee::::::::::::ee  t:::::::::::::::::t                   j:::::j  ss::::::::::s   oo:::::::::::oo n:::nn::::::::nn  
+//   g:::::::::::::::::g e::::::eeeee:::::eet:::::::::::::::::t                    j::::jss:::::::::::::s o:::::::::::::::on::::::::::::::nn 
+//  g::::::ggggg::::::gge::::::e     e:::::etttttt:::::::tttttt                    j::::js::::::ssss:::::so:::::ooooo:::::onn:::::::::::::::n
+//  g:::::g     g:::::g e:::::::eeeee::::::e      t:::::t                          j::::j s:::::s  ssssss o::::o     o::::o  n:::::nnnn:::::n
+//  g:::::g     g:::::g e:::::::::::::::::e       t:::::t                          j::::j   s::::::s      o::::o     o::::o  n::::n    n::::n
+//  g:::::g     g:::::g e::::::eeeeeeeeeee        t:::::t                          j::::j      s::::::s   o::::o     o::::o  n::::n    n::::n
+//  g::::::g    g:::::g e:::::::e                 t:::::t    tttttt                j::::jssssss   s:::::s o::::o     o::::o  n::::n    n::::n
+//  g:::::::ggggg:::::g e::::::::e                t::::::tttt:::::t                j::::js:::::ssss::::::so:::::ooooo:::::o  n::::n    n::::n
+//   g::::::::::::::::g  e::::::::eeeeeeee        tt::::::::::::::t                j::::js::::::::::::::s o:::::::::::::::o  n::::n    n::::n
+//    gg::::::::::::::g   ee:::::::::::::e          tt:::::::::::tt                j::::j s:::::::::::ss   oo:::::::::::oo   n::::n    n::::n
+//      gggggggg::::::g     eeeeeeeeeeeeee            ttttttttttt                  j::::j  sssssssssss       ooooooooooo     nnnnnn    nnnnnn
+//              g:::::g                                                            j::::j                                                    
+//  gggggg      g:::::g                                                  jjjj      j::::j                                                    
+//  g:::::gg   gg:::::g                                                 j::::jj   j:::::j                                                    
+//   g::::::ggg:::::::g                                                 j::::::jjj::::::j                                                    
+//    gg:::::::::::::g                                                   jj::::::::::::j                                                     
+//      ggg::::::ggg                                                       jjj::::::jjj                                                      
+//         gggggg                                                             jjjjjj                                                         
 
  $.getJSON( "js/data.json", function( data ) {
   var items = [];
@@ -551,15 +678,31 @@ $(document).ready(function(){
   
 
 
-
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
+//                                                                              
+//  bbbbbbbb                                                                    
+//  b::::::b                     tttt                                           
+//  b::::::b                  ttt:::t                                           
+//  b::::::b                  t:::::t                                           
+//   b:::::b                  t:::::t                                           
+//   b:::::bbbbbbbbb    ttttttt:::::ttttttt  nnnn  nnnnnnnn        ssssssssss   
+//   b::::::::::::::bb  t:::::::::::::::::t  n:::nn::::::::nn    ss::::::::::s  
+//   b::::::::::::::::b t:::::::::::::::::t  n::::::::::::::nn ss:::::::::::::s 
+//   b:::::bbbbb:::::::btttttt:::::::tttttt  nn:::::::::::::::ns::::::ssss:::::s
+//   b:::::b    b::::::b      t:::::t          n:::::nnnn:::::n s:::::s  ssssss 
+//   b:::::b     b:::::b      t:::::t          n::::n    n::::n   s::::::s      
+//   b:::::b     b:::::b      t:::::t          n::::n    n::::n      s::::::s   
+//   b:::::b     b:::::b      t:::::t    ttttttn::::n    n::::nssssss   s:::::s 
+//   b:::::bbbbbb::::::b      t::::::tttt:::::tn::::n    n::::ns:::::ssss::::::s
+//   b::::::::::::::::b       tt::::::::::::::tn::::n    n::::ns::::::::::::::s 
+//   b:::::::::::::::b          tt:::::::::::ttn::::n    n::::n s:::::::::::ss  
+//   bbbbbbbbbbbbbbbb             ttttttttttt  nnnnnn    nnnnnn  sssssssssss    
+//                                                                              
+//                                                                              
+//                                                                              
+//                                                                              
+//                                                                              
+//                                                                              
+//                                                                              
 
 
   $('.tab-buttons select').on('change', function(){

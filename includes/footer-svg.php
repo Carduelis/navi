@@ -1,7 +1,7 @@
 </div><!--end root-->
 <aside class="map-controls">
-    <a class="btn-border plus" onclick="zoomIn()"></a>
-    <a class="btn-border minus" onclick="zoomOut()"></a>
+    <a class="btn-border plus" onclick="svg.zoomIn()"></a>
+    <a class="btn-border minus" onclick="svg.zoomOut()"></a>
 </aside>
 <footer>
 	<div class="tab-buttons">

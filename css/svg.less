@@ -1,0 +1,40 @@
+
+.panzoom,
+.parent {
+	background-color: red;
+	-webkit-overflow-scrolling: touch;
+}
+#svg-pan-zoom-controls {
+	display: none;
+}
+polyline {
+	fill: transparent;
+}
+svg {
+	//min-width: 1020px;
+	//width: 100%;
+	background-color: #aaa;
+	//height: 660px;
+	//min-height: 100%;
+	overflow: hidden;
+	display: inline !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+.svg-holder {
+	background-color: #585858;
+	> .tab-view {
+		background-color: #585858;
+	}
+	code, pre {
+		position: absolute;
+		top: @pad*8;
+		right: 0;
+		padding: @pad*2;
+		bottom: @pad*4;
+		left: 0;
+		overflow-y: auto;
+		font-size: 9px;
+		background-color: rgba(255, 255, 255, 1);
+	}
+}

@@ -50,6 +50,8 @@
 
 @concrete:		#95a5a6;
 @asbestos:		#7f8c8d;
+
+@mapControlsBackground: fadeout(@peter_river, 40%);
 header {
 	z-index: 9999999;
 }
@@ -142,47 +144,15 @@ html.map {
 	}
 	header {
 		position: absolute;
+		background-color: @mapControlsBackground;
+		border-bottom-color: fadeout(@belize_hole, 40%)
+
 	}
 	footer {
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		right: 0;
-	}
-}
-.panzoom,
-.parent {
-	background-color: red;
-	-webkit-overflow-scrolling: touch;
-}
-polyline {
-	fill: transparent;
-}
-.svg-holder {
-	background-color: #585858;
-	> .tab-view {
-		.overflow-x;
-		background-color: #585858;
-		overflow-y: auto;
-		padding: @pad*10 0;
-	}
-	svg {
-		//min-width: 1020px;
-		//width: 100%;
-		background-color: #aaa;
-		//height: 660px;
-		//min-height: 100%;
-	}
-	code, pre {
-		position: absolute;
-		top: @pad*8;
-		right: 0;
-		padding: @pad*2;
-		bottom: @pad*4;
-		left: 0;
-		overflow-y: auto;
-		font-size: 9px;
-		background-color: rgba(255, 255, 255, 1);
 	}
 }
 .hinter {
@@ -192,11 +162,15 @@ polyline {
 	position: fixed;
 	left: 0;
 	z-index: 10;
+	display: none;
 	top: 50%;
 	margin: @pad/2;
 	border-radius: @pad/2;
 	margin-top: -@pad*4;
-	background-color: fadeout(@peter_river,20%);
+	background-color: fadeout(@peter_river,40%);
+	&.show {
+		display: block;
+	}
 	a {
 		display: block;
 		margin: @pad;
@@ -651,6 +625,7 @@ svg {
 	}
 	.btn {
 		.btn-border();
+		background-color: @peter_river;
 	}
 	select {
 		margin: 0;
@@ -832,7 +807,7 @@ svg {
 	a {display: none;}
 }
 footer {
-	background-color: @peter_river;
+	background-color: fadeout(@peter_river,40%);
 	padding: @pad;
 	.bold;
 	color: @clouds;

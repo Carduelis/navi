@@ -15,7 +15,7 @@
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
  <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
   -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?324234">
   <!--это для скопмилированного css
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>

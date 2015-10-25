@@ -15,7 +15,7 @@
 				<option value="g" disabled>Корпус Г</option>
 			</select>
 			<li>
-				<div class="description">
+				<div class="description" onclick="drawPath(calculatePathArray(coordinates),'testsvg')">
 				<span class="lever">Уровень</span>
 				<span class="floor">Аудитории</span>
 				</div>
@@ -38,6 +38,7 @@
 
 
 <!-- <script src="js/pathfinding-browser.min.js" type="text/javascript"></script> -->
+<script src="js/svg-pan-zoom.min.js" type="text/javascript"></script>
 <script src="js/pathfinding-browser.js" type="text/javascript"></script>
 <script src="js/hammer.min.js" type="text/javascript"></script>
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>

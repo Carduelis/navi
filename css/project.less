@@ -620,18 +620,16 @@ ul.inline {
 
 	}
 }
+* {
+	trasform-origin: 0 0 0;
+}
+svg {
+	transform-origin: 50% 50% 0px;
+}
 .tab-view {
 	display: none;
 }
-svg > g {
-	//-webkit-transform-origin: 50%;
-	//transform-origin: 50%;
-	//.transitions();
-}
-g#gholder {
-	.transitions(transform, 3s);
-	transform-origin: 1598px 523px;
-} 
+ 
 .tab-buttons {
 	height: @pad*6;
 	line-height: @pad*6;

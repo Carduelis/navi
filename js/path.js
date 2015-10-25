@@ -1,4 +1,14 @@
 
+var startPoint = {
+  x: 14,
+  y: 0
+} 
+
+var endPoint = {
+  x: 14,
+  y: 36
+}
+
 function inPoly(x,y){
   npol = xp.length;
   j = npol - 1;
@@ -114,7 +124,7 @@ $(document).ready(function(){
   // };
  
 
-  //DrawSvg(samplePath);
+  //DrawSvg(pathArray);
 
 
   // console.info(coordinates.length)
@@ -155,9 +165,11 @@ var gridTest;
 function setWalkable(grid) {
 
 }
+
+
 var coordTest;
-samplePath = [];
-function startPath(array) {
+pathArray = [];
+function calculatePathArray(array) {
   var grid = new PF.Grid(array.length, array[0].length);
   var sampleFinder = new PF.BestFirstFinder();
   //var grid = new PF.Grid(5, 5, matrix);
@@ -184,37 +196,38 @@ function startPath(array) {
   //     }
   //   }
   // }
-  samplePath = sampleFinder.findPath(14, 0, 14, 36, grid);
-  return samplePath 
+ // pathArray = sampleFinder.findPath(14, 0, 14, 36, grid);
+
+  pathArray = sampleFinder.findPath(startPoint.x, startPoint.y, endPoint.x, endPoint.y, grid);
+  return pathArray 
 }
 //var path = finder.findPath(20, 5 , 60, 80, sampleGrid);
-function DrawSvg(object){
+function drawPath(pathArray, idOfTheTargetSvg){
 
 var drawHolder = $('.tab-view')
 
-// for (var i = object.length - 1; i >= 0; i--) {
-//    x= object[i][1]
-//    y= object[i][0]
+// for (var i = pathArray.length - 1; i >= 0; i--) {
+//    x= pathArray[i][1]
+//    y= pathArray[i][0]
 //    drawHolder.append('<div style="opacity: .6; left: '+x*10 +'px; top: '+y*10 +'px; border: 1px solid green; position: absolute; margin-left: 2%; margin-top: 13%; width: 10px; height: 10px; background: red;">')
 // };
-  for (var i = object.length - 1; i >= 0; i--) {
-    exX = object[i][0];
-    exY = object[i][1];
-    object[i][0] = exY;
-    object[i][1] = exX;
-  };
-  for (var i = object.length - 1; i >= 0; i--) {
-   object[i] = object[i].join();   
-  };
-  var polylinePoints = object.join(' ');
 
-  $svg_polyline = $(document.createElementNS('http://www.w3.org/2000/svg', 'polyline')).attr({
+  for (var i = pathArray.length - 1; i >= 0; i--) {
+    exX = pathArray[i][0];
+    exY = pathArray[i][1];
+    pathArray[i][0] = exY;
+    pathArray[i][1] = exX;
+   pathArray[i] = pathArray[i].join();   
+  };
+  var polylinePoints = pathArray.join(' ');
+
+  $svg_polyline = createSvgElement('polyline').attr({
     id:  "pathLine",
     stroke: "black",
     points: polylinePoints
   })
   
-  $('#testsvg').append($svg_polyline);
+  $('#'+ idOfTheTargetSvg +' > .svg-pan-zoom_viewport').append($svg_polyline);
 
 }
 /////grid.setWalkableAt(0, 1, false);

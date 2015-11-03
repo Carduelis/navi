@@ -51,19 +51,12 @@
 
 <i id='top_page'></i>
 <header>
-<div id="debug">
-  <ul>
-    <li><span>posY</span><span id="DEBUG_posY"></span></li>
-    <li><span>posX</span><span id="DEBUG_posX"></span></li>
-    <li><span>center</span><span id="DEBUG_center"></span></li>
-    <li><span>scale</span><span id="DEBUG_scale"></span></li>
-    <li><span>rotate</span><span id="DEBUG_rotate"></span></li>
-  </ul>
-</div>
+
   <ul class='header'>
     <li class='logo'>
       <a href="#top_page"><img src="http://goldfinch.pro/mirea1/css/logo_min.png"></a>
     </li>
+    <li id="loading"></li>
     <li class='logotext'>
       <a href="/navi"><span class="txt">Навигация</span></a>
     </li>

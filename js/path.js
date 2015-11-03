@@ -52,10 +52,10 @@ function getCoordinates(element) {
   var points = [];
   var pointsX = [];
   var pointsY = [];
-  console.log(tagName);
+  //console.log(tagName);
   if (tagName == 'polygon') {
     points = element.attr('points').split(' ');
-    //console.log(points);
+    ////console.log(points);
     for (var i = points.length - 1; i >= 0; i--) {
       points[i] = points[i].split(',');
       pointsX[i] = parseInt(points[i][0])
@@ -69,7 +69,7 @@ function getCoordinates(element) {
   } else if (tagName == 'path') {
 
   } else {
-    console.log('this is not coord-tag')
+    //console.log('this is not coord-tag')
   }
     xMin = getMinOfArray(pointsX);
     xMax = getMaxOfArray(pointsX);
@@ -78,16 +78,16 @@ function getCoordinates(element) {
     xp = pointsX;
     yp = pointsY;
 
-    console.log("xMin: "+xMin+" . xMax: "+xMax+" . yMin: "+yMin+" . yMax: "+yMax+" . ");
-    console.log(pointsX);
-    console.log(pointsY);
+    //console.log("xMin: "+xMin+" . xMax: "+xMax+" . yMin: "+yMin+" . yMax: "+yMax+" . ");
+    //console.log(pointsX);
+    //console.log(pointsY);
     x = xMin;
     y = yMin;
-    coordinates.length = yMax+10;
-    for (var i = yMax+10; i>= 0; i--) {
+    
+    for (var i = yMax; i>= 0; i--) {
       coordinates[i] = [];
-      coordinates[i].length = xMax+10;
-      for (var j = xMax+10; j>=0; j--) {
+      
+      for (var j = xMax; j>=0; j--) {
         coordinates[i][j] = 0;
       }
     }
@@ -107,6 +107,7 @@ function getCoordinates(element) {
 
         };
     };
+    return coordinates
 }
 
 
@@ -115,7 +116,7 @@ function getCoordinates(element) {
 
 
 $(document).ready(function(){
-  getCoordinates($('#test'));
+  getCoordinates($('#Walkable'));
 
  
   // coordinates.splice(0,yMin);
@@ -129,11 +130,11 @@ $(document).ready(function(){
 
   // console.info(coordinates.length)
   // for (var i = grid.nodes.length - 1; i >= 0; i--) {
-  //     console.log(coordinates[i]);
+  //     //console.log(coordinates[i]);
   //   for (var j = grid.nodes[0].length - 1; j >= 0; j--) {
-  //     //console.log(grid.nodes[i][j]);
+  //     ////console.log(grid.nodes[i][j]);
   //     //console.info(coordinates);
-  //   //  console.log(coordinates.length);
+  //   //  //console.log(coordinates.length);
   // // 450 25 20
   // //    grid.setWalkableAt(i,j ,coordinates[i][j]);
   //   };
@@ -144,7 +145,7 @@ $(document).ready(function(){
 
 });
 
- // console.log(coordinates.join('\n') + '\n\n');
+ // //console.log(coordinates.join('\n') + '\n\n');
  // 
 
 
@@ -158,7 +159,7 @@ $(document).ready(function(){
 // ];
 //matrix1 = coordinates;
 //var sampleGrid = new PF.Grid(matrix);
-// console.log(sampleGrid);
+// //console.log(sampleGrid);
 
 var gridTest;
 
@@ -169,18 +170,27 @@ function setWalkable(grid) {
 
 var coordTest;
 pathArray = [];
+newPath = [];
 function calculatePathArray(array) {
-  var grid = new PF.Grid(array.length, array[0].length);
+
+// for (var i = array.length - 1; i >= 0; i--) {
+//   exX = array[i][0];
+//   exY = array[i][1];
+//   array[i][0] = exY;
+//   array[i][1] = exX;
+// }
+  var grid = new PF.Grid(array[0].length, array.length);
+
   var sampleFinder = new PF.BestFirstFinder();
   //var grid = new PF.Grid(5, 5, matrix);
   gridTest = grid;
   coordTest = array;
-  //console.log(array);
-  for (var i = array.length - 1; i >= 0; i--) {
-    for (var j = array[0].length - 1; j >= 0; j--) {
+  ////console.log(array);
+  for (var y = array.length - 1; y >= 1; y--) { // height // y
+    for (var x = array[0].length - 1; x >= 0; x--) { // width // x
       //console.info(array[i][j]);
-      if (coordinates[i][j] == 1) {
-        grid.setWalkableAt(i,j,false)
+      if (coordinates[y-1][x] == 0) {
+        grid.setWalkableAt(x,y,false)
         //console.info('unwalkable');
       }
     };
@@ -188,7 +198,7 @@ function calculatePathArray(array) {
   gridTest = grid;
   // for(var i = 0; i < grid.nodes.length; i++) {
   //   for (var j = 0; j < grid.nodes[0].length; j++) {
-  //     console.log(coordinates[i][j]);
+  //     //console.log(coordinates[i][j]);
   //     if (coordinates[i][j] == 0) {
   //       grid.setWalkableAt(i,j ,false)
   //     } else  if (coordinates[i][j] == 1) {
@@ -199,6 +209,9 @@ function calculatePathArray(array) {
  // pathArray = sampleFinder.findPath(14, 0, 14, 36, grid);
 
   pathArray = sampleFinder.findPath(startPoint.x, startPoint.y, endPoint.x, endPoint.y, grid);
+  newPath = PF.Util.smoothenPath(grid, pathArray);
+  //console.log(newPath);
+  //console.log(pathArray);
   return pathArray 
 }
 //var path = finder.findPath(20, 5 , 60, 80, sampleGrid);
@@ -213,10 +226,12 @@ var drawHolder = $('.tab-view')
 // };
 
   for (var i = pathArray.length - 1; i >= 0; i--) {
-    exX = pathArray[i][0];
-    exY = pathArray[i][1];
-    pathArray[i][0] = exY;
-    pathArray[i][1] = exX;
+    // Почему-то раньше надо было переворчаивать массив
+    // exX = pathArray[i][0];
+    // exY = pathArray[i][1];
+    // pathArray[i][0] = exY;
+    // pathArray[i][1] = exX;
+
    pathArray[i] = pathArray[i].join();   
   };
   var polylinePoints = pathArray.join(' ');
@@ -227,8 +242,24 @@ var drawHolder = $('.tab-view')
     points: polylinePoints
   })
   
-  $('#'+ idOfTheTargetSvg +' > .svg-pan-zoom_viewport').append($svg_polyline);
 
+  // $svg_polyline = createSvgElement('polyline').attr({
+  //   id:  "pathLine",
+  //   stroke: "black",
+  //   points: polylinePoints
+  // })
+  
+
+  // $svg_rectstart = createSvgElement('svg_circlestart').attr({
+  //   id:  "pathLine",
+  //   stroke: "black",
+  //   cx: polylinePoints[1][1]
+  //   cy: polylinePoints[1][2]
+  // })
+
+  $('#'+ idOfTheTargetSvg +' > .svg-pan-zoom_viewport').append($svg_polyline);
+  //$('#'+ idOfTheTargetSvg +' > .svg-pan-zoom_viewport').append($svg_circlestart);
+//  $('#'+ idOfTheTargetSvg +' > .svg-pan-zoom_viewport').append($svg_circleend);
 }
 /////grid.setWalkableAt(0, 1, false);
 // //var matrix = [
@@ -249,3 +280,78 @@ var arr1 = [
   [0,0,0,0,0,0]
 ]
 */
+
+
+function makePath(idAudStart, idAudEnd) {
+  /// to do 
+  //  start animation progress bar
+  //loading.start();
+ $("svg").find("#pathLine").remove();
+  destroyPopUp();
+
+  var doorPointsStart = $('#door-'+idAudStart).children().attr('points');
+  // doorPointsStart = '395.8,532.8 395.8,534.8 386.4,534.8 386.4,532.8 395.8,532.8'
+
+  doorPointsStart = doorPointsStart.split(' ');
+  if (doorPointsStart.length == 5) {
+    doorPointsStart = doorPointsStart.slice(1);
+  }
+    ////console.log(points);
+  for (var i = doorPointsStart.length-1; i >= 0; i--) {
+    doorPointsStart[i] = doorPointsStart[i].split(',');
+    doorPointsStart[i][0] = parseInt(doorPointsStart[i][0]);
+    doorPointsStart[i][1] = parseInt(doorPointsStart[i][1]);
+  }; 
+
+  var doorPointsEnd = $('#door-'+idAudEnd).children().attr('points');
+  // doorPointsEnd = '395.8,532.8 395.8,534.8 386.4,534.8 386.4,532.8 395.8,532.8'
+
+  doorPointsEnd = doorPointsEnd.split(' ');
+  if (doorPointsEnd.length == 5) {
+    doorPointsEnd = doorPointsEnd.slice(1);
+  }
+    ////console.log(points);
+  for (var i = doorPointsEnd.length-1; i >= 0; i--) {
+    doorPointsEnd[i] = doorPointsEnd[i].split(',');
+    doorPointsEnd[i][0] = parseInt(doorPointsEnd[i][0]);
+    doorPointsEnd[i][1] = parseInt(doorPointsEnd[i][1]);
+  }; 
+
+
+
+  ////console.log(doorPointsStart);
+  startPoint.x = doorPointsStart[0][0] - (doorPointsStart[0][0] - doorPointsStart[2][0])/2;
+  startPoint.x = parseInt(Math.round(startPoint.x));
+
+  startPoint.y = doorPointsStart[0][1] - (doorPointsStart[0][1] - doorPointsStart[2][1])/2;
+  startPoint.y = parseInt(Math.round(startPoint.y));
+
+  endPoint.x = doorPointsEnd[0][0] - (doorPointsEnd[0][0] - doorPointsEnd[2][0])/2;
+  endPoint.x = parseInt(Math.round(endPoint.x));
+
+  endPoint.y = doorPointsEnd[0][1] - (doorPointsEnd[0][1] - doorPointsEnd[2][1])/2;
+  endPoint.y = parseInt(Math.round(endPoint.y));
+
+
+  //console.log(startPoint, endPoint)
+
+  drawPath(calculatePathArray(getCoordinates($('#Walkable'))), 'level1');
+
+  //loading.stop();
+ 
+  /// to do
+  // end animation
+  // зум и перемещение к маршруту
+  // анимация маршрута (по точкам)
+
+}
+
+
+
+function path(x1,y1,x2,y2) {
+  startPoint.x = x1;
+  startPoint.y = y1;
+  endPoint.x = x2;
+  endPoint.y = y2;
+  drawPath(calculatePathArray(getCoordinates($('#Walkable'))), 'level1');
+}

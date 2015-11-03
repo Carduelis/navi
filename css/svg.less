@@ -10,9 +10,7 @@
 #svg-pan-zoom-controls {
 	display: none;
 }
-polyline {
-	fill: transparent;
-}
+
 svg {
 	//min-width: 1020px;
 	//width: 100%;
@@ -37,7 +35,43 @@ svg {
 		bottom: @pad*4;
 		left: 0;
 		overflow-y: auto;
-		font-size: 9px;
+		font-size: 4px;
 		background-color: rgba(255, 255, 255, 1);
 	}
+}
+svg {
+	
+  text {
+    font-family: Arial;
+    font-size  : 7px;
+    fill       : @peter_river;
+    font-weight: bold;
+  }
+}
+#A_x5F_Windows {
+	g {
+		fill: #D9E2E2
+	}
+}
+g#A_x5F_Walls g {
+	fill: #E2E2E2;
+}
+
+g#Audit {
+	rect {
+		fill: #DFDBE6;
+		&:hover {
+			fill: #D3C7E8
+		}
+	}
+}
+
+#Walkable {
+	fill: transparent !important;
+}
+
+#pathLine {
+	stroke-width: 7px;
+	stroke: rgba(255, 0, 0, 0.49);
+	fill: transparent;
 }

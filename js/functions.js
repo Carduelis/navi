@@ -1,15 +1,14 @@
 var xp = []
 var yp = []
 
-/*
-var x = -40;
-var y = -60; 
-var xp = new Array(-73,-33,7,-33); // Массив X-координат полигона
-var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
-
-
-*/
-
+var loading = {
+  start : function(text) {
+    $('#loading').addClass('loader');
+  },
+  stop : function() {
+    $('#loading').removeClass('loader');
+  }
+}
 
 function createSvgElement(type) {
   return $(document.createElementNS('http://www.w3.org/2000/svg', type))
@@ -84,77 +83,7 @@ $('rect').each(function(){
   $(this).parent($svg_g).append($svg_text)
 })
 
-//var matrix = coordinates;
-//console.log(matrix);
-// var grid = new PF.Grid(matrix);
-// var finder = new PF.BiAStarFinder();
-//var path = finder.findPath(55, 55, 180, 180, grid);
 
-/*
-$('polygon:eq(70)').each(function(){
-  var points = [];
-  var pointsX = [520,540,440,530];
-  var pointsY = [340,360,350,320];
-
-  points = $(this).attr('points').split(' ');
- 
-  for (var i = points.length - 1; i >= 0; i--) {
-    points[i] = points[i].split(',');
-    pointsX[i] = points[i][0]
-    pointsY[i] = points[i][1]
-  };
-  xMin = getMaxOfArray(pointsX);
-  xMax = getMinOfArray(pointsX);
-  yMin = getMaxOfArray(pointsY);
-  yMax = getMinOfArray(pointsY);
-  xp = pointsX;
-  yp = pointsY;
-  console.log(pointsX);
-  console.log(pointsY);
-  x = xMin;
-  y = yMin;
-  for (var i = xMin; i >= xMax; i--) {
-      x = i;
-      coordinates[i] = [];
-      for (var j = yMin; j >= yMax; j--) {
-          y = j;
-          coordinates[i][j] = inPoly(x,y);
-      };
-  };
-})
-
-$currentRect = $('#ToiletA-L-2-1')
-$currentRect.each(function(){
-  var points = [];
-  var pointsX = [];
-  var pointsY = [];
- 
-  pointsX[0] = parseInt($(this).attr('x'));
-  pointsX[1] = parseInt($(this).attr('x')) + parseInt($(this).attr('width'));
-  pointsY[0] = parseInt($(this).attr('y'));
-  pointsY[1] = parseInt($(this).attr('y')) + parseInt($(this).attr('height'));
-
-
-  xMin = getMaxOfArray(pointsX);
-  xMax = getMinOfArray(pointsX);
-  yMin = getMaxOfArray(pointsY);
-  yMax = getMinOfArray(pointsY);
-  xp = pointsX;
-  yp = pointsY;
-  console.log(pointsX);
-  console.log(pointsY);
-  x = xMin;
-  y = yMin;
-  for (var i = xMin; i >= xMax; i--) {
-      x = i;
-      coordinates[i] = [];
-      for (var j = yMin; j >= yMax; j--) {
-          y = j;
-          coordinates[i][j] = inPoly(x,y);
-      };
-  };
-})
-*/
 
 //-path
 function destroyPopUp() {
@@ -169,15 +98,30 @@ function closePopUp(el) {
   el.parent().remove();
 }
 function showRoom(name) {
-  var name = name.split("");
+  var name = name.split('');
+  // for (var i = name.length - 1; i >= 0; i--) {
+  //   if (name[i] == '-') {
+  //     name = name.splice(i,1);
+  //   }
+  // };
+  if (name.length == 2) {
+    // перед нами большая аудитория A1-A9
+  } else if (name.length == 3) {
+    // перед нами большая аудитория A10-A18
+  } else if (name.length > 3) {
+    // перед нами обычная аудитория с постфиксами
+  }
   corpus = name[0];
   floor = name[1].toString();
   room = name[2]+name[3];
   switch (corpus) {
-    case 'А':
-      corpus = 0
+    case 'A': // latin
+      corpus = 'A'
       break
-    case 'Д':
+    case 'А': // russian
+      corpus = 'A'
+      break
+    case 'Д': // russian
       corpus = 1
       break
     default:
@@ -185,145 +129,36 @@ function showRoom(name) {
       alert('Доступны корпуса А и Д');
   }
   console.log(corpus + floor + room);
+  var buttonPath = '<section><button onclick="setStartAuditory(\''+corpus+floor+room+'\',$(this))">Маршрут отсюда</button><button onclick="setEndAuditory(\''+corpus+floor+room+'\',$(this))">Маршрут сюда</button></section>';
   var content = $('section[data-corpus="'+corpus+'"]')
         .find('.level[data-floor="'+floor+'"]')
         .find('.room[data-roomid="'+room+'"]')
         .clone();
         if (content.get(0)) {
-          createPopUp(content)
+          createPopUp(content+buttonPath)
         } else {
-          createPopUp('Данная аудитория пока не доступна')
+          createPopUp('Информация о данной аудитории пока не доступна'+buttonPath)
         }
 }
+var startIdAud = null;
+function setStartAuditory(id,button) {
+  startIdAud = id;
+  console.log(startIdAud);
+  button.addClass('active');
+  if (endIdAud != null) {
+    makePath(startIdAud,endIdAud);
+  }
+}
+var endIdAud = null;
+function setEndAuditory(id,button) {
+  endIdAud = id;
+  console.log(endIdAud);
+  button.addClass('active');
+  if (startIdAud != null) {
+    makePath(startIdAud,endIdAud);
+  }
+}
 
-
-/*
-          var svgId = "testsvg"
-          elm = document.getElementById(svgId);;
-        function hammerIt(elm) {
-          hammertime = new Hammer(elm, {});
-          hammertime.get('pinch').set({
-              enable: true,
-          });
-          hammertime.get('rotate').set({ 
-            enable: true,
-          });
-          var posX = 0,
-              posY = 0,
-              perX = 50,
-              perY = 50,
-              scale = 1,
-              deg = 0,
-              last_deg = 0,
-              last_scale = 1,
-              last_posX = 0,
-              last_posY = 0,
-              max_pos_x = 0,
-              max_pos_y = 0,
-              transform = "",
-              el = elm;
-            hammertime.on('doubletap  pinch  pinchend rotate rotateend rotatestart center', function(ev) {
-              if (ev.type == "doubletap") {
-                  transform =
-                      "translate3d(0, 0, 0) " +
-                      "scale3d(2, 2, 1) ";
-                  scale = 2;
-                  last_scale = 2;
-                  try {
-                      if (window.getComputedStyle(el, null).getPropertyValue('-webkit-transform').toString() != "matrix(1, 0, 0, 1, 0, 0)") {
-                          transform =
-                              "translate3d(0, 0, 0) " +
-                              "scale3d(1, 1, 1) ";
-                          scale = 1;
-                          last_scale = 1;
-                      }
-                  } catch (err) {}
-                  el.style.webkitTransform = transform;
-                  transform = "";
-             
-              }
-
-              if (ev.type == "pan") {
-                  posX = last_posX + ev.deltaX;
-                  posY = last_posY + ev.deltaY;
-                  max_pos_x = Math.ceil((scale - 1) * el.clientWidth / 2);
-                  max_pos_y = Math.ceil((scale - 1) * el.clientHeight / 2);
-                  if (posX > max_pos_x) {
-                      posX = max_pos_x;
-                  }
-                  if (posX < -max_pos_x) {
-                      posX = -max_pos_x;
-                  }
-                  if (posY > max_pos_y) {
-                      posY = max_pos_y;
-                  }
-                  if (posY < -max_pos_y) {
-                      posY = -max_pos_y;
-                  }
-            }
-            //  }
-
-
-              //pinch
-              if (ev.type == "pinch") {
-                  scale = Math.max(.8, Math.min(last_scale * (ev.scale),2));
-                  $('#DEBUG_scale').text(scale);
-                  svgWidth = $('#'+svgId).width();
-                  svgHeight = $('#'+svgId).height();
-                  perX = ev.center.x / svgWidth * 100;
-                  perY = ev.center.y / svgHeight * 100;
-
-                  $('#DEBUG_center').text('x: '+ev.center.x + ' '+ perX+'; y:' +ev.center.y + ' '+ perY);
-
-              }
-              if(ev.type == "pinchend"){
-                last_scale = scale;
-                
-                $('#'+svgId).hide();
-                $('#'+svgId).get(0).offsetHeight; // no need to store this anywhere, the reference is enough
-                $('#'+svgId).show();
-
-
-              }
-
-              //panend
-              if(ev.type == "panend"){
-                last_posX = posX < max_pos_x ? posX : max_pos_x;
-                last_posY = posY < max_pos_y ? posY : max_pos_y;
-              }
-              if (ev.type == "rotate") {
-                if (last_deg == 0) {
-                  deg =  ev.rotation;
-                } else {
-                  deg = last_deg + ev.rotation;
-                }
-
-                $('#DEBUG_rotate').text(deg);
-              }
-
-              if (ev.type == "rotateend") {
-                last_deg = deg;
-              }
-              //if (scale != 1) {
-                  transform =
-                      "translate3d(" + posX + "px," + posY + "px, 0) " +
-                      "scale3d(" + scale + ", " + scale + ", 1)" + 
-                      "rotate("+deg+"deg)" 
-
-             // }
-
-              if (transform) {
-
-                  el.style.webkitTransform = transform;
-
-                  el.style.transformOrigin = perX + "% " + perY+"%";
-                  $('#DEBUG_posX').text(posX);
-                  $('#DEBUG_posY').text(posY);
-              }
-          });
-        }
-        hammerIt(elm)
-*/         
          
           $('#roomBLock .btn').on('click', function(){
             var p = $(this).parents('#roomBLock');
@@ -479,20 +314,20 @@ function showRoom(name) {
         beforePan = function(oldPan, newPan){
           var stopHorizontal = false
             , stopVertical = false
-            , gutterWidth = 0.9 * $(window).width()
-            , gutterHeight = 0.3 * $(window).height()
-              // Computed variables
-            , sizes = this.getSizes()
-            , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
-            , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
-            , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
-            , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom)
+          //   , gutterWidth = 0.9 * $(window).width()
+          //   , gutterHeight = 0.3 * $(window).height()
+          //     // Computed variables
+          //   , sizes = this.getSizes()
+          //   , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
+          //   , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
+          //   , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
+          //   , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom)
 
-          customPan = {}
-          customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x))
-          customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y))
+          // customPan = {}
+          // customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x))
+          // customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y))
 
-          return customPan
+          // return customPan
         }
 
         window.svg = null;
@@ -551,68 +386,13 @@ function showRoom(name) {
 //                                                                                                                                                                      
 $(document).ready(function(){
 
-      svgAlive('leftA');
-      // Don't use window.onLoad like this in production, because it can only listen to one function.
-    
-     
+  $('#Audit rect').on('click', function(){
 
+    var id = $(this).attr('id');
+    showRoom(id)
+  })
+      svgAlive('level1');
 
-
-      // Don't use window.onLoad like this in production, because it can only listen to one function.
-      // $(function() {
-      //   var lastEventListener = null;
-
-      //   function createNewEmbed(src){
-      //     var embed = document.createElement('embed');
-      //     embed.setAttribute('style', 'width: 500px; height: 500px; border:1px solid black;');
-      //     embed.setAttribute('type', 'image/svg+xml');
-      //     embed.setAttribute('src', src);
-
-      //     document.getElementById('container').appendChild(embed)
-
-      //     lastEventListener = function(){
-      //       svgPanZoom(embed, {
-      //         zoomEnabled: true,
-      //         controlIconsEnabled: true
-      //       });
-      //     }
-      //     embed.addEventListener('load', lastEventListener)
-
-      //     return embed
-      //   }
-
-      //   var lastEmbedSrc = 'tiger.svg'
-      //     , lastEmbed = createNewEmbed(lastEmbedSrc)
-      //     ;
-
-      //   function removeEmbed(){
-      //     // Destroy svgpanzoom
-      //     svgPanZoom(lastEmbed).destroy()
-      //     // Remove event listener
-      //     lastEmbed.removeEventListener('load', lastEventListener)
-      //     // Null last event listener
-      //     lastEventListener = null
-      //     // Remove embed element
-      //     document.getElementById('container').removeChild(lastEmbed)
-      //     // Null reference to embed
-      //     lastEmbed = null
-      //   }
-
-
-      //   $('#swap').on('click', function(){
-      //     // Remove last added svg
-      //     removeEmbed()
-
-      //     if (lastEmbedSrc == 'tiger.svg') {
-      //       lastEmbedSrc = 'Tux.svg'
-      //     } else {
-      //       lastEmbedSrc = 'tiger.svg'
-      //     }
-
-      //     lastEmbed = createNewEmbed(lastEmbedSrc)
-      //   })
-      // });
-    
 //                                                                                                                                           
 //                                                                                                                                           
 //                                                   tttt                           jjjj                                                     
@@ -639,89 +419,89 @@ $(document).ready(function(){
 //      ggg::::::ggg                                                       jjj::::::jjj                                                      
 //         gggggg                                                             jjjjjj                                                         
 
- $.getJSON( "js/data.json", function( data ) {
-  var items = [];
-  $.each( data, function( corpusKey, val ) {
-    var corpusVal = data[corpusKey].corpus;
-    $('body').append('<section class="json" data-corpus='+corpusKey+'>');
-    $.each( data[corpusKey], function( key2, val2 ) {
-      //console.log(key2 + ' - ' + val2);
-      var section = $('section.json[data-corpus="'+corpusKey+'"]');
-      if (key2 == 'corpus') {
-          section.append('<div class="'+key2+'">Корпус '+val2+'</div>');
-      } else {
-        $('<ul/>', {
-          "class": key2,
-          "data-corpus": corpusKey,
-          html: val2
-        }).appendTo(section)
-        //section.append('<ul class="'+key2+'" data-corpus="'+corpusKey+'">'+val2+'</ul>');
-      }
+  $.getJSON( "js/data.json", function( data ) {
+    var items = [];
+    $.each( data, function( corpusKey, val ) {
       var corpusVal = data[corpusKey].corpus;
-      $.each( this, function( levelKey, val3 ) {
-        //console.log(levelKey + ' - ' + val3);
-        var levels = section.find('.levels[data-corpus="'+corpusKey+'"]');
-        var levelVal = data[corpusKey].levels[levelKey].level;
-        var floorVal = data[corpusKey].levels[levelKey].floor;
-        $('<li/>', {
-          "class": "level",
-          "data-level": levelVal,
-          "data-floor": floorVal,
-          html: val3
-        }).appendTo(levels)
+      $('body').append('<section class="json" data-corpus='+corpusKey+'>');
+      $.each( data[corpusKey], function( key2, val2 ) {
+        //console.log(key2 + ' - ' + val2);
+        var section = $('section.json[data-corpus="'+corpusKey+'"]');
+        if (key2 == 'corpus') {
+            section.append('<div class="'+key2+'">Корпус '+val2+'</div>');
+        } else {
+          $('<ul/>', {
+            "class": key2,
+            "data-corpus": corpusKey,
+            html: val2
+          }).appendTo(section)
+          //section.append('<ul class="'+key2+'" data-corpus="'+corpusKey+'">'+val2+'</ul>');
+        }
+        var corpusVal = data[corpusKey].corpus;
+        $.each( this, function( levelKey, val3 ) {
+          //console.log(levelKey + ' - ' + val3);
+          var levels = section.find('.levels[data-corpus="'+corpusKey+'"]');
+          var levelVal = data[corpusKey].levels[levelKey].level;
+          var floorVal = data[corpusKey].levels[levelKey].floor;
+          $('<li/>', {
+            "class": "level",
+            "data-level": levelVal,
+            "data-floor": floorVal,
+            html: val3
+          }).appendTo(levels)
 
-        $.each( this, function( key4, val4 ) {
-            var level = levels.find('.level[data-level="'+levelVal+'"]');
-            if (key4 != 'rooms') {
-                level.append('<div class="'+key4+'">'+val4+'</div>');
-            } else {
-                level.append('<ul class="'+key4+'">'+val4+'</div>');
-            }
-            $.each( this, function( roomKey, val5 ) {
-                var rooms = level.find('.rooms');
-                var roomVal = data[corpusKey].levels[levelKey].rooms[roomKey].num;
-                var roomName = corpusVal+'-'+floorVal+roomVal;
-                rooms.append('<li class="room" data-roomId="'+roomVal+'">');
+          $.each( this, function( key4, val4 ) {
+              var level = levels.find('.level[data-level="'+levelVal+'"]');
+              if (key4 != 'rooms') {
+                  level.append('<div class="'+key4+'">'+val4+'</div>');
+              } else {
+                  level.append('<ul class="'+key4+'">'+val4+'</div>');
+              }
+              $.each( this, function( roomKey, val5 ) {
+                  var rooms = level.find('.rooms');
+                  var roomVal = data[corpusKey].levels[levelKey].rooms[roomKey].num;
+                  var roomName = corpusVal+'-'+floorVal+roomVal;
+                  rooms.append('<li class="room" data-roomId="'+roomVal+'">');
 
-                $.each( this, function( key6, val6 ) {
-                    var room = rooms.find('.room[data-roomid="'+roomVal+'"]');
-                    if (key6 == 'num') {
-                      $('<div/>', {
-                          "class": key6,
-                          html: roomName
-                      }).appendTo(room);
-                      //room.append('<div class="'+key6+'">'+roomName+'</div>');
-                    } else if (key6 == 'subrooms') {
-                      room.append('<ul class="subrooms">')
-                      $.each( this, function( key7, val7 ) {
-                          //room.children('.subrooms').append('<div class="subroom-'+key7+'">'+val7+'</div>');
-                          var subroom = [];
-                          $.each( this, function(key8, val8) {
-                              if (key8 == 'postfix') {
-                                subroom.push('<div class="num">'+roomName+'<sup>'+val8+'</sup></div>')
-                              } else {
-                                subroom.push('<div class="'+key8+'">'+val8+'</div>')
-                              }
-                          });
-                          $('<li/>', {
-                            "class": "subroom",
-                            "data-subroomid": key7,
-                            html: subroom.join('')
-                          }).appendTo(room.children('.subrooms'))
-                      });
-                    } else {
-                      room.append('<div class="'+key6+'">'+val6+'</div>');
-                    }
-                });
-            });
+                  $.each( this, function( key6, val6 ) {
+                      var room = rooms.find('.room[data-roomid="'+roomVal+'"]');
+                      if (key6 == 'num') {
+                        $('<div/>', {
+                            "class": key6,
+                            html: roomName
+                        }).appendTo(room);
+                        //room.append('<div class="'+key6+'">'+roomName+'</div>');
+                      } else if (key6 == 'subrooms') {
+                        room.append('<ul class="subrooms">')
+                        $.each( this, function( key7, val7 ) {
+                            //room.children('.subrooms').append('<div class="subroom-'+key7+'">'+val7+'</div>');
+                            var subroom = [];
+                            $.each( this, function(key8, val8) {
+                                if (key8 == 'postfix') {
+                                  subroom.push('<div class="num">'+roomName+'<sup>'+val8+'</sup></div>')
+                                } else {
+                                  subroom.push('<div class="'+key8+'">'+val8+'</div>')
+                                }
+                            });
+                            $('<li/>', {
+                              "class": "subroom",
+                              "data-subroomid": key7,
+                              html: subroom.join('')
+                            }).appendTo(room.children('.subrooms'))
+                        });
+                      } else {
+                        room.append('<div class="'+key6+'">'+val6+'</div>');
+                      }
+                  });
+              });
+          });
+          
         });
-        
       });
+      
     });
-    
-  });
-  
-}).done(function() {
+
+  }).done(function() {
     console.log( "second success" );
   })
   .fail(function() {
@@ -805,6 +585,33 @@ $(document).ready(function(){
     }
   });
 });
+//                                                                                                                                                                      
+//              dddddddd                                                                                                                dddddddd                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d::::::d                                                                                                                d::::::d                        
+//              d:::::d                                                                                                                 d:::::d                         
+//      ddddddddd:::::d    ooooooooooo       cccccccccccccccc        rrrrr   rrrrrrrrr       eeeeeeeeeeee    aaaaaaaaaaaaa      ddddddddd:::::dyyyyyyy           yyyyyyy
+//    dd::::::::::::::d  oo:::::::::::oo   cc:::::::::::::::c        r::::rrr:::::::::r    ee::::::::::::ee  a::::::::::::a   dd::::::::::::::d y:::::y         y:::::y 
+//   d::::::::::::::::d o:::::::::::::::o c:::::::::::::::::c        r:::::::::::::::::r  e::::::eeeee:::::eeaaaaaaaaa:::::a d::::::::::::::::d  y:::::y       y:::::y  
+//  d:::::::ddddd:::::d o:::::ooooo:::::oc:::::::cccccc:::::c        rr::::::rrrrr::::::re::::::e     e:::::e         a::::ad:::::::ddddd:::::d   y:::::y     y:::::y   
+//  d::::::d    d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r     r:::::re:::::::eeeee::::::e  aaaaaaa:::::ad::::::d    d:::::d    y:::::y   y:::::y    
+//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r     rrrrrrre:::::::::::::::::e aa::::::::::::ad:::::d     d:::::d     y:::::y y:::::y     
+//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r            e::::::eeeeeeeeeee a::::aaaa::::::ad:::::d     d:::::d      y:::::y:::::y      
+//  d:::::d     d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r            e:::::::e         a::::a    a:::::ad:::::d     d:::::d       y:::::::::y       
+//  d::::::ddddd::::::ddo:::::ooooo:::::oc:::::::cccccc:::::c         r:::::r            e::::::::e        a::::a    a:::::ad::::::ddddd::::::dd       y:::::::y        
+//   d:::::::::::::::::do:::::::::::::::o c:::::::::::::::::c ......  r:::::r             e::::::::eeeeeeeea:::::aaaa::::::a d:::::::::::::::::d        y:::::y         
+//    d:::::::::ddd::::d oo:::::::::::oo   cc:::::::::::::::c .::::.  r:::::r              ee:::::::::::::e a::::::::::aa:::a d:::::::::ddd::::d       y:::::y          
+//     ddddddddd   ddddd   ooooooooooo       cccccccccccccccc ......  rrrrrrr                eeeeeeeeeeeeee  aaaaaaaaaa  aaaa  ddddddddd   ddddd      y:::::y           
+//                                                                                                                                                   y:::::y            
+//                                                                                                                                                  y:::::y             
+//                                                                                                                                                 y:::::y              
+//                                                                                                                                                y:::::y               
+//                                                                                                                                               yyyyyyy                
+//                                                                                                                                                                      
+//  
+
+
 
 
 // ----------------------------

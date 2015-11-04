@@ -10,6 +10,7 @@
 
 
 
+<script src="js/path.min.js" type="text/javascript"></script>
 <script src="js/svg-pan-zoom.min.js" type="text/javascript"></script>
 <script src="js/pathfinding-browser.js" type="text/javascript"></script>
 <script src="js/hammer.min.js" type="text/javascript"></script>

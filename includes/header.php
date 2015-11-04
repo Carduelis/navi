@@ -60,6 +60,9 @@
     <li class='logotext'>
       <a href="/navi"><span class="txt">Навигация</span></a>
     </li>
+    <li id='back' class="">
+      <a onclick="closeMap()"></a>
+    </li>
     <li id='menu' class="btn">
       <a></a>
     </li>

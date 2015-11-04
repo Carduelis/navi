@@ -98,36 +98,6 @@ $('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
 $('#corpus-selector').val(currentCorpus)
 
 
-$('rect').each(function(){
-  id = $(this).attr('id');
-  text = id;
-  width = $(this).attr('width');
-  height = $(this).attr('height');
-  x = $(this).attr('x');
-  y = $(this).attr('y');
-
-  gid = 'group' + id ;
-  //$(this).wrap('<g id="'+gid+'">')
-  $svg_g = createSvgElement('g').attr({
-    id:  gid,
-    fill: 'red',
-    width: width*0.5,
-    height: height*0.5,
-    x: x,
-    y: y
-  })
-  $svg_text = createSvgElement('text').attr({
-    fill: 'red',
-    x: x - -5,
-    y: y - -20,
-    width: width*0.5,
-    height: height*0.5,
-
-  }).text(id)
-  $(this).wrap($svg_g)
-  $(this).parent($svg_g).append($svg_text)
-})
-
 
 
 //-path
@@ -141,6 +111,9 @@ function createPopUp(content) {
 }
 function closePopUp(el) {
   el.parent().remove();
+}
+function removeAllPopUps() {
+  $('.popup').remove();
 }
 function parseRoomName(text, latin) {
   var auditoryName = text.split('');
@@ -271,25 +244,41 @@ function showRoom(text) {
   var auditory = parseRoomName(text, true);
   var center = centerOfRect(auditory.roomId);
   openMap(center.x,center.y);
+
+
+  for (var i = document.getElementsByTagName('rect').length - 1; i >= 0; i--) {
+    document.getElementsByTagName('rect')[i].classList.remove('highlighted')
+  };
+  document.getElementById(auditory.roomId).classList.add('highlighted')
 }
 
 function showRoomPopUp(text) {
-  var auditory = parseRoomName(text);
+  var auditory = parseRoomName(text,true);
   // console.log(auditory.corpus + auditory.floor + auditory.room);
-  var content = $('section[data-corpus="'+auditory.corpus+'"]')
-        .find('.level[data-floor="'+auditory.floor+'"]')
-        .find('.room[data-roomid="'+auditory.room+'"]')
-        .clone();
+  var content = $('section[data-corpus="'+parseRoomName(text).corpus+'"]')
+        .find('.level[data-floor="'+parseRoomName(text).floor+'"]')
+        .find('.room[data-roomid="'+parseRoomName(text).room+'"]')
+        .clone()
+        .append('<button class="button" onclick="setStartAuditory(\''+auditory.roomId+'\',$(this))">Маршрут отсюда</button>')
+        .append('<button class="button" onclick="setEndAuditory(\''+auditory.roomId+'\',$(this))">Маршрут сюда</button>')
+       
   if (content.get(0)) {
     createPopUp(content)
   } else {
-    createPopUp('Информация о данной аудитории пока не доступна')
+    content = $("<div/>", {
+      "class": "clickme",
+      text: "Информация о данной аудитории пока не доступна.",
+    }).append('<button class="button" onclick="setStartAuditory(\''+auditory.roomId+'\',$(this))">Маршрут отсюда</button>')
+    .append('<button class="button" onclick="setEndAuditory(\''+auditory.roomId+'\',$(this))">Маршрут сюда</button>')
+   
+    createPopUp(content)
   }
 }
 var startIdAud = null;
 function setStartAuditory(id,button) {
   startIdAud = id;
-  console.log(startIdAud);
+  //console.log(startIdAud);
+  removeAllPopUps();
   button.addClass('active');
   if (endIdAud != null) {
     makePath(startIdAud,endIdAud);
@@ -298,6 +287,7 @@ function setStartAuditory(id,button) {
 var endIdAud = null;
 function setEndAuditory(id,button) {
   endIdAud = id;
+  removeAllPopUps();
   console.log(endIdAud);
   button.addClass('active');
   if (startIdAud != null) {
@@ -315,37 +305,6 @@ function setEndAuditory(id,button) {
           })
 
 
-        var zoom = 1;
-        var scalefactor = 0.05;
-        function zoomIn() {
-          zoom++;
-          scale = 1 + zoom*scalefactor;
-          currentSVG 
-                .children('g')
-                .css('transform','scale('+scale+')');
-
-          currentSVG.setSize(svgWidth,svgHeight, scale)
-
-          /*
-                .css({  
-                  'width': svgWidth*scalePX,
-                  'height': svgHeight*scalePX,
-                });
-        */
-        }
-
-
-
-
-        function zoomOut() {
-          zoom--;
-          scale = 1 + zoom*scalefactor;
-          currentSVG 
-                .children('g')
-                .css('transform','scale('+scale+')');
-
-          currentSVG.setSize(svgWidth,svgHeight, scale)
-        }
 //                                                                                                                                                                             
 //                                                                                                                                                                             
 //  HHHHHHHHH     HHHHHHHHH                                                                                                                              jjjj                  
@@ -532,12 +491,53 @@ function setEndAuditory(id,button) {
 //                                                                                                                                                                      
 $(document).ready(function(){
 
+      svgAlive('level1');
+
+Path.map("#/users/:name/:name2").to(function(){
+    alert(this.params['name'] + " " + this.params['name2']);
+});
+
+Path.map("#/room/:roomId").to(function(){
+    showRoom(this.params['roomId'])
+    //alert(this.params['roomId'] + " " + this.params['name2']);
+});
+Path.listen();
+
   $('#Audit rect').on('click', function(){
 
     var id = $(this).attr('id');
-    showRoom(id)
+    showRoomPopUp(id)
   })
-      svgAlive('level1');
+
+$('rect').each(function(){
+  id = $(this).attr('id');
+  text = id;
+  width = $(this).attr('width');
+  height = $(this).attr('height');
+  x = $(this).attr('x');
+  y = $(this).attr('y');
+
+  gid = 'group' + id ;
+  //$(this).wrap('<g id="'+gid+'">')
+  $svg_g = createSvgElement('g').attr({
+    id:  gid,
+    fill: 'red',
+    width: width*0.5,
+    height: height*0.5,
+    x: x,
+    y: y
+  })
+  $svg_text = createSvgElement('text').attr({
+    fill: 'red',
+    x: x - -5,
+    y: y - -20,
+    width: width*0.5,
+    height: height*0.5,
+
+  }).text(id)
+  $(this).wrap($svg_g)
+  $(this).parent($svg_g).append($svg_text)
+})
 
 //                                                                                                                                           
 //                                                                                                                                           
@@ -564,6 +564,20 @@ $(document).ready(function(){
 //    gg:::::::::::::g                                                   jj::::::::::::j                                                     
 //      ggg::::::ggg                                                       jjj::::::jjj                                                      
 //         gggggg                                                             jjjjjj                                                         
+
+
+// Какие данные нам нужно получать?
+
+// SVG-карты
+// Подгрузка номеров аудиторий на SVG-карту (не факт, что нужно)
+// Данные об аудитории: тип аудитории, время работы, обед, ФИО, телефон
+// Данные о человеке: должность, телефон, какие кафедры возглавляет
+// Данные о кафедре: телефоны, люди, аудитория
+// Данные о факультете: какие подразделения и в каких аудиториях имеет
+// 
+
+
+
 
   $.getJSON( "js/data.json", function( data ) {
     var items = [];

@@ -357,8 +357,8 @@ header {
 					}
 				}
 			}
-			&#menu {
-				width: 25%;
+			&#menu, &#back {
+				width: @pad*8;
 				display: block;
 				position: relative;
 				z-index: 1;
@@ -383,6 +383,12 @@ header {
 						.rotate(90deg);
 					}
 					.txt {display: none;}
+				}
+			}
+			&#back {
+				float: right;
+				a::before {
+					.icon-arrow-left;
 				}
 			}
 			&.btn {

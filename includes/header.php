@@ -15,13 +15,13 @@
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
  <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
   -->
-  <link rel="stylesheet" href="css/style.css?24">
-  <!--это для скопмилированного css
+  <!-- <link rel="stylesheet" href="css/style.css?24"> -->
+  <!-- это для скопмилированного css -->
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
   <script type="text/javascript">less.watch();</script>
-  -->
+  
   <!--
   -->
   
@@ -54,7 +54,7 @@
 
   <ul class='header'>
     <li class='logo'>
-      <a href="#top_page"><img src="http://goldfinch.pro/mirea1/css/logo_min.png"></a>
+      <a href="#top_page"></a>
     </li>
     <li id="loading"></li>
     <li class='logotext'>
@@ -68,7 +68,7 @@
 
   <div id='menuBody' class='hidden-block'>
     <ul>
-      <li><a href="map.php">К карте</a>
+      <li><a onclick="closeMap()">Назад к меню</a>
     </ul>
   </div>
 
@@ -85,5 +85,3 @@
   </div>
 
 </header>
-
-<div id="gf-root">

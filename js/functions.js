@@ -10,6 +10,51 @@ var loading = {
   }
 }
 
+function centerOfRect(id) {
+  var el = $('rect#'+id);
+  var rect = {};
+  var center = {};
+  rect.x = parseInt(el.attr('x'));
+  rect.y = parseInt(el.attr('y'));
+  rect.width = parseInt(el.attr('width'));
+  rect.height = parseInt(el.attr('height'));
+
+  center.x = (rect.x + rect.width/2)
+  center.y = (rect.y + rect.height/2)
+
+  return center
+}
+
+var mapWasOpened = 0;
+function openMap(targetX, targetY) {
+  $('html').addClass('map');
+  $('.svg-holder').removeClass('hidden');
+  if (!mapWasOpened) {
+    svg.resize();
+    svg.fit();
+    svg.center();
+  }
+  if (targetX) {
+    // svg.getSizes.width;
+    // svg.getSizes.height;
+    realZoom = svg.getSizes().realZoom;
+    svg.pan({
+      x:-targetX*realZoom + $(window).width()/2,
+      y:-targetY*realZoom + $(window).height()/2
+    })
+    // svg.zoom строго после svg.pan
+    svg.zoom(10);
+    //svg.zoomAtPointBy(5, {x: targetX, y: targetY})
+  }
+  mapWasOpened = 1;
+}
+
+function closeMap() {
+  $('html').removeClass('map');
+  $('.svg-holder').addClass('hidden');
+
+}
+
 function createSvgElement(type) {
   return $(document.createElementNS('http://www.w3.org/2000/svg', type))
 }
@@ -97,48 +142,149 @@ function createPopUp(content) {
 function closePopUp(el) {
   el.parent().remove();
 }
-function showRoom(name) {
-  var name = name.split('');
-  // for (var i = name.length - 1; i >= 0; i--) {
-  //   if (name[i] == '-') {
-  //     name = name.splice(i,1);
-  //   }
-  // };
-  if (name.length == 2) {
+function parseRoomName(text, latin) {
+  var auditoryName = text.split('');
+  var auditory = {
+    corpus : '',
+    floor: '',
+    room: '',
+    postfix: '',
+  }
+  for (var i = auditoryName.length - 1; i >= 0; i--) {
+    if (auditoryName[i] == '-') {
+      auditoryName.splice(i,1);
+    }
+  }
+
+  auditory.corpus = auditoryName[0];
+  if (latin) {
+    switch (auditory.corpus) {
+      case 'A': // latin
+        auditory.corpus = 'A'
+        break
+      case 'А': // russian
+        auditory.corpus = 'A'
+        break
+      case 'a': // latin
+        auditory.corpus = 'A'
+        break
+      case 'а': // russian
+        auditory.corpus = 'A'
+        break
+      case 'Б': // russian
+        auditory.corpus = 'B'
+        break
+      case 'б': // russian
+        auditory.corpus = 'B'
+        break
+      case 'В': // russian
+        auditory.corpus = 'V'
+        break
+      case 'в': // russian
+        auditory.corpus = 'V'
+        break
+      case 'Г': // russian
+        auditory.corpus = 'G'
+        break
+      case 'г': // russian
+        auditory.corpus = 'G'
+        break
+      case 'Д': // russian
+        auditory.corpus = 'D'
+        break
+      case 'д': // russian
+        auditory.corpus = 'D'
+        break
+      default:
+        corpus = null
+        alert('Первым символом должен быть номер корпуса');
+    }
+  } else {
+    switch (auditory.corpus) {
+      case 'A': // latin
+        auditory.corpus = 0
+        break
+      case 'А': // russian
+        auditory.corpus = 0
+        break
+      case 'a': // latin
+        auditory.corpus = 0
+        break
+      case 'а': // russian
+        auditory.corpus = 0
+        break
+      case 'Б': // russian
+        auditory.corpus = 1
+        break
+      case 'б': // russian
+        auditory.corpus = 1
+        break
+      case 'В': // russian
+        auditory.corpus = 2
+        break
+      case 'в': // russian
+        auditory.corpus = 2
+        break
+      case 'Г': // russian
+        auditory.corpus = 3
+        break
+      case 'г': // russian
+        auditory.corpus = 3
+        break
+      case 'Д': // russian
+        auditory.corpus = 4
+        break
+      case 'д': // russian
+        auditory.corpus = 5
+        break
+      default:
+        corpus = null
+        alert('Первым символом должен быть номер корпуса');
+    }
+  }
+
+
+  if (auditoryName.length == 2) {
     // перед нами большая аудитория A1-A9
-  } else if (name.length == 3) {
+    auditory.floor = 0;
+    auditory.room = auditoryName[2];
+
+  } else if (auditoryName.length == 3) {
     // перед нами большая аудитория A10-A18
-  } else if (name.length > 3) {
+    auditory.floor = 0;
+    auditory.room = auditoryName[2]+auditoryName[3];
+  } else if (auditoryName.length == 4) {
+    // перед нами обычная аудитория 
+    auditory.floor = auditoryName[1];
+    auditory.room = auditoryName[2]+auditoryName[3];
+  } else if (auditoryName.length > 4) {
     // перед нами обычная аудитория с постфиксами
+    auditory.floor = auditoryName[1];
+    auditory.room = auditoryName[2]+auditoryName[3];
+    auditory.postfix = auditoryName[4];
   }
-  corpus = name[0];
-  floor = name[1].toString();
-  room = name[2]+name[3];
-  switch (corpus) {
-    case 'A': // latin
-      corpus = 'A'
-      break
-    case 'А': // russian
-      corpus = 'A'
-      break
-    case 'Д': // russian
-      corpus = 1
-      break
-    default:
-      corpus = null
-      alert('Доступны корпуса А и Д');
-  }
-  console.log(corpus + floor + room);
-  var buttonPath = '<section><button onclick="setStartAuditory(\''+corpus+floor+room+'\',$(this))">Маршрут отсюда</button><button onclick="setEndAuditory(\''+corpus+floor+room+'\',$(this))">Маршрут сюда</button></section>';
-  var content = $('section[data-corpus="'+corpus+'"]')
-        .find('.level[data-floor="'+floor+'"]')
-        .find('.room[data-roomid="'+room+'"]')
+  auditory.roomId = auditory.corpus+auditory.floor+auditory.room+auditory.postfix;
+  return auditory
+}
+function showRoom(text) {
+  // findRoomOnMap(text)
+  var auditory = parseRoomName(text, true);
+  var center = centerOfRect(auditory.roomId);
+  openMap(center.x,center.y);
+}
+
+function showRoomPopUp(text) {
+  var auditory = parseRoomName(text);
+  // console.log(auditory.corpus + auditory.floor + auditory.room);
+  var content = $('section[data-corpus="'+auditory.corpus+'"]')
+        .find('.level[data-floor="'+auditory.floor+'"]')
+        .find('.room[data-roomid="'+auditory.room+'"]')
         .clone();
-        if (content.get(0)) {
-          createPopUp(content+buttonPath)
-        } else {
-          createPopUp('Информация о данной аудитории пока не доступна'+buttonPath)
-        }
+  if (content.get(0)) {
+    createPopUp(content)
+  } else {
+    createPopUp('Информация о данной аудитории пока не доступна')
+  }
 }
 var startIdAud = null;
 function setStartAuditory(id,button) {
@@ -625,7 +771,7 @@ $('header .btn a').bind('click',function() {
   var openBlock = $('.hidden-block#'+openBlockId);
   openBlock.toggleClass('opened');
   thisLink.toggleClass('active');
-  $('.hidden-block').not(openBlock).removeClass('opened')();
+  $('.hidden-block').not(openBlock).removeClass('opened');
   $('header .btn a').not(thisLink).removeClass('active');
 });
 

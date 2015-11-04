@@ -120,7 +120,7 @@ html.map {
 	position: absolute;
 	width: 100%;
 	left: 0;
-		background-color: #585858;
+	background-color: #585858;
 	top: 0;
 	overflow: hidden;
 	i#top_page {
@@ -153,7 +153,26 @@ html.map {
 		bottom: 0;
 		left: 0;
 		right: 0;
+		&#static-footer {
+			display: none;
+		}
 	}
+	#gf-root > .wrapper {
+		display: none;
+	}
+	#map-zoom, #map-controls {
+		display: block;
+	}
+}
+html.index {
+	.svg-holder.hidden {
+		position: absolute;
+		left: -9999999;
+		opacity: 0;
+	}
+}
+#map-zoom, #map-controls {
+	display: none;
 }
 .hinter {
 	display: none;
@@ -476,7 +495,7 @@ form {
 	}
 }
 .wrapper {
-	//max-width: @screen-desktop;
+	max-width: @screen-desktop;
 	margin: @pad*10 auto @pad*7;
 }
 .holder {

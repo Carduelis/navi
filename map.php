@@ -1,5 +1,6 @@
 <?php include ('includes/header.php'); ?>
 
+<div id="gf-root">
 <div class="svg-wrapper">
     <div class="svg-holder">
 		<div class="tab-view" data-corpus="a" data-level="0" data-floor="1">
@@ -33,5 +34,5 @@
 		</div>
     </div>
 </div>
-
+</div><!--end root-->
 <?php include ('includes/footer-svg.php'); ?>

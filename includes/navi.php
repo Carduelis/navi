@@ -1,3 +1,4 @@
+<section class="wrapper">
 <ul class="navigation">
 <li>
     <a class="button toggler" id="room"><span class="name">Найти аудиторию</span>
@@ -65,7 +66,8 @@
     </div>
     
 <li>
-    <a class="button" id="map" href="map.php"><span class="name">Перейти к карте</span>
+    <a class="button" id="map" onclick="openMap()"><span class="name">Перейти к карте</span>
         <span class="description">Интерактивная карта корпусов, аудиторий и помещений</span>
     </a>
 </ul>
+</section>

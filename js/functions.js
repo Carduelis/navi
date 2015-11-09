@@ -60,48 +60,23 @@ function centerOfRect(id) {
   return center
 }
 
+function highlightRoom(roomId) {
+  for (var i = document.getElementsByTagName('rect').length - 1; i >= 0; i--) {
+    document.getElementsByTagName('rect')[i].classList.remove('highlighted')
+  };
+  document.getElementById(roomId).classList.add('highlighted')
 
+}
 function createSvgElement(type) {
   return $(document.createElementNS('http://www.w3.org/2000/svg', type))
 }
-var currentLevel = 1;
-var currentCorpus = 'a';
-function mapView(corpus, level) {
-  return $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="'+currentLevel+'"]')
-}
-var currentSVG = mapView(currentCorpus, currentLevel).find('svg');
 
-currentSVG.setSize = function(width, height, scale) {
-  deviceWidth = $(window).width();
-  deviceHeight = $(window).height();
+// var currentLevel = 1;
+var defaultCorpus  = 'a';
 
-  scrolledLeft = this.offset().left;
-  scrolledTop = this.offset().top;
-
-  console.log(scrolledLeft)
-
-  originLeft = (deviceWidth + 2779.46)/2 - scrolledLeft;
-  originTop = (deviceHeight + 454.613)/2 - scrolledTop;
-// после скролла надо сохранять предыдущий trnasfrom-origin
-
-  xShift = (width - width*scale)/2;
-  yShift = (height - height*scale)/2;
-  width = width*scale;
-  height = height*scale;
-  this.attr('width', width)
-    .attr('height', height)
-    .get(0).setAttribute('viewBox',  xShift+' '+yShift+' '+width+' '+height);
-   this.children('g').css('transform-origin', originLeft+'px '+originTop+'px ' );
-};
-
-
-
-svgWidth = currentSVG.width();
-svgHeight = currentSVG.height();
-mapView(currentCorpus, currentLevel).show().scrollLeft(currentSVG.width()/2);
-$('.tab-buttons [data-corpus="'+currentCorpus+'"]').show();
-$('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
-$('#corpus-selector').val(currentCorpus)
+// $('.tab-buttons [data-corpus="'+currentCorpus+'"]').show();
+// $('.tab-buttons a[data-level="'+currentLevel+'"]').addClass('active');
+// $('#corpus-selector').val(currentCorpus)
 
 
 
@@ -123,150 +98,6 @@ function removeAllPopUps() {
 }
 
 
-         
-          $('#roomBLock .btn').on('click', function(){
-            var p = $(this).parents('#roomBLock');
-            corpus = p.find('select').val();
-            number = p.find('input[type="number"]').val();
-            console.log(corpus + number)
-            showRoom(corpus+number)
-          })
-
-
-//                                                                                                                                                                             
-//                                                                                                                                                                             
-//  HHHHHHHHH     HHHHHHHHH                                                                                                                              jjjj                  
-//  H:::::::H     H:::::::H                                                                                                                             j::::j                 
-//  H:::::::H     H:::::::H                                                                                                                              jjjj                  
-//  HH::::::H     H::::::HH                                                                                                                                                    
-//    H:::::H     H:::::H    aaaaaaaaaaaaa      mmmmmmm    mmmmmmm      mmmmmmm    mmmmmmm       eeeeeeeeeeee    rrrrr   rrrrrrrrr                     jjjjjjj    ssssssssss   
-//    H:::::H     H:::::H    a::::::::::::a   mm:::::::m  m:::::::mm  mm:::::::m  m:::::::mm   ee::::::::::::ee  r::::rrr:::::::::r                    j:::::j  ss::::::::::s  
-//    H::::::HHHHH::::::H    aaaaaaaaa:::::a m::::::::::mm::::::::::mm::::::::::mm::::::::::m e::::::eeeee:::::eer:::::::::::::::::r                    j::::jss:::::::::::::s 
-//    H:::::::::::::::::H             a::::a m::::::::::::::::::::::mm::::::::::::::::::::::me::::::e     e:::::err::::::rrrrr::::::r                   j::::js::::::ssss:::::s
-//    H:::::::::::::::::H      aaaaaaa:::::a m:::::mmm::::::mmm:::::mm:::::mmm::::::mmm:::::me:::::::eeeee::::::e r:::::r     r:::::r                   j::::j s:::::s  ssssss 
-//    H::::::HHHHH::::::H    aa::::::::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me:::::::::::::::::e  r:::::r     rrrrrrr                   j::::j   s::::::s      
-//    H:::::H     H:::::H   a::::aaaa::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me::::::eeeeeeeeeee   r:::::r                               j::::j      s::::::s   
-//    H:::::H     H:::::H  a::::a    a:::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me:::::::e            r:::::r                               j::::jssssss   s:::::s 
-//  HH::::::H     H::::::HHa::::a    a:::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::me::::::::e           r:::::r                               j::::js:::::ssss::::::s
-//  H:::::::H     H:::::::Ha:::::aaaa::::::a m::::m   m::::m   m::::mm::::m   m::::m   m::::m e::::::::eeeeeeee   r:::::r             ......            j::::js::::::::::::::s 
-//  H:::::::H     H:::::::H a::::::::::aa:::am::::m   m::::m   m::::mm::::m   m::::m   m::::m  ee:::::::::::::e   r:::::r             .::::.            j::::j s:::::::::::ss  
-//  HHHHHHHHH     HHHHHHHHH  aaaaaaaaaa  aaaammmmmm   mmmmmm   mmmmmmmmmmmm   mmmmmm   mmmmmm    eeeeeeeeeeeeee   rrrrrrr             ......            j::::j  sssssssssss    
-//                                                                                                                                                      j::::j                 
-//                                                                                                                                            jjjj      j::::j                 
-//                                                                                                                                           j::::jj   j:::::j                 
-//                                                                                                                                           j::::::jjj::::::j                 
-//                                                                                                                                            jj::::::::::::j                  
-//                                                                                                                                              jjj::::::jjj                   
-//                                                                                                                                                 jjjjjj                                                                                                                                                                                                                                                                                                                                                                      
-   var eventsHandler;
-
-        eventsHandler = {
-          haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
-        , init: function(options) {
-            var instance = options.instance
-              , initialScale = 1
-              , pannedX = 0
-              , pannedY = 0
-
-            // Init Hammer
-            // Listen only for pointer and touch events
-            this.hammer = Hammer(options.svgElement, {
-              inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
-            })
-
-            // Enable pinch
-            this.hammer.get('pinch').set({enable: true})
-
-            // Handle double tap
-            this.hammer.on('doubletap', function(ev){
-              instance.zoomIn()
-            })
-
-            // Handle pan
-            this.hammer.on('panstart panmove', function(ev){
-              // On pan start reset panned variables
-              if (ev.type === 'panstart') {
-                pannedX = 0
-                pannedY = 0
-              }
-
-              // Pan only the difference
-              instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
-              pannedX = ev.deltaX
-              pannedY = ev.deltaY
-            })
-
-            // Handle pinch
-            this.hammer.on('pinchstart pinchmove', function(ev){
-              // On pinch start remember initial zoom
-              if (ev.type === 'pinchstart') {
-                initialScale = instance.getZoom()
-                instance.zoom(initialScale * ev.scale)
-              }
-
-              instance.zoom(initialScale * ev.scale)
-
-            })
-
-            // Prevent moving the page on some devices when panning over SVG
-            options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
-          }
-
-        , destroy: function(){
-            this.hammer.destroy()
-          }
-        }
-
-//                                                                                                                     
-//                                                                                                                     
-//     SSSSSSSSSSSSSSS                                            iiii                     iiii          tttt          
-//   SS:::::::::::::::S                                          i::::i                   i::::i      ttt:::t          
-//  S:::::SSSSSS::::::S                                           iiii                     iiii       t:::::t          
-//  S:::::S     SSSSSSS                                                                               t:::::t          
-//  S:::::S      vvvvvvv           vvvvvvvggggggggg   ggggg     iiiiiiinnnn  nnnnnnnn    iiiiiiittttttt:::::ttttttt    
-//  S:::::S       v:::::v         v:::::vg:::::::::ggg::::g     i:::::in:::nn::::::::nn  i:::::it:::::::::::::::::t    
-//   S::::SSSS     v:::::v       v:::::vg:::::::::::::::::g      i::::in::::::::::::::nn  i::::it:::::::::::::::::t    
-//    SS::::::SSSSS v:::::v     v:::::vg::::::ggggg::::::gg      i::::inn:::::::::::::::n i::::itttttt:::::::tttttt    
-//      SSS::::::::SSv:::::v   v:::::v g:::::g     g:::::g       i::::i  n:::::nnnn:::::n i::::i      t:::::t          
-//         SSSSSS::::Sv:::::v v:::::v  g:::::g     g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t          
-//              S:::::Sv:::::v:::::v   g:::::g     g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t          
-//              S:::::S v:::::::::v    g::::::g    g:::::g       i::::i  n::::n    n::::n i::::i      t:::::t    tttttt
-//  SSSSSSS     S:::::S  v:::::::v     g:::::::ggggg:::::g      i::::::i n::::n    n::::ni::::::i     t::::::tttt:::::t
-//  S::::::SSSSSS:::::S   v:::::v       g::::::::::::::::g      i::::::i n::::n    n::::ni::::::i     tt::::::::::::::t
-//  S:::::::::::::::SS     v:::v         gg::::::::::::::g      i::::::i n::::n    n::::ni::::::i       tt:::::::::::tt
-//   SSSSSSSSSSSSSSS        vvv            gggggggg::::::g      iiiiiiii nnnnnn    nnnnnniiiiiiii         ttttttttttt  
-//                                                 g:::::g                                                             
-//                                     gggggg      g:::::g                                                             
-//                                     g:::::gg   gg:::::g                                                             
-//                                      g::::::ggg:::::::g                                                             
-//                                       gg:::::::::::::g                                                              
-//                                         ggg::::::ggg                                                                
-//                                            gggggg                                                                                                            gggggg                                                                                    
-
-var mapWasOpened = 0;
-function openMap(targetX, targetY) {
-  $('html').addClass('map');
-  $('.svg-holder').removeClass('hidden');
-  if (!mapWasOpened) {
-    svg.resize();
-    svg.fit();
-    svg.center();
-  }
-  if (targetX) {
-    // svg.getSizes.width;
-    // svg.getSizes.height;
-    realZoom = svg.getSizes().realZoom;
-    //svg.resize();
-    svg.pan({
-      x:-targetX*realZoom + $(window).width()/2,
-      y:-targetY*realZoom + $(window).height()/2
-    })
-    // svg.zoom строго после svg.pan
-    svg.zoom(10);
-    //svg.zoomAtPointBy(5, {x: targetX, y: targetY})
-  }
-  mapWasOpened = 1;
-}
 
 function closeMap() {
   $('html').removeClass('map');
@@ -465,55 +296,6 @@ function setEndAuditory(id,button) {
   }
 }
 
-        var beforePan
-
-        beforePan = function(oldPan, newPan){
-          var stopHorizontal = false
-            , stopVertical = false
-          //   , gutterWidth = 0.9 * $(window).width()
-          //   , gutterHeight = 0.3 * $(window).height()
-          //     // Computed variables
-          //   , sizes = this.getSizes()
-          //   , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
-          //   , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
-          //   , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
-          //   , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom)
-
-          // customPan = {}
-          // customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x))
-          // customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y))
-
-          // return customPan
-        }
-
-        window.svg = null;
-        function svgAlive(svgId) {
-
-          // to do
-          // 1) надо запомнить предыдущий уровень зума и центровку
-  
-          $('.map-controls').removeClass('show');
-            if (svg) {
-              svgPanZoom('svg').destroy();
-            }
-            svg = svgPanZoom('#'+svgId, {
-            zoomEnabled: true,
-            controlIconsEnabled: true,
-            fit: true,
-            center: true,
-            zoomScaleSensitivity: 0.3,
-            minZoom: 1,
-            maxZoom: 14,
-            customEventsHandler: eventsHandler,
-            beforePan: beforePan
-          });
-          $('.map-controls').addClass('show');
-          $(window).resize(function(){
-            // svg.resize();
-            // svg.fit();
-            // svg.center();
-          })
-        }
 
 function setAuditoryNames(el) {
  id = el.attr('id');
@@ -544,160 +326,34 @@ function setAuditoryNames(el) {
       el.wrap($svg_g)
       el.parent($svg_g).append($svg_text)
 }
-var getSvg = {};
-function showSvgPlanByLevel(level) {
-  if (!$('#level'+level).get(0)) {
 
-  
-  getSvg = $.ajax({
-    url:  "./img/level"+level+".svg",
-    dataType: 'html',
-    beforeSend: function(param){
-      loader.start();
-      loader.add({
-        name: 'map',
-        text: 'Загружаются планы здания. Уровень '+level
-      });
-    }
-  }).done(function(data) {
-    loader.remove({
-        name: 'map',
-        text: 'Уровень '+level+'. Загрузка завершена.'
-      });
-    loader.stop('map');
-    $('.svg-view[data-level="'+level+'"]').removeClass('hided')
-    $('.svg-view[data-level="'+level+'"]').append(data)
-    
-    console.log("svg has been successfully loaded");
-    
-    svgAlive('level'+level);
 
-    var $auditories = $('svg#level'+level).find('.auditories');
-    if ($auditories.get(0)) { 
-      $auditories.find('rect').on('click', function(){
-        var id = $(this).attr('id');
-        showRoomPopUp(id)
-      });
-    } else {
-      console.warn('"auditories"-class is not represented')
-    }
-
-    // запускать однажды надо, а не каждый раз
-    $auditories.find('rect').each(function(){
-      setAuditoryNames($(this))
-    })
-
-    Path.listen();
-  
-  }).fail(function() {
-    console.warn("Cant load svg-file");
-  }).always(function() {
-    console.log('ajax has been worked')
-  });
-} else {
-  console.log('Have downloaded already');
-  getSvg.success(function(){
-    svgAlive('level'+level);
-  })
+function changeLevelButton(el) {
+    var container = el.parents('.tab-buttons');
+    var currentCorpus = container.find('select').val();
+    // console.log(currentCorpus)
+    container.find('a.btn').removeClass('active');
+    el.addClass('active');
 }
+function changeLevelButtonsByCorpus(el,level) {
+  var container = el.parents('.tab-buttons');
+  var currentCorpus = el.val();
+  //console.log(currentCorpus);
+  container.find('div[data-corpus]').hide();
+  container.find('div[data-corpus="'+currentCorpus+'"]').show();
+  container.find('a.btn').removeClass('active');
+  container.find('a.btn[data-level="'+level+'"]').addClass('active');
 }
-//                                                                                                                                                                      
-//              dddddddd                                                                                                                dddddddd                        
-//              d::::::d                                                                                                                d::::::d                        
-//              d::::::d                                                                                                                d::::::d                        
-//              d::::::d                                                                                                                d::::::d                        
-//              d:::::d                                                                                                                 d:::::d                         
-//      ddddddddd:::::d    ooooooooooo       cccccccccccccccc        rrrrr   rrrrrrrrr       eeeeeeeeeeee    aaaaaaaaaaaaa      ddddddddd:::::dyyyyyyy           yyyyyyy
-//    dd::::::::::::::d  oo:::::::::::oo   cc:::::::::::::::c        r::::rrr:::::::::r    ee::::::::::::ee  a::::::::::::a   dd::::::::::::::d y:::::y         y:::::y 
-//   d::::::::::::::::d o:::::::::::::::o c:::::::::::::::::c        r:::::::::::::::::r  e::::::eeeee:::::eeaaaaaaaaa:::::a d::::::::::::::::d  y:::::y       y:::::y  
-//  d:::::::ddddd:::::d o:::::ooooo:::::oc:::::::cccccc:::::c        rr::::::rrrrr::::::re::::::e     e:::::e         a::::ad:::::::ddddd:::::d   y:::::y     y:::::y   
-//  d::::::d    d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r     r:::::re:::::::eeeee::::::e  aaaaaaa:::::ad::::::d    d:::::d    y:::::y   y:::::y    
-//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r     rrrrrrre:::::::::::::::::e aa::::::::::::ad:::::d     d:::::d     y:::::y y:::::y     
-//  d:::::d     d:::::d o::::o     o::::oc:::::c                      r:::::r            e::::::eeeeeeeeeee a::::aaaa::::::ad:::::d     d:::::d      y:::::y:::::y      
-//  d:::::d     d:::::d o::::o     o::::oc::::::c     ccccccc         r:::::r            e:::::::e         a::::a    a:::::ad:::::d     d:::::d       y:::::::::y       
-//  d::::::ddddd::::::ddo:::::ooooo:::::oc:::::::cccccc:::::c         r:::::r            e::::::::e        a::::a    a:::::ad::::::ddddd::::::dd       y:::::::y        
-//   d:::::::::::::::::do:::::::::::::::o c:::::::::::::::::c ......  r:::::r             e::::::::eeeeeeeea:::::aaaa::::::a d:::::::::::::::::d        y:::::y         
-//    d:::::::::ddd::::d oo:::::::::::oo   cc:::::::::::::::c .::::.  r:::::r              ee:::::::::::::e a::::::::::aa:::a d:::::::::ddd::::d       y:::::y          
-//     ddddddddd   ddddd   ooooooooooo       cccccccccccccccc ......  rrrrrrr                eeeeeeeeeeeeee  aaaaaaaaaa  aaaa  ddddddddd   ddddd      y:::::y           
-//                                                                                                                                                   y:::::y            
-//                                                                                                                                                  y:::::y             
-//                                                                                                                                                 y:::::y              
-//                                                                                                                                                y:::::y               
-//                                                                                                                                               yyyyyyy                
-//                                                                                                                                                                      
-//           
 
-      // Don't use window.onLoad like this in production, because it can only listen to one function.
-      // $(function() {
-      //   var lastEventListener = null;
-
-      //   function createNewEmbed(src){
-      //     var embed = document.createElement('embed');
-      //     embed.setAttribute('style', 'width: 500px; height: 500px; border:1px solid black;');
-      //     embed.setAttribute('type', 'image/svg+xml');
-      //     embed.setAttribute('src', src);
-
-      //     document.getElementById('container').appendChild(embed)
-
-      //     lastEventListener = function(){
-      //       svgPanZoom(embed, {
-      //         zoomEnabled: true,
-      //         controlIconsEnabled: true
-      //       });
-      //     }
-      //     embed.addEventListener('load', lastEventListener)
-
-      //     return embed
-      //   }
-
-      //   var lastEmbedSrc = 'tiger.svg'
-      //     , lastEmbed = createNewEmbed(lastEmbedSrc)
-      //     ;
-
-      //   function removeEmbed(){
-      //     // Destroy svgpanzoom
-      //     svgPanZoom(lastEmbed).destroy()
-      //     // Remove event listener
-      //     lastEmbed.removeEventListener('load', lastEventListener)
-      //     // Null last event listener
-      //     lastEventListener = null
-      //     // Remove embed element
-      //     document.getElementById('container').removeChild(lastEmbed)
-      //     // Null reference to embed
-      //     lastEmbed = null
-      //   }
-
-
-      //   $('#swap').on('click', function(){
-      //     // Remove last added svg
-      //     removeEmbed()
-
-      //     if (lastEmbedSrc == 'tiger.svg') {
-      //       lastEmbedSrc = 'Tux.svg'
-      //     } else {
-      //       lastEmbedSrc = 'tiger.svg'
-      //     }
-
-      //     lastEmbed = createNewEmbed(lastEmbedSrc)
-      //   })
-      // });
+function setControls(obj) {
+  obj.corpus;
+  obj.level;
+  var thisOption = $('#corpus-selector option[value="'+obj.corpus+'"]');
+  thisOption.attr('selected','selected');
+  changeLevelButtonsByCorpus(thisOption,obj.level);
+}
 
 $(document).ready(function(){
-  showSvgPlanByLevel(1);
-  Path.map("#/users/:name/:name2").to(function(){
-      alert(this.params['name'] + " " + this.params['name2']);
-  });
-
-  Path.map("#/room/:roomId").to(function(){
-      var level = parseRoomName(this.params['roomId']).level;
-      console.log('lololol' + level + ' - '+ parseRoomName(this.params['roomId']).floor)
-      showSvgPlanByLevel(level);
-      roomId = this.params['roomId'];
-      getSvg.always(function(){
-        showRoom(roomId);
-      })
-      //alert(this.params['roomId'] + " " + this.params['name2']);
-  });
 
 
 //                                                                                                                                           
@@ -861,27 +517,21 @@ $(document).ready(function(){
 //                                                                              
 
 
+
   $('.tab-buttons select').on('change', function(){
-    var container = $(this).parents('.tab-buttons');
-    var currentCorpus = $(this).val();
-    //console.log(currentCorpus);
-    container.find('div[data-corpus]').hide();
-    container.find('div[data-corpus="'+currentCorpus+'"]').show();
-    $('.tab-view').hide();
-    $('.tab-view[data-corpus="'+currentCorpus+'"][data-level="1"]').show();
-    container.find('a.btn').removeClass('active');
-    container.find('a.btn[data-level="1"]').addClass('active');
+    var corpus = $(this).val();
+    var level = $('.tab-buttons [data-corpus="'+corpus+'"]').find('a.active').data('level');
+    changeLevelButtonsByCorpus($(this),level);
   });
   $('.tab-buttons a.btn').on('click', function(){
-    var currentLevel = $(this).attr('data-level');
-    var container = $(this).parents('.tab-buttons');
-    var currentCorpus = container.find('select').val();
-    container.find('a.btn').removeClass('active');
-    $(this).addClass('active');
-    $('.svg-view').addClass('hided');
-    $('.svg-view[data-level="'+currentLevel+'"]').removeClass('hided');
-    showSvgPlanByLevel(currentLevel)
-  })
+    var level = $(this).data('level');
+    changeLevelButton($(this));
+    initSvg(level, function(){
+      svgAction.view(level);
+    });
+  });
+
+
   $('#openTheForm').bind('click',function() {
     $('#form').slideDown();
     $('#thx').slideUp();

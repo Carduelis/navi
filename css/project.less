@@ -167,7 +167,7 @@ html.map {
 html.index {
 	.svg-holder.hidden {
 		position: absolute;
-		left: -9999999;
+		left: -9999999px;
 		opacity: 0;
 	}
 }
@@ -331,7 +331,7 @@ header {
 				display: block;
 				text-align: center;
 				@media (max-width: @screen-phoneh) {
-					width: 75%;
+					width: 55%;
 					text-align: left;
 					a {font-size: @pad*3.5;}
 				}
@@ -357,7 +357,7 @@ header {
 					}
 				}
 			}
-			&#menu, &#back {
+			&#menu, &#back, &#fullscreen, &#exitfullscreen {
 				width: @pad*8;
 				display: block;
 				position: relative;
@@ -389,6 +389,19 @@ header {
 				float: right;
 				a::before {
 					.icon-arrow-left;
+				}
+			}
+			&#exitfullscreen {
+				float: right;
+				display: none;
+				a::before {
+					.icon-contract;
+				}
+			}
+			&#fullscreen {
+				float: right;
+				a::before {
+					.icon-expand;
 				}
 			}
 			&.btn {
@@ -628,6 +641,13 @@ svg {
 .tab-view {
 	display: none;
 }
+
+.svg-view {
+	&.hided {
+		left: -999999px;
+		position: absolute;
+	}
+}
  
 .tab-buttons {
 	height: @pad*6;
@@ -635,9 +655,9 @@ svg {
 	ul li {
 		line-height: @pad*2;
 		vertical-align: middle;
-		&:nth-of-type(1) {width: 33%};
+		&:nth-of-type(1) {width: 20%};
 		&:nth-of-type(2) {width: 22%};
-		&:nth-of-type(3) {width: 45%};
+		&:nth-of-type(3) {width: 58%};
 		&:nth-of-type(3) {
 			a {
 				min-width: 20%;
@@ -646,11 +666,29 @@ svg {
 	}
 	div[data-corpus] {
 		display: none;
+		padding: 0 @pad;
 		text-align: center;
+	}
+	div.overflow {
+		width: 100%;
+		white-space: nowrap;
+		.overflow-x;
 	}
 	.btn {
 		.btn-border();
 		background-color: @peter_river;
+	}
+	.select-container {
+		position: relative;
+		label {
+			position: absolute;
+			top: @pad/4;
+			.light;
+			margin: 0;
+			left: @pad;
+			opacity: .7;
+			font-size: 75%;
+		}
 	}
 	select {
 		margin: 0;
@@ -658,7 +696,8 @@ svg {
 		border-color: @color-back;
 		border-radius: @pad/2;
 		color: @color-back;
-		padding: @pad @pad/2;
+		padding: @pad*2 @pad/2 0;
+		height: @pad*5;
 		option {
 			color: @color-txt;
 			&[disabled] {
@@ -671,15 +710,29 @@ svg {
 		text-align: right;
 		opacity: .8;
 	}
+	a.btn {
+		position: relative;
+		padding: @pad*1.5;
+		overflow: hidden;
+		padding-left: @pad*4;
+	} 
 	span {
 		display: block;
 		.light;
 		&.level {
 			.bold;
+			right: @pad*5;
+			font-size: @pad*9;
+			opacity: .5;
+			line-height: @pad*2;
+			height: @pad*2;
+			top: 50%;
+			margin-top: -@pad/2;
+			position: absolute;
 		}		
 		&.floor {
 			font-size: 75%;
-			opacity: .7;
+			opacity: .9;
 		}
 	}
 }

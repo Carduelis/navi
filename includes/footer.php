@@ -17,6 +17,7 @@
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="js/jquery.hammer.min.js" type="text/javascript"></script>
 <script src="js/functions.js" type="text/javascript"></script>
+<script src="js/svg.js" type="text/javascript"></script>
 <script src="js/path.js" type="text/javascript"></script>
 
 </body>

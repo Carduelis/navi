@@ -116,7 +116,8 @@ function getCoordinates(element) {
 
 
 $(document).ready(function(){
-  getCoordinates($('#Walkable'));
+  
+  //getCoordinates($('#Walkable'));
 
  
   // coordinates.splice(0,yMin);
@@ -285,7 +286,7 @@ var arr1 = [
 function makePath(idAudStart, idAudEnd) {
   /// to do 
   //  start animation progress bar
-  //loading.start();
+  loading.start();
  $("svg").find("#pathLine").remove();
   destroyPopUp();
 
@@ -337,7 +338,7 @@ function makePath(idAudStart, idAudEnd) {
 
   drawPath(calculatePathArray(getCoordinates($('#Walkable'))), 'level1');
 
-  //loading.stop();
+  loading.stop();
  
   /// to do
   // end animation

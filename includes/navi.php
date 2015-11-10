@@ -66,7 +66,7 @@
     </div>
     
 <li>
-    <a class="button" id="map" onclick="initSvg(1,false)"><span class="name">Перейти к карте</span>
+    <a class="button" id="map" onclick="initSvg(1,svgAction.view(1))"><span class="name">Перейти к карте</span>
         <span class="description">Интерактивная карта корпусов, аудиторий и помещений</span>
     </a>
 </ul>

@@ -41,11 +41,6 @@
 			</select>
 			</div>
 			<li>
-				<div class="description" onclick="drawPath(calculatePathArray(coordinates),'testsvg')">
-				<span class="lever">Уровень</span>
-				<span class="floor">Аудитории</span>
-				</div>
-			<li>
 			<div class="overflow" data-corpus="a">
 				<a data-level="0" class="btn"><span class="level" >0</span><span class="floor">А-1xx</span></a>
 				<a data-level="1" class="btn"><span class="level" >1</span><span class="floor">А-2xx</span></a>

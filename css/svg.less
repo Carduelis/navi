@@ -14,7 +14,6 @@
 svg {
 	//min-width: 1020px;
 	//width: 100%;
-	background-color: #aaa;
 	//height: 660px;
 	//min-height: 100%;
 	overflow: hidden;
@@ -23,11 +22,8 @@ svg {
 	height: 100% !important;
 }
 .svg-holder {
-	background-color: #585858;
-	> .tab-view {
-		background-color: #585858;
-		display: block;
-	}
+	//.gradient(darken(@silver,15%),@silver);
+	background: @silver;
 	code, pre {
 		position: absolute;
 		top: @pad*8;
@@ -51,11 +47,15 @@ svg {
 }
 #A_x5F_Windows {
 	g {
-		fill: #D9E2E2
+		fill: #83DDDD;
+		polyline {
+			stroke: @asbestos;
+			stroke-width: 0.6px;
+		}
 	}
 }
 g#A_x5F_Walls g {
-	fill: #E2E2E2;
+	fill: @concrete;
 }
 
 g#Audit {

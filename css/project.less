@@ -184,6 +184,7 @@ html.index {
 	display: none;
 	top: 50%;
 	margin: @pad/2;
+	padding: 0;
 	border-radius: @pad/2;
 	margin-top: -@pad*4;
 	background-color: fadeout(@peter_river,40%);
@@ -296,19 +297,17 @@ header {
 	ul.header {
 		max-width: @screen-desktop;
 		margin: auto !important;
-		height: @header-height;
 		li {
-			
+			vertical-align: top;
 			a {
 				text-decoration: none;
+				box-shadow: none;
 				text-align: center;
-				padding: @pad;
-				height: @header-height;
+				padding: @pad/2;
 				line-height: @header-height - @pad*2;
 				//.cuprum;
 				.large;
 				.unsel;
-				box-shadow: none !important;
 				color: @clouds !important;
 				&.active {
 					background-color: @peter_river;
@@ -331,18 +330,18 @@ header {
 				display: block;
 				text-align: center;
 				@media (max-width: @screen-phoneh) {
-					width: 55%;
 					text-align: left;
 					a {font-size: @pad*3.5;}
 				}
 				a {
-					font-size: @pad*4;
-					padding-left: @pad*3;
+					font-size: @pad*3.5;
+					padding: @pad/2 0;
 					white-space: nowrap;
 					color: @clouds;
 					text-align: left;
 					.txt {
 						position: relative;
+						.light;
 						display: inline-block;
 						&::after {
 							content: 'МИРЭА';
@@ -357,13 +356,15 @@ header {
 					}
 				}
 			}
-			&#menu, &#back, &#fullscreen, &#exitfullscreen {
-				width: @pad*8;
+			&#back {
+				float: left;
+			}
+			&.btn {
+				width: @pad*7;
 				display: block;
 				position: relative;
 				z-index: 1;
 				float: right;
-				@media (min-width: @screen-tablet) {display: none;}
 				a {
 					display: block;
 					padding: @pad/2 0;
@@ -386,7 +387,7 @@ header {
 				}
 			}
 			&#back {
-				float: right;
+				float: left;
 				a::before {
 					.icon-arrow-left;
 				}
@@ -403,10 +404,6 @@ header {
 				a::before {
 					.icon-expand;
 				}
-			}
-			&.btn {
-				@media (min-width: @screen-tablet) {display: inline-block;}
-
 			}
 		}
 	}
@@ -671,16 +668,30 @@ svg {
 		position: absolute;
 	}
 }
- 
+
+@color-text: #4D729B;
+@color-light: darken(#8CC9FF,5%);
+@color-accent: #4F87BF;
+
+#map-controls {
+	padding: 0;
+	box-shadow: 0 0 3px @color-accent;
+}
+@bottombar-height: @pad*7;
 .tab-buttons {
-	height: @pad*6;
-	line-height: @pad*6;
+	background-color: @color-light;
+	//.gradient(@color-light,darken(@color-light, 4%));
+	
+	height: @bottombar-height;
+	line-height: @bottombar-height;
 	ul li {
 		line-height: @pad*2;
-		vertical-align: middle;
-		&:nth-of-type(1) {width: 20%};
-		&:nth-of-type(2) {width: 22%};
-		&:nth-of-type(3) {width: 58%};
+		vertical-align: top;
+		&:nth-of-type(1) {width: 28%};
+		&:nth-of-type(2) {
+			width: 72%;
+			position: relative;
+		};
 		&:nth-of-type(3) {
 			a {
 				min-width: 20%;
@@ -688,75 +699,121 @@ svg {
 		}
 	}
 	div[data-corpus] {
-		display: none;
-		padding: 0 @pad;
+		display: block;
 		text-align: center;
+		position: absolute;
+		left: 0;
+		right: 0;
+		.transitions();
+		.translate(0,@bottombar-height);
+		&.show {
+			.translate(0,0);
+		}
 	}
 	div.overflow {
-		width: 100%;
 		white-space: nowrap;
 		.overflow-x;
+		padding-left: @pad;
+		width: 100%;
 	}
 	.btn {
-		.btn-border();
-		background-color: @peter_river;
+		height: @bottombar-height; 
 	}
 	.select-container {
+		padding: 0;
+		height: @bottombar-height; 
+		width: 100%;
 		position: relative;
+		color: @color-text;
 		label {
 			position: absolute;
-			top: @pad/4;
+			top: 0;
 			.light;
 			margin: 0;
-			left: @pad;
-			opacity: .7;
-			font-size: 75%;
+			z-index: 1;
+			left: @pad*4;
+			line-height: @bottombar-height;
+			font-size: 70%;
+		}
+		&::after {
+			.icon-angle-up;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			display: block;
+			margin-top: -@pad;
 		}
 	}
 	select {
 		margin: 0;
 		background-color: transparent;
-		border-color: @color-back;
-		border-radius: @pad/2;
-		color: @color-back;
-		padding: @pad*2 @pad/2 0;
-		height: @pad*5;
+		border: none;
+		line-height: @bottombar-height;
+		position: relative;
+		z-index: 2;
+		padding: 0 @pad;
+		-webkit-appearance: none;
+		appearance: none;
+		height: 100%;
+		color: @color-text;
+		text-align: left;
+		.bold;
+		font-size: 120%;
+		text-shadow:  0 1px 0 rgba(255, 255, 255, 0.3),  0 -1px 0 darken(@color-text,10%);
 		option {
-			color: @color-txt;
 			&[disabled] {
 				color: #999;
 			}
 		}
 	}
-	.description {
-		padding: @pad/2;
-		text-align: right;
-		opacity: .8;
-	}
 	a.btn {
-		position: relative;
-		padding: @pad*1.5;
-		overflow: hidden;
-		padding-left: @pad*4;
+		padding: @pad*1.5 @pad @pad/2;
+		// border-radius: @pad/2;
+		@media (min-width: 340px) {
+			padding-left: @pad*1.5;
+			padding-right: @pad*1.5
+		}
+		cursor: pointer;
+		color: @color-text;
+		&.active {
+			background-color: @color-accent;
+			color: lighten(@color-light,15%);
+			.level {
+				text-shadow: none;
+			}
+		}
+		// position: relative;
+		// padding: @pad*1.5;
+		// overflow: hidden;
+		// padding-left: @pad*4;
 	} 
 	span {
 		display: block;
 		.light;
 		&.level {
 			.bold;
-			right: @pad*5;
-			font-size: @pad*9;
-			opacity: .5;
-			line-height: @pad*2;
-			height: @pad*2;
-			top: 50%;
-			margin-top: -@pad/2;
-			position: absolute;
-		}		
-		&.floor {
-			font-size: 75%;
-			opacity: .9;
+			font-size: 120%;
+			height: 1.2rem;
+			text-shadow:  0 1px 0 rgba(255, 255, 255, 0.3),  0 -1px 0 darken(@color-text,10%);
 		}
+		&.floor {
+			font-size: 70%;
+		}
+		// &.level {
+		// 	.bold;
+		// 	right: @pad*5;
+		// 	font-size: @pad*9;
+		// 	opacity: .5;
+		// 	line-height: @pad*2;
+		// 	height: @pad*2;
+		// 	top: 50%;
+		// 	margin-top: -@pad/2;
+		// 	position: absolute;
+		// }		
+		// &.floor {
+		// 	font-size: 75%;
+		// 	opacity: .9;
+		// }
 	}
 }
 #roomBLock {
@@ -916,7 +973,8 @@ footer {
 
 .loader {
 	margin: 4px;
-	position: relative;
+	position: absolute;
+	left: 0;
 	right: 0;
 	margin-left: @pad;
   font-size: 10px;

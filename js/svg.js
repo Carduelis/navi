@@ -117,6 +117,7 @@ var svgAction = {
     $('.svg-holder').removeClass('hidden');
   },
   view : function(level) {
+    svgAction.show();
     $('.svg-view').addClass('hided');
     $('.svg-view[data-level="'+level+'"]').removeClass('hided');
   },
@@ -168,7 +169,7 @@ var svgAction = {
       svg = svgPanZoom('#level'+level, {
       zoomEnabled: true,
       controlIconsEnabled: true,
-      fit: true,
+      // fit: true,
       center: true,
       zoomScaleSensitivity: 0.3,
       minZoom: 1,
@@ -218,7 +219,6 @@ function findRoom(text) {
   var auditory = parseRoomName(text, true);
   var center = centerOfRect(auditory.roomId);
   highlightRoom(auditory.roomId);
-  svgAction.show();
   svgAction.view(auditory.level);
   
   svgAction.centerBy({
@@ -236,21 +236,25 @@ function initSvg(level, func) {
       loadSvg.success(function(){
         svgAction.enablePanZoom(level);
 
-
-     
-        func();
+        if (func) {
+          func();
+        }
       })
     } else {
       if (lastSvgLevel == level) {
 
 
 
-        func();
+        if (func) {
+          func();
+        }
       } else {
         svgAction.enablePanZoom(level);
 
 
-        func();
+        if (func) {
+          func();
+        }
       }
     }  
 }

@@ -15,15 +15,15 @@
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic|Cuprum:400,400italic,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
  <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
   -->
-  <link rel="stylesheet" href="css/style.css?24">
+  <!-- <link rel="stylesheet" href="css/style.css?24"> -->
   <!-- это для скопмилированного css  -->
-  <!--
+  
  <link rel="stylesheet/less" type="text/css" href="css/style.less">
   <script type="text/javascript">less = {env: "development"};</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
   <script type="text/javascript">less.watch();</script>
   
-  -->
+  
   
   <!--apple web app-->
   <meta name="apple-mobile-web-app-title" content="Навигация">
@@ -53,20 +53,20 @@
 <header>
 
   <ul class='header'>
+    <li id='back' class="btn">
+      <a onclick="closeMap()"></a>
+    </li>
+    <li id="loading"></li>
     <li class='logo'>
       <a href="#top_page"></a>
     </li>
-    <li id="loading"></li>
     <li class='logotext'>
-      <a href="/navi"><span class="txt">Навигация</span></a>
+      <a href="#"><span class="txt">Навигация</span></a>
     </li>
-    <li id='back' class="">
-      <a onclick="closeMap()"></a>
-    </li>
-    <li id='fullscreen' class="">
+    <li id='fullscreen' class="btn">
       <a onclick="launchIntoFullscreen(document.documentElement);"></a>
     </li>
-    <li id='exitfullscreen' class="">
+    <li id='exitfullscreen' class="btn">
       <a onclick="exitFullscreen();"></a>
     </li>
     <li id='menu' class="btn">

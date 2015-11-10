@@ -339,8 +339,8 @@ function changeLevelButtonsByCorpus(el,level) {
   var container = el.parents('.tab-buttons');
   var currentCorpus = el.val();
   //console.log(currentCorpus);
-  container.find('div[data-corpus]').hide();
-  container.find('div[data-corpus="'+currentCorpus+'"]').show();
+  container.find('div[data-corpus]').removeClass('show');
+  container.find('div[data-corpus="'+currentCorpus+'"]').addClass('show');
   container.find('a.btn').removeClass('active');
   container.find('a.btn[data-level="'+level+'"]').addClass('active');
 }

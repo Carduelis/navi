@@ -517,6 +517,29 @@ form {
 	max-width: @screen-desktop;
 	margin: @pad*10 auto @pad*7;
 }
+.simple-btn {
+	.btn-flat(@peter_river);
+	margin: 0;
+	padding: @pad;
+	display: block;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+
+	-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	transition: none;
+	&::before {
+		margin-right: @pad;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		margin-top: -@pad*2;
+		padding: @pad @pad*1.5;
+	}
+}
 .holder {
 	background: @clouds;
 	color: @wet_asphalt;
@@ -559,10 +582,10 @@ form {
 				padding-left: @pad*5;
 
 				-webkit-transition: none;
-	-moz-transition: none;
-	-ms-transition: none;
-	-o-transition: none;
-	transition: none;
+				-moz-transition: none;
+				-ms-transition: none;
+				-o-transition: none;
+				transition: none;
 				&::before {
 					margin-right: @pad;
 					position: absolute;

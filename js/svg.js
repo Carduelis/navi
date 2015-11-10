@@ -277,6 +277,65 @@ $(document).ready(function(){
       findRoom(roomId);
     });
   })
+
+
+
+  
+
+});
+$(document).ajaxSuccess(function() {
+  $('rect').on('click',function(){
+    var roomId = $(this).attr('id');
+    getForm('link_roomnames_to_id', roomId)
+  })
 });
 
+  function getForm(formId, tagId) {
+    var html = null;
+    loadForm = $.ajax({
+      url:  "./includes/forms/"+formId+".php",
+      dataType: 'html',
+      beforeSend: function(param){
+        loader.start();
+        loader.add({
+          name: 'form',
+          text: 'Загружается форма '+formId
+        });
+      }
+    })
+    .success(function(data) {
+      loader.remove({
+          name: 'form',
+          text: 'Форма '+formId+'. Загрузка завершена.'
+        });
+      loader.stop('map');
+      html = $('<div id="newData">').html(data);
+      html.find('#tagId').attr('value',tagId);
+      returnAjaxData(html);
+    })
+    .fail(function(){
+      console.warn('Cant load form#'+formId+' from '+formId+'.php');
+      html = false
+    });
+ }
 
+
+function returnAjaxData(obj) {
+  createPopUp(obj);
+}
+
+
+function sendData(arr) {
+  var xmlhttp = new XMLHttpRequest();
+  var query;
+  // for (var i = arr.length - 1; i >= 0; i--) {
+  //   query = arr[i]+"='"
+  // };
+  var value0 = document.getElementById(arr[0]).value;
+  var value1 = document.getElementById(arr[1]).value;
+  query = arr[0]+'='+value0+"&"+arr[1]+'='+value1;
+  console.log(query)
+  xmlhttp.open('GET','db_bridge.php?'+query, false)
+  xmlhttp.send(null);
+  document.getElementById('message').innerHTML=xmlhttp.responseText;
+}

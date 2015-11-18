@@ -1,4 +1,4 @@
-<form name="link_users_to_rooms" method="post">
+<form name="link_users_to_room" method="post">
 	<div class="form-group">
 		<label for="tagId">Внутренний id объекта</label>
 		<input type="text" name="tagId" id="tagId" disabled="disabled">
@@ -11,7 +11,7 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<a class="simple-btn" onclick="sendData(['tagId','userId'])">Сохранить в БД</a>
+		<a class="simple-btn" onclick="sendData($(this),['tagId','userId'])">Сохранить в БД</a>
 		<div id="message"></div>
 	</div>
 </form>

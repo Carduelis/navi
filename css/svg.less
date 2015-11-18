@@ -10,7 +10,85 @@
 #svg-pan-zoom-controls {
 	display: none;
 }
+.bubbleHolder {
+	position: relative;
+}
+.bubbleWrapper {
+	@padding: 5px;
+	@baloonWidth: 160px;
 
+	padding: @padding;
+	@color-bottom: darken(@clouds,5%);
+	@color-top: lighten(#F1ECEC,10%);
+	.bubble {
+		background-color: @clouds;
+		border-radius: @pad/2;
+		padding: @padding*1.5;
+		min-height: 50px;
+		font-size: 6px;
+		width: auto !important;
+		height: auto !important;
+		//color: transparent;
+		box-shadow: 0 @pad*1.5 @pad -@pad @asbestos;
+		.gradient(@color-top, @color-bottom);
+	}
+	.arrow {
+		@arrowWidth: 5px;
+		margin-bottom: -1px;
+		content: '';
+		border-width: @arrowWidth;
+		border-color: transparent;
+		border-bottom-color: @color-top;
+		border-style: solid;
+		display: block;
+		width: 0;
+		margin-left: (@baloonWidth - @padding*2)/2 - @arrowWidth;
+		height: 0;
+	}
+	.close {
+		float: right;
+		@size: 14px;
+		cursor: pointer;
+		margin-top: -@padding/4;
+		margin-right: -@padding/4;
+		border-radius: 50%;
+		height: @size;
+		width: @size;
+		line-height: @size;
+		text-align: center;
+		&::before {
+			.icon-close;
+			color: @alizarin;
+			line-height: inherit;
+		}
+	}
+	.content {
+		h2 {
+			font-size: 8px;
+			margin-right: 20px;
+			margin: 0;
+			color: @asbestos;
+			small {
+				font-size: 80%;
+				margin-left: 4px;
+				color: @concrete;
+				.light;
+			}
+		}
+	}
+	.group {
+		margin-top: @padding;
+		a {
+			border-top: 1px solid rgba(0,0,0,.1);
+			padding: @padding;
+			display: block;
+			&::after {
+				.icon-angle-right;
+				float: right;
+			}
+		}
+	}
+}
 svg {
 	//min-width: 1020px;
 	//width: 100%;
@@ -21,9 +99,11 @@ svg {
 	width: 100% !important;
 	height: 100% !important;
 }
+
 .svg-holder {
 	//.gradient(darken(@silver,15%),@silver);
-	background: @silver;
+	// background: @silver;
+	background-color: @svg-background-color;
 	code, pre {
 		position: absolute;
 		top: @pad*8;
@@ -36,34 +116,71 @@ svg {
 		background-color: rgba(255, 255, 255, 1);
 	}
 }
+
+@svg-background-color: fadeout(#454E6C,10%);
+
+@svg-door-color: @svg-background-color;
+@svg-door-stroke: @svg-background-color;
+@svg-door-stroke-width: 1px;
+
+@svg-room-color: transparent;
+@svg-room-stroke: #80D490;
+@svg-room-stroke-width: 1px;
+
+@svg-wall-color: #353F5C;
+@svg-wall-stroke: transparent;
+@svg-wall-stroke-width: 1px;
+
+@svg-window-color: transparent;
+@svg-window-stroke: transparent;
+@svg-window-stroke-width: 1px;
+
+@svg-text-color: #80D490;
+@svg-text-color-hover: #fff;
 svg {
 	
   text {
     font-family: Arial;
-    font-size  : 7px;
-    fill       : @peter_river;
-    font-weight: bold;
+    font-size  : 10px;
+    // letter-spacing: 0.2px;
+    fill       : @svg-text-color;
   }
 }
 #A_x5F_Windows {
 	g {
 		fill: #83DDDD;
+		
+		fill: @svg-window-color;
 		polyline {
-			stroke: @asbestos;
-			stroke-width: 0.6px;
+			stroke: @svg-window-stroke;
+			stroke-width: @svg-window-stroke-width;
 		}
 	}
 }
 g#A_x5F_Walls g {
-	fill: @concrete;
+	fill: @svg-wall-color;
+	polyline {
+		stroke: @svg-wall-stroke;
+		stroke-width: @svg-wall-stroke-width;
+	}
 }
-
+g#A_x5F_Doors {
+	g {
+		fill: @svg-door-color;
+		polyline {
+			stroke: @svg-door-stroke;
+			stroke-width: @svg-door-stroke-width;
+		}
+	}
+}
 g#Audit {
 	rect {
-		fill: #DFDBE6;
-		&:hover {
-			fill: #D3C7E8
-		}
+		cursor: pointer;
+		// fill: #DFDBE6;
+		fill: @svg-room-color;
+		stroke: @svg-room-stroke;
+		stroke-width: @svg-room-stroke-width;
+		//stroke-dasharray: 10,3;
 	}
 }
 
@@ -81,6 +198,6 @@ g#Audit {
 .highlighted {
 	fill: rgba(255, 140, 100, 0.39) !important;
 	+ text {
-		fill: #fff !important;
+		fill: @svg-text-color-hover !important;
 	}
 }

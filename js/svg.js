@@ -287,59 +287,27 @@ $(document).ready(function(){
   
 
 });
-$(document).ajaxSuccess(function() {
-  $('rect').on('click',function(){
-    var roomId = $(this).attr('id');
-    getForm('link_roomnames_to_id', roomId)
-  })
-});
-
-  function getForm(formId, tagId) {
-    var html = null;
-    loadForm = $.ajax({
-      url:  "./includes/forms/"+formId+".php",
-      dataType: 'html',
-      beforeSend: function(param){
-        loader.start();
-        loader.add({
-          name: 'form',
-          text: 'Загружается форма '+formId
-        });
-      }
-    })
-    .success(function(data) {
-      loader.remove({
-          name: 'form',
-          text: 'Форма '+formId+'. Загрузка завершена.'
-        });
-      loader.stop('map');
-      html = $('<div id="newData">').html(data);
-      html.find('#tagId').attr('value',tagId);
-      returnAjaxData(html);
-    })
-    .fail(function(){
-      console.warn('Cant load form#'+formId+' from '+formId+'.php');
-      html = false
-    });
- }
 
 
-function returnAjaxData(obj) {
-  createPopUp(obj);
+/// Создание балунов
+function closeBubble() {
+  $('#roomBubble').remove();
 }
 
+function showBubble(id) {
+  closeBubble();
+  var bubble = createSvgElement('foreignObject');
+  bubble
+    .attr({
+      id : 'roomBubble',
+      x: centerOfRect(id).x - 160/2,
+      y: centerOfRect(id).y,
+      width: 160,
+      height: 150,
+      class: 'bubbleHolder'
+    })
+    .append('<div class="bubbleWrapper"><div class="arrow"></div><div class="bubble"><a onclick="closeBubble()" class="close"></a><div class="content"><h2>'+id+'<small>Отдел кадров</small></h2><ul class="group"><li><a onclick="setStartAuditory(\''+id+'\',$(this))">Маршрут отсюда</a></li><li><a onclick="setEndAuditory(\''+id+'\',$(this))">Маршрут сюда</a></li><li><a onclick="alert(\'Данный функционал в стадии разработки.\')">Подробная информация о помещении</a><li><a onclick="showFormChoosing(\''+id+'\')">Добавление данных в БД</a></li></li></ul></div></div>')
 
-function sendData(arr) {
-  var xmlhttp = new XMLHttpRequest();
-  var query;
-  // for (var i = arr.length - 1; i >= 0; i--) {
-  //   query = arr[i]+"='"
-  // };
-  var value0 = document.getElementById(arr[0]).value;
-  var value1 = document.getElementById(arr[1]).value;
-  query = arr[0]+'='+value0+"&"+arr[1]+'='+value1;
-  console.log(query)
-  xmlhttp.open('GET','db_bridge.php?'+query, false)
-  xmlhttp.send(null);
-  document.getElementById('message').innerHTML=xmlhttp.responseText;
+  $('.svg-pan-zoom_viewport').append(bubble);
 }
+

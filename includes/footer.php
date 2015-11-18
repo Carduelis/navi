@@ -19,6 +19,7 @@
 <script src="js/functions.js" type="text/javascript"></script>
 <script src="js/svg.js" type="text/javascript"></script>
 <script src="js/path.js" type="text/javascript"></script>
+<script src="js/admin.js" type="text/javascript"></script>
 
 </body>
 </html>

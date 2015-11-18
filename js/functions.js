@@ -10,12 +10,12 @@ var loader = {
   add: function(obj) {
     obj.name;
     obj.text;
-    console.info(obj.text)
+    console.info(obj.text);
   },
   remove: function(obj) {
     obj.name;
     obj.text;
-    console.info(obj.text)
+    console.info(obj.text);
   },
   stop : function() {
     $('#loading').removeClass('loader');

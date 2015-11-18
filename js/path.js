@@ -286,7 +286,7 @@ var arr1 = [
 function makePath(idAudStart, idAudEnd) {
   /// to do 
   //  start animation progress bar
-  loading.start();
+  loader.start();
  $("svg").find("#pathLine").remove();
   destroyPopUp();
 
@@ -338,7 +338,7 @@ function makePath(idAudStart, idAudEnd) {
 
   drawPath(calculatePathArray(getCoordinates($('#Walkable'))), 'level1');
 
-  loading.stop();
+  loader.stop();
  
   /// to do
   // end animation
